@@ -14,3 +14,5 @@ typing_extensions
 python-dotenv
 numpy
 dotenv
+fastapi
+uvicorn
