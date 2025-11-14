@@ -1,0 +1,30 @@
+[
+  {
+    "role": "user",
+    "content": "What type of langugae did the repo consists of?",
+    "timestamp": "2025-11-14T16:01:51.949145"
+  },
+  {
+    "role": "assistant",
+    "content": "The repository consists of Java code. [MainActivity.java:6-12], [NotificationHelper.java:9-43], [SMSReceiver.java:11-34]\n",
+    "timestamp": "2025-11-14T16:01:51.968152",
+    "citations": [
+      "MainActivity.java:6-12",
+      "NotificationHelper.java:9-43",
+      "SMSReceiver.java:11-34"
+    ]
+  },
+  {
+    "role": "user",
+    "content": "what does the showNotifications does",
+    "timestamp": "2025-11-14T17:31:04.109809"
+  },
+  {
+    "role": "assistant",
+    "content": "The `showNotification` method in [NotificationHelper.java:14-27] displays a notification. It takes the context, a title, and a message as input. It first calls `createNotificationChannel` to ensure the notification channel is created. Then, it builds a notification with a small icon, the provided title and message, sets the priority to high, and enables auto-cancel. Finally, it retrieves the `NotificationManager` and displays the notification.\n",
+    "timestamp": "2025-11-14T17:31:04.133939",
+    "citations": [
+      "NotificationHelper.java:14-27"
+    ]
+  }
+]

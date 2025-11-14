@@ -1,0 +1,7 @@
+{
+  "repo_url": "https://github.com/sharmilat23/Rock-Paper-Scissors",
+  "repo_hash": "6706d305",
+  "indexed_at": "2025-11-14T11:15:45.882570",
+  "chunk_count": 16,
+  "embeddings_model": "sentence-transformers/all-MiniLM-L6-v2"
+}
