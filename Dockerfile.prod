@@ -1,0 +1,62 @@
+FROM python:3.10-slim
+
+# Set environment
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    curl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user for security
+RUN groupadd -r raguser && useradd -r -g raguser raguser
+
+# Copy requirements first (for caching)
+COPY requirements.txt .
+COPY rag_agent/requirements.txt ./rag_agent/
+
+# Install Python dependencies
+RUN pip install --upgrade pip && \
+    pip install \
+    fastapi \
+    uvicorn[standard] \
+    gunicorn \
+    python-dotenv && \
+    pip install -r requirements.txt && \
+    pip install -r rag_agent/requirements.txt || true
+
+# Copy application code
+COPY . /app
+
+# Create directories and set permissions
+RUN mkdir -p /app/rag_agent/indexes /app/rag_agent/histories && \
+    chown -R raguser:raguser /app
+
+# Switch to non-root user
+USER raguser
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Expose port
+EXPOSE 8000
+
+# Use gunicorn with uvicorn workers for production
+CMD ["gunicorn", "rag_agent.fastapi_app_secure:app", \
+     "--workers", "4", \
+     "--worker-class", "uvicorn.workers.UvicornWorker", \
+     "--bind", "0.0.0.0:8000", \
+     "--timeout", "120", \
+     "--keep-alive", "5", \
+     "--max-requests", "1000", \
+     "--max-requests-jitter", "100", \
+     "--access-logfile", "-", \
+     "--error-logfile", "-"]

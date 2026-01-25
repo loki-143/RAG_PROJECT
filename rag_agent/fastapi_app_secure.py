@@ -2,21 +2,13 @@
 RAG Project FastAPI - Production Ready with Security
 
 Features:
-- Rate limiting (60 requests/minute per IP)
-- API key authentication (optional, enabled via RAG_API_KEY env var)
-- Input validation & URL allowlist
+- Rate limiting
+- API key authentication
+- Input validation
 - Thread-safe storage
 - Error sanitization
 - Security headers
 - Audit logging
-
-Environment Variables:
-- GOOGLE_API_KEY: Required - Your Google Gemini API key
-- RAG_API_KEY: Optional - Set to enable API key authentication
-- ENVIRONMENT: development/production (default: development)
-- RATE_LIMIT_REQUESTS: Requests per window (default: 60)
-- ALLOWED_DOMAINS: Comma-separated domains (default: github.com,gitlab.com,bitbucket.org)
-- ALLOWED_ORIGINS: CORS origins (default: *)
 """
 
 import os
@@ -37,6 +29,7 @@ from concurrent.futures import ThreadPoolExecutor
 # -----------------------------
 load_dotenv()
 
+# Configure logging
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
 logging.basicConfig(
     level=getattr(logging, LOG_LEVEL),
@@ -46,7 +39,6 @@ logger = logging.getLogger("fastapi_app")
 
 # -----------------------------
 # FIX: Force correct working directory
-# Ensures indexes/histories remain inside rag_agent/
 # -----------------------------
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 os.chdir(PROJECT_ROOT)
@@ -64,9 +56,6 @@ from security import (
     InputValidator,
     audit_logger,
 )
-
-# Import cleanup utility
-from cleanup import storage_cleanup
 
 # -----------------------------
 # Initialize RAG Agent
@@ -203,11 +192,6 @@ async def index_repo(req: IndexRequest, request: Request):
     """Index a repository for RAG queries."""
     try:
         audit_logger.log_index_operation("INDEX", str(req.repo_url))
-        
-        # Auto-cleanup if storage limits exceeded BEFORE indexing
-        cleanup_result = await run_blocking(storage_cleanup.cleanup_if_needed)
-        if cleanup_result["cleaned"]:
-            logger.info(f"Auto-cleanup freed {cleanup_result['space_freed_mb']}MB")
         
         meta = await run_blocking(
             agent.index_repository,
@@ -356,69 +340,18 @@ async def get_stats(repo_url: HttpUrl):
         raise HTTPException(status_code=500, detail="Failed to get stats")
 
 
-# ---------------------------------------------
-# Storage Management Endpoints
-# ---------------------------------------------
-@app.get("/storage", dependencies=[Depends(verify_api_key)])
-async def get_storage_stats():
-    """Get storage usage statistics."""
-    try:
-        stats = await run_blocking(storage_cleanup.get_storage_stats)
-        return stats
-    except Exception as e:
-        raise HTTPException(status_code=500, detail="Failed to get storage stats")
-
-
-@app.get("/storage/recommendation", dependencies=[Depends(verify_api_key)])
-async def get_cleanup_recommendation():
-    """Get cleanup recommendations without performing cleanup."""
-    try:
-        recommendation = await run_blocking(storage_cleanup.get_cleanup_recommendation)
-        return recommendation
-    except Exception as e:
-        raise HTTPException(status_code=500, detail="Failed to get recommendations")
-
-
-@app.post("/storage/cleanup", dependencies=[Depends(verify_api_key)])
-async def trigger_cleanup(force: bool = False, keep_count: int = 10):
-    """
-    Trigger storage cleanup.
-    
-    Args:
-        force: If True, force cleanup keeping only keep_count indexes
-        keep_count: Number of indexes to keep when force=True
-    """
-    try:
-        if force:
-            result = await run_blocking(storage_cleanup.force_cleanup, keep_count)
-            audit_logger.log_index_operation("FORCE_CLEANUP", f"kept={keep_count}")
-        else:
-            result = await run_blocking(storage_cleanup.cleanup_if_needed)
-            audit_logger.log_index_operation("CLEANUP", "auto")
-        
-        return {
-            "status": "completed",
-            "cleaned": result.get("cleaned", True),
-            "indexes_deleted": result.get("indexes_deleted", []),
-            "histories_deleted": result.get("histories_deleted", []),
-            "space_freed_mb": result.get("space_freed_mb", 0),
-        }
-    except Exception as e:
-        logger.exception("Cleanup failed")
-        raise HTTPException(status_code=500, detail="Failed to perform cleanup")
-
-
 # ------------------------------------------------------
 # Local run convenience
 # ------------------------------------------------------
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8000))
-    print(os.environ.get("GOOGLE_API_KEY"))
+    workers = int(os.environ.get("UVICORN_WORKERS", 1))
+    
     uvicorn.run(
         "fastapi_app:app",
         host="0.0.0.0",
         port=port,
         reload=os.environ.get("ENVIRONMENT", "development") != "production",
+        workers=workers if os.environ.get("ENVIRONMENT") == "production" else 1,
     )
-

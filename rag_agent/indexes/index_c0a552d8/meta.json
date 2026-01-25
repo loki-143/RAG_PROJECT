@@ -1,7 +1,0 @@
-{
-  "repo_url": "https://github.com/loki-143/calculator",
-  "repo_hash": "c0a552d8",
-  "indexed_at": "2025-11-14T16:00:40.003534",
-  "chunk_count": 8,
-  "embeddings_model": "sentence-transformers/all-MiniLM-L6-v2"
-}

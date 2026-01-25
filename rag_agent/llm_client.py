@@ -10,15 +10,15 @@ logger = logging.getLogger(__name__)
 
 
 class GeminiLLMWrapper:
-    """Wrapper around Gemini 2.0 Flash for code Q&A."""
+    """Wrapper around Gemini for code Q&A."""
 
-    def __init__(self, api_key: str, model: str = "gemini-2.0-flash"):
+    def __init__(self, api_key: str, model: str = "gemini-2.5-flash"):
         """
         Initialize Gemini wrapper.
         
         Args:
             api_key: Google API key
-            model: Model name (default: gemini-2.0-flash)
+            model: Model name (default: gemini-2.5-flash - FREE)
         """
         genai.configure(api_key=api_key)
         self.model_name = model

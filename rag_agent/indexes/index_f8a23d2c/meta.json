@@ -1,7 +1,0 @@
-{
-  "repo_url": "https://github.com/kattakoushik/Tecos_clone",
-  "repo_hash": "f8a23d2c",
-  "indexed_at": "2025-11-14T15:48:27.097281",
-  "chunk_count": 310,
-  "embeddings_model": "sentence-transformers/all-MiniLM-L6-v2"
-}

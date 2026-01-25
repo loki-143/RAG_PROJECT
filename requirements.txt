@@ -15,4 +15,6 @@ python-dotenv
 numpy
 dotenv
 fastapi
-uvicorn
+uvicorn[standard]
+gunicorn
+pydantic>=2.0

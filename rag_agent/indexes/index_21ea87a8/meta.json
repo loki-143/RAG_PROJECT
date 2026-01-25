@@ -1,7 +1,0 @@
-{
-  "repo_url": "https://github.com/loki-143/TextToSpeech",
-  "repo_hash": "21ea87a8",
-  "indexed_at": "2025-11-14T18:16:57.215478",
-  "chunk_count": 29,
-  "embeddings_model": "sentence-transformers/all-MiniLM-L6-v2"
-}

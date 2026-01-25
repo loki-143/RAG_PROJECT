@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RAG Agent Tester</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .chat-bubble-user { background: #2563eb; color: white; }
+    .chat-bubble-ai { background: #e5e7eb; }
+  </style>
+</head>
+
+<body class="bg-gray-100">
+
+  <div class="max-w-4xl mx-auto mt-10 p-6 bg-white shadow rounded">
+
+    <h1 class="text-2xl font-bold mb-4">🔍 RAG Agent Tester</h1>
+
+    <!-- REPO INDEXER -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold mb-2">Index Repository</h2>
+      <div class="flex gap-2">
+        <input id="repoUrl" type="text" placeholder="https://github.com/user/repo"
+               class="flex-1 p-2 border rounded">
+        <button onclick="indexRepo()"
+                class="px-4 py-2 bg-blue-600 text-white rounded">Index</button>
+      </div>
+      <p id="indexStatus" class="mt-2 text-sm text-gray-700"></p>
+    </div>
+
+    <!-- ASK SECTION -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold mb-2">Ask Question</h2>
+      <input id="questionInput" type="text" placeholder="Ask something about the code..."
+             class="w-full p-2 border rounded mb-2">
+
+      <input id="reposInput" type="text" placeholder="Repo URLs (comma separated)"
+             class="w-full p-2 border rounded mb-4">
+
+      <button onclick="askQuestion()"
+              class="px-4 py-2 bg-green-600 text-white rounded">
+        Ask
+      </button>
+    </div>
+
+    <!-- CHAT OUTPUT -->
+    <div id="chatBox"
+         class="bg-gray-50 p-4 rounded h-80 overflow-y-auto border"></div>
+
+  </div>
+
+<script>
+const API = "http://localhost:8000";   // Update if needed
+
+// ---------------------------------------------
+// INDEX REPOSITORY
+// ---------------------------------------------
+async function indexRepo() {
+    const url = document.getElementById("repoUrl").value;
+    const status = document.getElementById("indexStatus");
+
+    status.innerText = "Indexing... please wait.";
+
+    try {
+        const res = await fetch(`${API}/index`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ repo_url: url, force: false })
+        });
+
+        const data = await res.json();
+        status.innerText = `Indexed: ${JSON.stringify(data.meta)}`;
+    } catch (err) {
+        status.innerText = "Error: " + err;
+    }
+}
+
+// ---------------------------------------------
+// ASK QUESTION (NON-STREAMING)
+// ---------------------------------------------
+async function askQuestion() {
+    const q = document.getElementById("questionInput").value;
+    const reposText = document.getElementById("reposInput").value;
+
+    const repoList = reposText.split(",").map(r => r.trim()).filter(r => r);
+
+    addMessage("user", q);
+
+    const res = await fetch(`${API}/ask`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            question: q,
+            repos: repoList,
+            top_k: 8,
+            use_history: true
+        })
+    });
+
+    const data = await res.json();
+
+    addMessage("ai", data.answer + "\n\nCitations: " + JSON.stringify(data.citations));
+}
+
+// ---------------------------------------------
+// DISPLAY MESSAGE
+// ---------------------------------------------
+function addMessage(sender, text) {
+    const chat = document.getElementById("chatBox");
+
+    const bubble = document.createElement("div");
+    bubble.className =
+        "p-3 rounded mb-2 max-w-xl " +
+        (sender === "user" ? "chat-bubble-user self-end ml-auto" : "chat-bubble-ai");
+
+    bubble.innerText = text;
+    chat.appendChild(bubble);
+
+    chat.scrollTop = chat.scrollHeight;
+}
+</script>
+
+</body>
+</html>
