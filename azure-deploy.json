@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "siteName": {
+      "type": "string",
+      "defaultValue": "rag-agent-api",
+      "metadata": {
+        "description": "Name of the App Service"
+      }
+    }
+  },
+  "variables": {
+    "appServicePlanName": "[concat(parameters('siteName'), '-plan')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2021-02-01",
+      "name": "[variables('appServicePlanName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "F1",
+        "capacity": 1
+      },
+      "properties": {
+        "reserved": true
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2021-02-01",
+      "name": "[parameters('siteName')]",
+      "location": "[resourceGroup().location]",
+      "kind": "app,linux",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
+      ],
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+        "siteConfig": {
+          "linuxFxVersion": "PYTHON|3.11",
+          "appCommandLine": "bash startup.sh",
+          "pythonVersion": "3.11"
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "siteUrl": {
+      "type": "string",
+      "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', parameters('siteName'))).defaultHostName)]"
+    }
+  }
+}
