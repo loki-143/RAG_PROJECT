@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: rag-agent
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: cd rag_agent && uvicorn fastapi_app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: RAG_API_KEY
+        sync: false
+      - key: ENVIRONMENT
+        value: production
+      - key: ENABLE_DOCS
+        value: "true"
+      - key: PYTHON_VERSION
+        value: "3.11"
+    healthCheckPath: /
+    plan: free
