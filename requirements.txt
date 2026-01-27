@@ -3,7 +3,7 @@ langchain-core
 langchain-community
 langchain-text-splitters
 langchain-huggingface
-faiss-cpu
+faiss-cpu==1.7.4
 sentence-transformers
 gitpython
 rank-bm25
@@ -13,7 +13,6 @@ requests
 typing_extensions
 python-dotenv
 numpy
-dotenv
 fastapi
 uvicorn[standard]
 gunicorn
