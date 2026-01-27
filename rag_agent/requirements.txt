@@ -1,18 +1,31 @@
+# --- Web server (CRITICAL) ---
+fastapi
+uvicorn
+gunicorn
+
+# --- Core numerical deps ---
+numpy
+
+# --- Vector + NLP (PINNED) ---
+faiss-cpu==1.7.4
+sentence-transformers
+rank-bm25
+
+# --- LangChain stack ---
 langchain
 langchain-core
 langchain-community
 langchain-text-splitters
 langchain-huggingface
 
-faiss-cpu
-sentence-transformers
-rank-bm25
+# --- Git + HTTP ---
 gitpython
-
-google-generativeai
-protobuf==4.25.3
 requests
 typing_extensions
 
+# --- Gemini ---
+google-generativeai
+protobuf==4.25.3
+
+# --- Env ---
 python-dotenv
-numpy
