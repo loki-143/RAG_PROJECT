@@ -1,0 +1,7 @@
+{
+  "repo_url": "https://github.com/loki-143/RAG_PROJECT",
+  "repo_hash": "cce4e622",
+  "indexed_at": "2026-01-28T14:49:42.981284",
+  "chunk_count": 369,
+  "embeddings_model": "sentence-transformers/all-MiniLM-L6-v2"
+}
