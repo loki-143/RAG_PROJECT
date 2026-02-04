@@ -1,0 +1,7 @@
+{
+  "repo_url": "https://github.com/loki-143/Student_Form",
+  "repo_hash": "f7752ed4",
+  "indexed_at": "2026-01-31T07:18:51.811212",
+  "chunk_count": 11,
+  "embeddings_model": "sentence-transformers/all-MiniLM-L6-v2"
+}
