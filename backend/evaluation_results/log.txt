@@ -1,0 +1,373 @@
+D:\RAG_PROJECT\backend\evaluation\run_evaluation.py:32: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+2026-02-14 23:57:37,332 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2026-02-14 23:57:37,332 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-02-14 23:57:41,737 - __main__ - INFO - Loaded 15 ground-truth queries for https://github.com/gouravthakur39/beginners-C-program-examples
+D:\RAG_PROJECT\backend\evaluation\run_evaluation.py:378: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat(),
+2026-02-14 23:57:41,739 - __main__ - INFO - ============================================================
+2026-02-14 23:57:41,739 - __main__ - INFO - PHASE 1  — Indexing repository
+2026-02-14 23:57:41,740 - __main__ - INFO - ============================================================
+2026-02-14 23:57:41,740 - indexer - INFO - Indexing repository: https://github.com/gouravthakur39/beginners-C-program-examples
+2026-02-14 23:57:43,890 - indexer - INFO - Cloned to C:\Users\chlok\AppData\Local\Temp\tmpqoiy9q1z
+2026-02-14 23:57:45,967 - indexer - INFO - Extracted 199 chunks
+2026-02-14 23:57:45,973 - storage - INFO - Saved 199 chunks to indexes\index_1d9ffbaf\chunks.jsonl
+2026-02-14 23:57:45,976 - storage - INFO - Saved metadata to indexes\index_1d9ffbaf\meta.json
+2026-02-14 23:57:46,054 - retriever - INFO - Building hybrid index for https://github.com/gouravthakur39/beginners-C-program-examples
+2026-02-14 23:58:10,156 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-02-14 23:58:16,968 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-02-14 23:58:16,990 - retriever - INFO - Saved FAISS index to indexes\index_1d9ffbaf\faiss_index
+2026-02-14 23:58:16,991 - retriever - INFO - Built hybrid index with 199 chunks
+2026-02-14 23:58:16,991 - rag_agent - INFO - ✓ Indexed https://github.com/gouravthakur39/beginners-C-program-examples: 199 chunks
+2026-02-14 23:58:16,993 - evaluation.performance_metrics - INFO - [Timer] indexing: 35.2515s
+2026-02-14 23:58:16,993 - rag_agent - INFO - ✓ Added https://github.com/gouravthakur39/beginners-C-program-examples to active repositories
+2026-02-14 23:58:16,993 - __main__ - INFO - ============================================================
+2026-02-14 23:58:16,993 - __main__ - INFO - PHASE 2  — Retrieval Quality
+2026-02-14 23:58:16,993 - __main__ - INFO - ============================================================
+2026-02-14 23:58:21,370 - __main__ - INFO -   Q1: P@5=0.200  R@5=1.000  NDCG@5=1.000  RR=1.000
+2026-02-14 23:58:21,370 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-14 23:58:21,372 - retriever - INFO - Found file match: Adding_Fractions.c
+2026-02-14 23:58:25,785 - __main__ - INFO -   Q2: P@5=0.200  R@5=1.000  NDCG@5=0.500  RR=0.333
+2026-02-14 23:58:30,281 - __main__ - INFO -   Q3: P@5=0.400  R@5=0.400  NDCG@5=0.553  RR=1.000
+2026-02-14 23:58:34,235 - __main__ - INFO -   Q4: P@5=0.000  R@5=0.000  NDCG@5=0.000  RR=0.167
+2026-02-14 23:58:37,635 - __main__ - INFO -   Q5: P@5=0.600  R@5=0.750  NDCG@5=0.805  RR=1.000
+2026-02-14 23:58:42,585 - __main__ - INFO -   Q6: P@5=0.200  R@5=0.200  NDCG@5=0.146  RR=0.250
+2026-02-14 23:58:46,753 - __main__ - INFO -   Q7: P@5=0.600  R@5=1.000  NDCG@5=1.000  RR=1.000
+2026-02-14 23:58:50,861 - __main__ - INFO -   Q8: P@5=0.200  R@5=1.000  NDCG@5=1.000  RR=1.000
+2026-02-14 23:58:54,748 - __main__ - INFO -   Q9: P@5=0.200  R@5=0.500  NDCG@5=0.613  RR=1.000
+2026-02-14 23:58:54,748 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-14 23:58:54,755 - retriever - INFO - Found file match: ARRAY.c
+2026-02-14 23:58:54,757 - retriever - INFO - Found file match: ARRAY.c
+2026-02-14 23:58:54,757 - retriever - INFO - Found file match: ARRAY.c
+2026-02-14 23:58:54,759 - retriever - INFO - Found file match: ARRAY.c
+2026-02-14 23:58:59,433 - __main__ - INFO -   Q10: P@5=0.000  R@5=0.000  NDCG@5=0.000  RR=0.000
+2026-02-14 23:58:59,433 - retriever - INFO - Detected file-specific query for: basicgame.c
+2026-02-14 23:58:59,435 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:58:59,435 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:58:59,435 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:58:59,435 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:58:59,435 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:58:59,435 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:58:59,437 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:58:59,437 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:58:59,437 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:58:59,437 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:58:59,437 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:59:03,900 - __main__ - INFO -   Q11: P@5=0.000  R@5=0.000  NDCG@5=0.000  RR=0.000
+2026-02-14 23:59:08,888 - __main__ - INFO -   Q12: P@5=0.400  R@5=0.333  NDCG@5=0.485  RR=1.000
+2026-02-14 23:59:13,225 - __main__ - INFO -   Q13: P@5=0.400  R@5=0.500  NDCG@5=0.558  RR=1.000
+2026-02-14 23:59:17,379 - __main__ - INFO -   Q14: P@5=0.200  R@5=0.500  NDCG@5=0.387  RR=0.500
+2026-02-14 23:59:21,367 - __main__ - INFO -   Q15: P@5=0.000  R@5=0.000  NDCG@5=0.000  RR=0.000
+2026-02-14 23:59:21,369 - __main__ - INFO - 
+  Aggregate: {
+  "Precision@1": 0.5333333333333333,
+  "Recall@1": 0.24666666666666667,
+  "F1@1": 0.3057142857142857,
+  "NDCG@1": 0.5333333333333333,
+  "HitRate@1": 0.5333333333333333,
+  "Precision@3": 0.31111111111111106,
+  "Recall@3": 0.4211111111111111,
+  "F1@3": 0.3252910052910053,
+  "NDCG@3": 0.4646185817348504,
+  "HitRate@3": 0.6666666666666666,
+  "Precision@5": 0.24000000000000002,
+  "Recall@5": 0.4788888888888889,
+  "F1@5": 0.2930784030784031,
+  "NDCG@5": 0.4698507290822894,
+  "HitRate@5": 0.7333333333333333,
+  "Precision@8": 0.16666666666666666,
+  "Recall@8": 0.5288888888888889,
+  "F1@8": 0.2372915972915973,
+  "NDCG@8": 0.4901948117904095,
+  "HitRate@8": 0.8,
+  "Precision@10": 0.14666666666666667,
+  "Recall@10": 0.5533333333333333,
+  "F1@10": 0.21816461316461316,
+  "NDCG@10": 0.5028327524053642,
+  "HitRate@10": 0.8,
+  "MRR": 0.6166666666666667,
+  "MAP": 0.41268518518518515
+}
+2026-02-14 23:59:21,371 - __main__ - INFO - ============================================================
+2026-02-14 23:59:21,371 - __main__ - INFO - PHASE 3  — Generation Quality (LLM-as-Judge)
+2026-02-14 23:59:21,371 - __main__ - INFO - ============================================================
+2026-02-14 23:59:21,371 - rag_agent - INFO - Retrieving context for: How does the Armstrong number checker work?...   
+2026-02-14 23:59:24,428 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-14 23:59:25,063 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:25,064 - __main__ - WARNING -   Q1 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:25,065 - rag_agent - INFO - Retrieving context for: Explain the Adding_Fractions.c program...        
+2026-02-14 23:59:25,065 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-14 23:59:25,068 - retriever - INFO - Found file match: Adding_Fractions.c
+2026-02-14 23:59:27,617 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-14 23:59:27,784 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:27,785 - __main__ - WARNING -   Q2 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:27,785 - rag_agent - INFO - Retrieving context for: Show me the bubble sort implementation...        
+2026-02-14 23:59:31,867 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-14 23:59:32,056 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:32,057 - __main__ - WARNING -   Q3 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:32,058 - rag_agent - INFO - Retrieving context for: How is temperature conversion implemented?...    
+2026-02-14 23:59:35,242 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-14 23:59:35,347 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:35,349 - __main__ - WARNING -   Q4 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:35,349 - rag_agent - INFO - Retrieving context for: What programs calculate the area of geometric shap...
+2026-02-14 23:59:37,813 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-14 23:59:37,951 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:37,951 - __main__ - WARNING -   Q5 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:37,952 - rag_agent - INFO - Retrieving context for: How does the binary search algorithm work in this ...
+2026-02-14 23:59:40,401 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-14 23:59:40,520 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:40,522 - __main__ - WARNING -   Q6 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:40,522 - rag_agent - INFO - Retrieving context for: Explain the background thread sorter program...  
+2026-02-14 23:59:43,049 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-14 23:59:43,211 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:43,212 - __main__ - WARNING -   Q7 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:43,214 - rag_agent - INFO - Retrieving context for: What is an automorphic number and how is it detect...
+2026-02-14 23:59:45,327 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-14 23:59:45,522 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:45,522 - __main__ - WARNING -   Q8 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:45,524 - rag_agent - INFO - Retrieving context for: Show me a simple addition program in C...        
+2026-02-14 23:59:48,597 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-14 23:59:48,699 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:48,700 - __main__ - WARNING -   Q9 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:48,700 - rag_agent - INFO - Retrieving context for: How does the ARRAY.c program handle insertion and ...
+2026-02-14 23:59:48,701 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-14 23:59:48,703 - retriever - INFO - Found file match: ARRAY.c
+2026-02-14 23:59:48,704 - retriever - INFO - Found file match: ARRAY.c
+2026-02-14 23:59:48,704 - retriever - INFO - Found file match: ARRAY.c
+2026-02-14 23:59:48,705 - retriever - INFO - Found file match: ARRAY.c
+2026-02-14 23:59:51,384 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-14 23:59:51,542 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:51,542 - __main__ - WARNING -   Q10 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:51,542 - rag_agent - INFO - Retrieving context for: What data structures are used in the BasicGame.c p...
+2026-02-14 23:59:51,542 - retriever - INFO - Detected file-specific query for: basicgame.c
+2026-02-14 23:59:51,544 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:59:51,544 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:59:51,546 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:59:51,546 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:59:51,546 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:59:51,546 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:59:51,546 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:59:51,546 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:59:51,546 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:59:51,546 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:59:51,548 - retriever - INFO - Found file match: BasicGame.c
+2026-02-14 23:59:54,968 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-14 23:59:55,121 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:55,121 - __main__ - WARNING -   Q11 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:55,121 - rag_agent - INFO - Retrieving context for: How does the selection sort compare to bubble sort...
+2026-02-14 23:59:58,459 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-14 23:59:58,572 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:58,572 - __main__ - WARNING -   Q12 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-14 23:59:58,572 - rag_agent - INFO - Retrieving context for: Explain the linear search implementation...      
+2026-02-15 00:00:01,327 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:00:01,444 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:00:01,444 - __main__ - WARNING -   Q13 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:00:01,444 - rag_agent - INFO - Retrieving context for: How are basic arithmetic operations implemented?...
+2026-02-15 00:00:04,134 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:00:04,246 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:00:04,246 - __main__ - WARNING -   Q14 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:00:04,246 - rag_agent - INFO - Retrieving context for: What is the alphabet triangle program doing?...  
+2026-02-15 00:00:06,972 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:00:07,084 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:00:07,086 - __main__ - WARNING -   Q15 failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:00:07,086 - __main__ - INFO -
+  Aggregate: {
+  "AnswerRelevance_raw": 0.0,
+  "Faithfulness_raw": 0.0,
+  "CitationAccuracy_raw": 0.0,
+  "AnswerRelevance_norm": 0.0,
+  "Faithfulness_norm": 0.0,
+  "CitationAccuracy_norm": 0.0
+}
+2026-02-15 00:00:07,086 - __main__ - INFO - ============================================================
+2026-02-15 00:00:07,086 - __main__ - INFO - PHASE 4  — Performance Benchmarks
+2026-02-15 00:00:07,086 - __main__ - INFO - ============================================================
+2026-02-15 00:00:07,086 - indexer - INFO - Indexing repository: https://github.com/gouravthakur39/beginners-C-program-examples
+2026-02-15 00:00:09,379 - indexer - INFO - Cloned to C:\Users\chlok\AppData\Local\Temp\tmpt5in9bn1
+2026-02-15 00:00:10,606 - indexer - INFO - Extracted 199 chunks
+2026-02-15 00:00:10,617 - storage - INFO - Saved 199 chunks to indexes\index_1d9ffbaf\chunks.jsonl
+2026-02-15 00:00:10,619 - storage - INFO - Saved metadata to indexes\index_1d9ffbaf\meta.json
+2026-02-15 00:00:10,696 - retriever - INFO - Building hybrid index for https://github.com/gouravthakur39/beginners-C-program-examples
+2026-02-15 00:00:31,062 - retriever - INFO - Saved FAISS index to indexes\index_1d9ffbaf\faiss_index
+2026-02-15 00:00:31,062 - retriever - INFO - Built hybrid index with 199 chunks
+2026-02-15 00:00:31,064 - rag_agent - INFO - ✓ Indexed https://github.com/gouravthakur39/beginners-C-program-examples: 199 chunks
+2026-02-15 00:00:31,064 - evaluation.performance_metrics - INFO - [Timer] index_run_0: 23.9772s
+2026-02-15 00:00:34,056 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 00:00:34,059 - retriever - INFO - Found file match: Adding_Fractions.c
+2026-02-15 00:00:46,105 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 00:00:46,107 - retriever - INFO - Found file match: Adding_Fractions.c
+2026-02-15 00:00:48,884 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 00:00:48,885 - retriever - INFO - Found file match: Adding_Fractions.c
+2026-02-15 00:00:51,897 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 00:00:51,901 - retriever - INFO - Found file match: Adding_Fractions.c
+2026-02-15 00:01:53,110 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 00:01:53,116 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:01:53,118 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:01:53,118 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:01:53,120 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:01:56,427 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 00:01:56,429 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:01:56,431 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:01:56,431 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:01:56,431 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:01:59,606 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 00:01:59,609 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:01:59,609 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:01:59,609 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:01:59,609 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:02:02,921 - retriever - INFO - Detected file-specific query for: basicgame.c
+2026-02-15 00:02:02,923 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:02,923 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:02,923 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:02,923 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:02,923 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:02,923 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:02,925 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:02,925 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:02,925 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:02,925 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:02,925 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:05,824 - retriever - INFO - Detected file-specific query for: basicgame.c
+2026-02-15 00:02:05,828 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:05,828 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:05,828 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:05,828 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:05,828 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:05,828 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:05,830 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:05,830 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:05,830 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:05,830 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:05,832 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:08,536 - retriever - INFO - Detected file-specific query for: basicgame.c
+2026-02-15 00:02:08,538 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:08,540 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:08,540 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:08,540 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:08,540 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:08,540 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:08,540 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:08,542 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:08,542 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:08,542 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:08,542 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:02:46,074 - rag_agent - INFO - Retrieving context for: How does the Armstrong number checker work?...
+2026-02-15 00:02:49,247 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:02:49,363 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:02:49,363 - rag_agent - INFO - Retrieving context for: How does the Armstrong number checker work?...
+2026-02-15 00:02:52,322 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:02:52,443 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:02:52,443 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:02:52,443 - rag_agent - INFO - Retrieving context for: Explain the Adding_Fractions.c program...        
+2026-02-15 00:02:52,443 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 00:02:52,445 - retriever - INFO - Found file match: Adding_Fractions.c
+2026-02-15 00:02:55,340 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:02:55,456 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:02:55,458 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:02:55,458 - rag_agent - INFO - Retrieving context for: Show me the bubble sort implementation...        
+2026-02-15 00:02:58,592 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:02:58,711 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:02:58,711 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:02:58,713 - rag_agent - INFO - Retrieving context for: How is temperature conversion implemented?...    
+2026-02-15 00:03:01,524 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:03:01,627 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:01,627 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:01,627 - rag_agent - INFO - Retrieving context for: What programs calculate the area of geometric shap...
+2026-02-15 00:03:04,241 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:03:04,346 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:04,346 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:04,346 - rag_agent - INFO - Retrieving context for: How does the binary search algorithm work in this ...
+2026-02-15 00:03:07,681 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:03:07,821 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:07,821 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:07,821 - rag_agent - INFO - Retrieving context for: Explain the background thread sorter program...  
+2026-02-15 00:03:10,571 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:03:10,686 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:10,688 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:10,688 - rag_agent - INFO - Retrieving context for: What is an automorphic number and how is it detect...
+2026-02-15 00:03:13,618 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:03:13,723 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:13,723 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:13,723 - rag_agent - INFO - Retrieving context for: Show me a simple addition program in C...        
+2026-02-15 00:03:16,452 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:03:16,618 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:16,620 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:16,620 - rag_agent - INFO - Retrieving context for: How does the ARRAY.c program handle insertion and ...
+2026-02-15 00:03:16,620 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 00:03:16,622 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:03:16,622 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:03:16,622 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:03:16,622 - retriever - INFO - Found file match: ARRAY.c
+2026-02-15 00:03:19,948 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:03:20,064 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:20,064 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:20,064 - rag_agent - INFO - Retrieving context for: What data structures are used in the BasicGame.c p...
+2026-02-15 00:03:20,064 - retriever - INFO - Detected file-specific query for: basicgame.c
+2026-02-15 00:03:20,066 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:03:20,066 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:03:20,066 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:03:20,068 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:03:20,068 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:03:20,068 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:03:20,068 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:03:20,068 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:03:20,068 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:03:20,068 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:03:20,068 - retriever - INFO - Found file match: BasicGame.c
+2026-02-15 00:03:23,712 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:03:23,834 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:23,835 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:23,835 - rag_agent - INFO - Retrieving context for: How does the selection sort compare to bubble sort...
+2026-02-15 00:03:27,759 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:03:27,928 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:27,928 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:27,928 - rag_agent - INFO - Retrieving context for: Explain the linear search implementation...      
+2026-02-15 00:03:31,472 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:03:31,590 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:31,590 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:31,590 - rag_agent - INFO - Retrieving context for: How are basic arithmetic operations implemented?...
+2026-02-15 00:03:35,026 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:03:35,146 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:35,146 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:35,146 - rag_agent - INFO - Retrieving context for: What is the alphabet triangle program doing?...  
+2026-02-15 00:03:38,296 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 00:03:38,411 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:38,411 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 00:03:38,411 - __main__ - INFO - Skipping extreme scenarios (--skip-extreme)
+2026-02-15 00:03:38,417 - __main__ - INFO -   JSON report → evaluation_results\evaluation_report.json
+2026-02-15 00:03:38,419 - __main__ - INFO -   Markdown report → evaluation_results\evaluation_report.md
+2026-02-15 00:03:38,419 - __main__ - INFO - ============================================================
+2026-02-15 00:03:38,421 - __main__ - INFO - Evaluation complete — results in evaluation_results/
+2026-02-15 00:03:38,421 - __main__ - INFO - ============================================================
+
+============================================================
+EVALUATION SUMMARY
+============================================================
+
+Retrieval Quality:
+  Precision@5        = 0.2400
+  Recall@5           = 0.4789
+  NDCG@5             = 0.4699
+  MRR                = 0.6167
+  HitRate@5          = 0.7333
+  MAP                = 0.4127
+
+Generation Quality (normalised 0-1):
+  AnswerRelevance_norm     = 0.000
+  Faithfulness_norm        = 0.000
+  CitationAccuracy_norm    = 0.000
+
+Retrieval Latency: P50=2.8807s  P95=3.314s  P99=3.4591s
+End-to-End Latency: P50=3.2542s  P95=4.0931s  P99=4.0931s
+
+Full reports saved to: evaluation_results/
+  - evaluation_report.json
+  - evaluation_report.md
+(venv) PS D:\RAG_PROJECT\backend> 

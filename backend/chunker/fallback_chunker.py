@@ -150,36 +150,34 @@ class FallbackChunker:
         repo_url: str,
         ext: str,
     ) -> List[ChunkMetadata]:
-        """Chunk remaining lines not covered by structural extraction."""
-        # Simple approach: chunk by non-empty line groups
+        """Chunk remaining lines with overlap for better retrieval."""
         chunks = []
-        chunk_lines = []
-        chunk_start = 1
+        total = len(lines)
+        window = 50          # lines per chunk
+        stride = 35          # advance by 35 → 15-line overlap
 
-        for idx, line in enumerate(lines, start=1):
-            chunk_lines.append(line)
+        idx = 0
+        while idx < total:
+            end = min(idx + window, total)
+            chunk_lines = lines[idx:end]
 
-            # Chunk when we reach size limit or blank line
-            line_count = len(chunk_lines)
-            if line_count >= 50 or (idx == len(lines)):
-                if any(l.strip() for l in chunk_lines):  # Has content
-                    chunk_text = '\n'.join(chunk_lines)
-                    chunk_id = f"{filepath}::snippet::{uuid.uuid4().hex[:8]}"
-                    meta = ChunkMetadata(
-                        chunk_id=chunk_id,
-                        text=chunk_text,
-                        source=filepath,
-                        ext=ext or '',
-                        language=language,
-                        chunk_type='snippet',
-                        start_line=chunk_start,
-                        end_line=idx,
-                        repo_url=repo_url,
-                    )
-                    chunks.append(meta)
+            if any(l.strip() for l in chunk_lines):  # Has content
+                chunk_text = '\n'.join(chunk_lines)
+                chunk_id = f"{filepath}::snippet::{uuid.uuid4().hex[:8]}"
+                meta = ChunkMetadata(
+                    chunk_id=chunk_id,
+                    text=chunk_text,
+                    source=filepath,
+                    ext=ext or '',
+                    language=language,
+                    chunk_type='snippet',
+                    start_line=idx + 1,
+                    end_line=end,
+                    repo_url=repo_url,
+                )
+                chunks.append(meta)
 
-                chunk_lines = []
-                chunk_start = idx + 1
+            idx += stride
 
         return chunks
 

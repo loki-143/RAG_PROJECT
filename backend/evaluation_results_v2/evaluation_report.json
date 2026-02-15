@@ -1,0 +1,1329 @@
+{
+  "metadata": {
+    "timestamp": "2026-02-14T19:00:49.715688",
+    "repo_url": "https://github.com/gouravthakur39/beginners-C-program-examples",
+    "num_queries": 15,
+    "k_values": [
+      1,
+      3,
+      5,
+      8,
+      10
+    ],
+    "ground_truth_file": "D:\\RAG_PROJECT\\backend\\evaluation\\sample_ground_truth.json",
+    "total_eval_time_sec": 478.91
+  },
+  "indexing": {
+    "repo_url": "https://github.com/gouravthakur39/beginners-C-program-examples",
+    "chunk_count": 246,
+    "index_time_sec": 66.68
+  },
+  "retrieval_quality": {
+    "per_query": [
+      {
+        "question": "How does the Armstrong number checker work?",
+        "retrieved_ids": [
+          "ArmstrongNumber.c::snippet::bc70134f",
+          "DigitalRoot.c::snippet::d02dbdb3",
+          "BitwiseOddOrEven.c::snippet::e6620a08",
+          "MagicNumbers.c::snippet::21a79ac5",
+          "oddandeven.c::snippet::452848e2",
+          "Number_to_Character.c::snippet::f624c174",
+          "ReverseNumber2.c::snippet::8491690d",
+          "MagicNumbers.c::snippet::a8342863",
+          "increment_number.c::snippet::85240a78",
+          "combine_calculator.c::snippet::ff04e163"
+        ],
+        "relevant_ids": [
+          "ArmstrongNumber.c::snippet::bc70134f"
+        ],
+        "retrieved_sources": [
+          "ArmstrongNumber.c",
+          "DigitalRoot.c",
+          "BitwiseOddOrEven.c",
+          "MagicNumbers.c",
+          "oddandeven.c",
+          "Number_to_Character.c",
+          "ReverseNumber2.c",
+          "MagicNumbers.c",
+          "increment_number.c",
+          "combine_calculator.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 1.0,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 0.3333,
+        "R@3": 1.0,
+        "NDCG@3": 1.0,
+        "Hit@3": 1.0,
+        "P@5": 0.2,
+        "R@5": 1.0,
+        "NDCG@5": 1.0,
+        "Hit@5": 1.0,
+        "P@8": 0.125,
+        "R@8": 1.0,
+        "NDCG@8": 1.0,
+        "Hit@8": 1.0,
+        "P@10": 0.1,
+        "R@10": 1.0,
+        "NDCG@10": 1.0,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 1.0
+      },
+      {
+        "question": "Explain the Adding_Fractions.c program",
+        "retrieved_ids": [
+          "Adding_Fractions.c::snippet::d8581dde",
+          "Addition.c::snippet::d2ca1375",
+          "RussianPeasantMultiplication.c::snippet::a864bbeb",
+          "BasicArithmatic.c::snippet::3e077d1c",
+          "Recursion.c::snippet::6a07518e",
+          "SizeofOperator.c::snippet::c6d223a8",
+          "MagicNumbers.c::snippet::21a79ac5",
+          "IncrementOperator.c::snippet::0df2b66a",
+          "multiply.c::snippet::bfce4a21",
+          "DigitalRoot.c::snippet::d02dbdb3"
+        ],
+        "relevant_ids": [
+          "Adding_Fractions.c::snippet::d8581dde"
+        ],
+        "retrieved_sources": [
+          "Adding_Fractions.c",
+          "Addition.c",
+          "RussianPeasantMultiplication.c",
+          "BasicArithmatic.c",
+          "Recursion.c",
+          "SizeofOperator.c",
+          "MagicNumbers.c",
+          "IncrementOperator.c",
+          "multiply.c",
+          "DigitalRoot.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 1.0,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 0.3333,
+        "R@3": 1.0,
+        "NDCG@3": 1.0,
+        "Hit@3": 1.0,
+        "P@5": 0.2,
+        "R@5": 1.0,
+        "NDCG@5": 1.0,
+        "Hit@5": 1.0,
+        "P@8": 0.125,
+        "R@8": 1.0,
+        "NDCG@8": 1.0,
+        "Hit@8": 1.0,
+        "P@10": 0.1,
+        "R@10": 1.0,
+        "NDCG@10": 1.0,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 1.0
+      },
+      {
+        "question": "Show me the bubble sort implementation",
+        "retrieved_ids": [
+          "BubbleSort.c::snippet::e87568ba",
+          "ARRAY.c::snippet::f69d78b8",
+          "SelectionSort.c::snippet::d9af342b",
+          "kth smallest no in an array.c::snippet::4bb960a6",
+          "BackgroundThreadSorter.c::snippet::3d54471b",
+          "counting_sort.c::snippet::77b6be12",
+          "Insertionsort.c::snippet::8b3df6cd",
+          "ARRAY.c::snippet::e609283d",
+          "Quicksort.c::snippet::757dee0e",
+          "heap sort.c::snippet::a8ffcdf7"
+        ],
+        "relevant_ids": [
+          "ARRAY.c::snippet::f69d78b8",
+          "ARRAY.c::snippet::e609283d",
+          "ARRAY.c::snippet::a9aa606b",
+          "ARRAY.c::snippet::846ed0f8",
+          "ARRAY.c::snippet::e962a18e",
+          "BubbleSort.c::snippet::e87568ba",
+          "ARRAY.c::snippet::9c60afcf",
+          "BubbleSort.c::snippet::0d2a4362"
+        ],
+        "retrieved_sources": [
+          "BubbleSort.c",
+          "ARRAY.c",
+          "SelectionSort.c",
+          "kth smallest no in an array.c",
+          "BackgroundThreadSorter.c",
+          "counting_sort.c",
+          "Insertionsort.c",
+          "ARRAY.c",
+          "Quicksort.c",
+          "heap sort.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 0.125,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 0.6667,
+        "R@3": 0.25,
+        "NDCG@3": 0.7654,
+        "Hit@3": 1.0,
+        "P@5": 0.4,
+        "R@5": 0.25,
+        "NDCG@5": 0.5531,
+        "Hit@5": 1.0,
+        "P@8": 0.375,
+        "R@8": 0.375,
+        "NDCG@8": 0.4923,
+        "Hit@8": 1.0,
+        "P@10": 0.3,
+        "R@10": 0.375,
+        "NDCG@10": 0.4923,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 0.2969
+      },
+      {
+        "question": "How is temperature conversion implemented?",
+        "retrieved_ids": [
+          "AllTempScalesConv.c::snippet::2d888d4e",
+          "CelciusToKelvinConv.c::snippet::8ab341ff",
+          "FahrenheitToCelciusConv.c::snippet::a774359a",
+          "TemperatureSwitch.c::snippet::0c5390b2",
+          "Temperature.c::snippet::adadaf5c",
+          "TemperatureSwitch.c::snippet::8a9dfb99",
+          "AllTempScalesConv.c::snippet::60444c59",
+          "AllTempScalesConv.c::snippet::3819c2bd",
+          "binary_to_octal.c::snippet::58bd660a",
+          "DecimalToBinary.c::snippet::208e577c"
+        ],
+        "relevant_ids": [
+          "AllTempScalesConv.c::snippet::3819c2bd",
+          "AllTempScalesConv.c::snippet::60444c59",
+          "AllTempScalesConv.c::snippet::2d888d4e"
+        ],
+        "retrieved_sources": [
+          "AllTempScalesConv.c",
+          "CelciusToKelvinConv.c",
+          "FahrenheitToCelciusConv.c",
+          "TemperatureSwitch.c",
+          "Temperature.c",
+          "TemperatureSwitch.c",
+          "AllTempScalesConv.c",
+          "AllTempScalesConv.c",
+          "binary_to_octal.c",
+          "DecimalToBinary.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 0.3333,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 0.3333,
+        "R@3": 0.3333,
+        "NDCG@3": 0.4693,
+        "Hit@3": 1.0,
+        "P@5": 0.2,
+        "R@5": 0.3333,
+        "NDCG@5": 0.4693,
+        "Hit@5": 1.0,
+        "P@8": 0.375,
+        "R@8": 1.0,
+        "NDCG@8": 0.7737,
+        "Hit@8": 1.0,
+        "P@10": 0.3,
+        "R@10": 1.0,
+        "NDCG@10": 0.7737,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 0.5536
+      },
+      {
+        "question": "What programs calculate the area of geometric shapes?",
+        "retrieved_ids": [
+          "Area_of_Triangle.c::snippet::2d232151",
+          "AreaAndCircumference.c::snippet::d05bdec6",
+          "Area_of_Square.c::snippet::4e52575d",
+          "Area_of_Circle.c::snippet::460d3004",
+          "volume_cone_sphere.c::snippet::5effe92d",
+          "SizeofOperator.c::snippet::c6d223a8",
+          "simple_interest.c::snippet::a86d1949",
+          "BackgroundThreadSorter.c::snippet::0e7225e6",
+          "SquareRoot.c::snippet::b43e8c9b",
+          "BackgroundThreadSorter.c::snippet::a8997624"
+        ],
+        "relevant_ids": [
+          "Area_of_Circle.c::snippet::460d3004",
+          "Area_of_Square.c::snippet::4e52575d",
+          "Area_of_Triangle.c::snippet::2d232151",
+          "AreaAndCircumference.c::snippet::d05bdec6"
+        ],
+        "retrieved_sources": [
+          "Area_of_Triangle.c",
+          "AreaAndCircumference.c",
+          "Area_of_Square.c",
+          "Area_of_Circle.c",
+          "volume_cone_sphere.c",
+          "SizeofOperator.c",
+          "simple_interest.c",
+          "BackgroundThreadSorter.c",
+          "SquareRoot.c",
+          "BackgroundThreadSorter.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 0.25,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 1.0,
+        "R@3": 0.75,
+        "NDCG@3": 1.0,
+        "Hit@3": 1.0,
+        "P@5": 0.8,
+        "R@5": 1.0,
+        "NDCG@5": 1.0,
+        "Hit@5": 1.0,
+        "P@8": 0.5,
+        "R@8": 1.0,
+        "NDCG@8": 1.0,
+        "Hit@8": 1.0,
+        "P@10": 0.4,
+        "R@10": 1.0,
+        "NDCG@10": 1.0,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 1.0
+      },
+      {
+        "question": "How does the binary search algorithm work in this repository?",
+        "retrieved_ids": [
+          "BinarySearch.c::snippet::331e1269",
+          "ARRAY.c::snippet::f69d78b8",
+          "ARRAY.c::snippet::e609283d",
+          "BinarySearch.c::snippet::fe0341d0",
+          "binary_to_octal.c::snippet::58bd660a",
+          "DecimalToBinary.c::snippet::208e577c",
+          "linkedlist.cpp::snippet::3772760b",
+          "README.md::snippet::94edbe6b",
+          "linkedlist.cpp::snippet::80ba484b",
+          "LinkedLists.c::snippet::beafa0c2"
+        ],
+        "relevant_ids": [
+          "ARRAY.c::snippet::f69d78b8",
+          "ARRAY.c::snippet::e609283d",
+          "BinarySearch.c::snippet::fe0341d0",
+          "ARRAY.c::snippet::a9aa606b",
+          "ARRAY.c::snippet::846ed0f8",
+          "ARRAY.c::snippet::e962a18e",
+          "BinarySearch.c::snippet::331e1269",
+          "ARRAY.c::snippet::9c60afcf"
+        ],
+        "retrieved_sources": [
+          "BinarySearch.c",
+          "ARRAY.c",
+          "ARRAY.c",
+          "BinarySearch.c",
+          "binary_to_octal.c",
+          "DecimalToBinary.c",
+          "linkedlist.cpp",
+          "README.md",
+          "linkedlist.cpp",
+          "LinkedLists.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 0.125,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 1.0,
+        "R@3": 0.375,
+        "NDCG@3": 1.0,
+        "Hit@3": 1.0,
+        "P@5": 0.8,
+        "R@5": 0.5,
+        "NDCG@5": 0.8688,
+        "Hit@5": 1.0,
+        "P@8": 0.5,
+        "R@8": 0.5,
+        "NDCG@8": 0.6479,
+        "Hit@8": 1.0,
+        "P@10": 0.4,
+        "R@10": 0.5,
+        "NDCG@10": 0.6479,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 0.5
+      },
+      {
+        "question": "Explain the background thread sorter program",
+        "retrieved_ids": [
+          "BackgroundThreadSorter.c::snippet::3d54471b",
+          "BackgroundThreadSorter.c::snippet::0e7225e6",
+          "BackgroundThreadSorter.c::snippet::a8997624",
+          "BackgroundThreadSorter.c::snippet::c1e47cbe",
+          "SumUsingThreads.c::snippet::6210c2a9",
+          "BubbleSort.c::snippet::e87568ba",
+          "heap sort.c::snippet::a8ffcdf7",
+          "Insertionsort.c::snippet::8b3df6cd",
+          "SumUsingThreads.c::snippet::66d71e94",
+          "ARRAY.c::snippet::f69d78b8"
+        ],
+        "relevant_ids": [
+          "BackgroundThreadSorter.c::snippet::c1e47cbe",
+          "BackgroundThreadSorter.c::snippet::3d54471b",
+          "BackgroundThreadSorter.c::snippet::a8997624",
+          "BackgroundThreadSorter.c::snippet::0e7225e6"
+        ],
+        "retrieved_sources": [
+          "BackgroundThreadSorter.c",
+          "BackgroundThreadSorter.c",
+          "BackgroundThreadSorter.c",
+          "BackgroundThreadSorter.c",
+          "SumUsingThreads.c",
+          "BubbleSort.c",
+          "heap sort.c",
+          "Insertionsort.c",
+          "SumUsingThreads.c",
+          "ARRAY.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 0.25,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 1.0,
+        "R@3": 0.75,
+        "NDCG@3": 1.0,
+        "Hit@3": 1.0,
+        "P@5": 0.8,
+        "R@5": 1.0,
+        "NDCG@5": 1.0,
+        "Hit@5": 1.0,
+        "P@8": 0.5,
+        "R@8": 1.0,
+        "NDCG@8": 1.0,
+        "Hit@8": 1.0,
+        "P@10": 0.4,
+        "R@10": 1.0,
+        "NDCG@10": 1.0,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 1.0
+      },
+      {
+        "question": "What is an automorphic number and how is it detected?",
+        "retrieved_ids": [
+          "Automorphic_number.c::snippet::8089531f",
+          "MagicNumbers.c::snippet::21a79ac5",
+          "MagicNumbers.c::snippet::a8342863",
+          "ArmstrongNumber.c::snippet::bc70134f",
+          "increment_number.c::snippet::85240a78",
+          "DigitalRoot.c::snippet::d02dbdb3",
+          "CheckCharacterType.c::snippet::dbe188da",
+          "oddandeven.c::snippet::452848e2",
+          "MirrorNumber.c::snippet::19820f9a",
+          "BitwiseOddOrEven.c::snippet::e6620a08"
+        ],
+        "relevant_ids": [
+          "Automorphic_number.c::snippet::8089531f"
+        ],
+        "retrieved_sources": [
+          "Automorphic_number.c",
+          "MagicNumbers.c",
+          "MagicNumbers.c",
+          "ArmstrongNumber.c",
+          "increment_number.c",
+          "DigitalRoot.c",
+          "CheckCharacterType.c",
+          "oddandeven.c",
+          "MirrorNumber.c",
+          "BitwiseOddOrEven.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 1.0,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 0.3333,
+        "R@3": 1.0,
+        "NDCG@3": 1.0,
+        "Hit@3": 1.0,
+        "P@5": 0.2,
+        "R@5": 1.0,
+        "NDCG@5": 1.0,
+        "Hit@5": 1.0,
+        "P@8": 0.125,
+        "R@8": 1.0,
+        "NDCG@8": 1.0,
+        "Hit@8": 1.0,
+        "P@10": 0.1,
+        "R@10": 1.0,
+        "NDCG@10": 1.0,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 1.0
+      },
+      {
+        "question": "Show me a simple addition program in C",
+        "retrieved_ids": [
+          "Addition.c::snippet::d2ca1375",
+          "Recursion.c::snippet::6a07518e",
+          "BasicArithmatic.c::snippet::3e077d1c",
+          "MagicNumbers.c::snippet::21a79ac5",
+          "RussianPeasantMultiplication.c::snippet::a864bbeb",
+          "PerfectNumber.c::snippet::50493d0b",
+          "IncrementOperator.c::snippet::0df2b66a",
+          "SimpleInterestCalculator.c::snippet::bd195940",
+          "ArmstrongNumber.c::snippet::bc70134f",
+          "multiply.c::snippet::bfce4a21"
+        ],
+        "relevant_ids": [
+          "Addition.c::snippet::d2ca1375",
+          "BasicArithmatic.c::snippet::3e077d1c"
+        ],
+        "retrieved_sources": [
+          "Addition.c",
+          "Recursion.c",
+          "BasicArithmatic.c",
+          "MagicNumbers.c",
+          "RussianPeasantMultiplication.c",
+          "PerfectNumber.c",
+          "IncrementOperator.c",
+          "SimpleInterestCalculator.c",
+          "ArmstrongNumber.c",
+          "multiply.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 0.5,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 0.6667,
+        "R@3": 1.0,
+        "NDCG@3": 0.9197,
+        "Hit@3": 1.0,
+        "P@5": 0.4,
+        "R@5": 1.0,
+        "NDCG@5": 0.9197,
+        "Hit@5": 1.0,
+        "P@8": 0.25,
+        "R@8": 1.0,
+        "NDCG@8": 0.9197,
+        "Hit@8": 1.0,
+        "P@10": 0.2,
+        "R@10": 1.0,
+        "NDCG@10": 0.9197,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 0.8333
+      },
+      {
+        "question": "How does the ARRAY.c program handle insertion and deletion?",
+        "retrieved_ids": [
+          "ARRAY.c::snippet::846ed0f8",
+          "ARRAY.c::snippet::e609283d",
+          "ARRAY.c::snippet::a9aa606b",
+          "ARRAY.c::snippet::9c60afcf",
+          "ARRAY.c::snippet::f69d78b8",
+          "ARRAY.c::snippet::e962a18e",
+          "DynamicTwoDArrayUsingArrayOfPointer.c::snippet::cb538753",
+          "DynamicTwoDArrayUsingOnePointer.c::snippet::91d13a1b",
+          "BinarySearch.c::snippet::331e1269",
+          "BackgroundThreadSorter.c::snippet::3d54471b"
+        ],
+        "relevant_ids": [
+          "ARRAY.c::snippet::f69d78b8",
+          "ARRAY.c::snippet::e609283d",
+          "ARRAY.c::snippet::a9aa606b",
+          "ARRAY.c::snippet::846ed0f8",
+          "ARRAY.c::snippet::e962a18e",
+          "ARRAY.c::snippet::9c60afcf"
+        ],
+        "retrieved_sources": [
+          "ARRAY.c",
+          "ARRAY.c",
+          "ARRAY.c",
+          "ARRAY.c",
+          "ARRAY.c",
+          "ARRAY.c",
+          "DynamicTwoDArrayUsingArrayOfPointer.c",
+          "DynamicTwoDArrayUsingOnePointer.c",
+          "BinarySearch.c",
+          "BackgroundThreadSorter.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 0.1667,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 1.0,
+        "R@3": 0.5,
+        "NDCG@3": 1.0,
+        "Hit@3": 1.0,
+        "P@5": 1.0,
+        "R@5": 0.8333,
+        "NDCG@5": 1.0,
+        "Hit@5": 1.0,
+        "P@8": 0.75,
+        "R@8": 1.0,
+        "NDCG@8": 1.0,
+        "Hit@8": 1.0,
+        "P@10": 0.6,
+        "R@10": 1.0,
+        "NDCG@10": 1.0,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 1.0
+      },
+      {
+        "question": "What data structures are used in the BasicGame.c program?",
+        "retrieved_ids": [
+          "BasicGame.c::snippet::c385000e",
+          "BasicGame.c::snippet::d837202a",
+          "BasicGame.c::snippet::ccea184a",
+          "BasicGame.c::snippet::2f406937",
+          "BasicGame.c::snippet::a8ef4dfa",
+          "BasicGame.c::snippet::4b5ce91c",
+          "BasicGame.c::snippet::6c550404",
+          "BasicGame.c::snippet::11c2ed1f",
+          "BasicGame.c::snippet::cbe10693",
+          "BasicGame.c::snippet::14c13c7c"
+        ],
+        "relevant_ids": [
+          "BasicGame.c::snippet::524a5037",
+          "BasicGame.c::snippet::14c13c7c",
+          "BasicGame.c::snippet::5ea0e85c",
+          "BasicGame.c::snippet::645fe192",
+          "BasicGame.c::snippet::cbe10693",
+          "BasicGame.c::snippet::ccea184a",
+          "BasicGame.c::snippet::2c22d2e1",
+          "BasicGame.c::snippet::49fc3f5b",
+          "BasicGame.c::snippet::4b5ce91c",
+          "BasicGame.c::snippet::6c550404",
+          "BasicGame.c::snippet::a8ef4dfa",
+          "BasicGame.c::snippet::2f406937",
+          "BasicGame.c::snippet::d837202a",
+          "BasicGame.c::snippet::c385000e",
+          "BasicGame.c::snippet::11c2ed1f"
+        ],
+        "retrieved_sources": [
+          "BasicGame.c",
+          "BasicGame.c",
+          "BasicGame.c",
+          "BasicGame.c",
+          "BasicGame.c",
+          "BasicGame.c",
+          "BasicGame.c",
+          "BasicGame.c",
+          "BasicGame.c",
+          "BasicGame.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 0.0667,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 1.0,
+        "R@3": 0.2,
+        "NDCG@3": 1.0,
+        "Hit@3": 1.0,
+        "P@5": 1.0,
+        "R@5": 0.3333,
+        "NDCG@5": 1.0,
+        "Hit@5": 1.0,
+        "P@8": 1.0,
+        "R@8": 0.5333,
+        "NDCG@8": 1.0,
+        "Hit@8": 1.0,
+        "P@10": 1.0,
+        "R@10": 0.6667,
+        "NDCG@10": 1.0,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 0.6667
+      },
+      {
+        "question": "How does the selection sort compare to bubble sort in this codebase?",
+        "retrieved_ids": [
+          "BubbleSort.c::snippet::e87568ba",
+          "SelectionSort.c::snippet::d9af342b",
+          "ARRAY.c::snippet::e609283d",
+          "ARRAY.c::snippet::f69d78b8",
+          "BackgroundThreadSorter.c::snippet::3d54471b",
+          "SelectionSort.c::snippet::9a0cde3d",
+          "counting_sort.c::snippet::77b6be12",
+          "Quicksort.c::snippet::757dee0e",
+          "ARRAY.c::snippet::e962a18e",
+          "BubbleSort.c::snippet::0d2a4362"
+        ],
+        "relevant_ids": [
+          "SelectionSort.c::snippet::d9af342b",
+          "ARRAY.c::snippet::f69d78b8",
+          "ARRAY.c::snippet::e609283d",
+          "SelectionSort.c::snippet::9a0cde3d",
+          "ARRAY.c::snippet::a9aa606b",
+          "ARRAY.c::snippet::e962a18e",
+          "ARRAY.c::snippet::846ed0f8",
+          "BubbleSort.c::snippet::e87568ba",
+          "ARRAY.c::snippet::9c60afcf",
+          "BubbleSort.c::snippet::0d2a4362"
+        ],
+        "retrieved_sources": [
+          "BubbleSort.c",
+          "SelectionSort.c",
+          "ARRAY.c",
+          "ARRAY.c",
+          "BackgroundThreadSorter.c",
+          "SelectionSort.c",
+          "counting_sort.c",
+          "Quicksort.c",
+          "ARRAY.c",
+          "BubbleSort.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 0.1,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 1.0,
+        "R@3": 0.3,
+        "NDCG@3": 1.0,
+        "Hit@3": 1.0,
+        "P@5": 0.8,
+        "R@5": 0.4,
+        "NDCG@5": 0.8688,
+        "Hit@5": 1.0,
+        "P@8": 0.625,
+        "R@8": 0.5,
+        "NDCG@8": 0.738,
+        "Hit@8": 1.0,
+        "P@10": 0.7,
+        "R@10": 0.7,
+        "NDCG@10": 0.7721,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 0.62
+      },
+      {
+        "question": "Explain the linear search implementation",
+        "retrieved_ids": [
+          "linearsearch.c::snippet::7feea14d",
+          "ARRAY.c::snippet::e609283d",
+          "ARRAY.c::snippet::f69d78b8",
+          "linkedlist.cpp::snippet::3772760b",
+          "BinarySearch.c::snippet::331e1269",
+          "ARRAY.c::snippet::a9aa606b",
+          "linkedlist.cpp::snippet::80ba484b",
+          "LinearCongruentialGenerator.c::snippet::4a388794",
+          "transposeOfMatrix.c::snippet::fb4cf2ae",
+          "SparseMatrix_017.c::snippet::2ff01c40"
+        ],
+        "relevant_ids": [
+          "ARRAY.c::snippet::f69d78b8",
+          "ARRAY.c::snippet::e609283d",
+          "ARRAY.c::snippet::a9aa606b",
+          "ARRAY.c::snippet::e962a18e",
+          "ARRAY.c::snippet::846ed0f8",
+          "ARRAY.c::snippet::9c60afcf"
+        ],
+        "retrieved_sources": [
+          "linearsearch.c",
+          "ARRAY.c",
+          "ARRAY.c",
+          "linkedlist.cpp",
+          "BinarySearch.c",
+          "ARRAY.c",
+          "linkedlist.cpp",
+          "LinearCongruentialGenerator.c",
+          "transposeOfMatrix.c",
+          "SparseMatrix_017.c"
+        ],
+        "P@1": 0.0,
+        "R@1": 0.0,
+        "NDCG@1": 0.0,
+        "Hit@1": 0.0,
+        "P@3": 0.6667,
+        "R@3": 0.3333,
+        "NDCG@3": 0.5307,
+        "Hit@3": 1.0,
+        "P@5": 0.4,
+        "R@5": 0.3333,
+        "NDCG@5": 0.3836,
+        "Hit@5": 1.0,
+        "P@8": 0.375,
+        "R@8": 0.5,
+        "NDCG@8": 0.45,
+        "Hit@8": 1.0,
+        "P@10": 0.3,
+        "R@10": 0.5,
+        "NDCG@10": 0.45,
+        "Hit@10": 1.0,
+        "RR": 0.5,
+        "AP": 0.2778
+      },
+      {
+        "question": "How are basic arithmetic operations implemented?",
+        "retrieved_ids": [
+          "BasicArithmatic.c::snippet::3e077d1c",
+          "multiply.c::snippet::bfce4a21",
+          "RussianPeasantMultiplication.c::snippet::a864bbeb",
+          "CalcUsingSwitchCase.c::snippet::25c03207",
+          "combine_calculator.c::snippet::38d209fc",
+          "SimpleMultiplicationTable.c::snippet::e5caaf38",
+          "DecrementOperator.c::snippet::4fec55d7",
+          "fastModuloExponentiation.c::snippet::8a94ecdd",
+          "IncrementOperator.c::snippet::0df2b66a",
+          "MagicNumbers.c::snippet::21a79ac5"
+        ],
+        "relevant_ids": [
+          "Addition.c::snippet::d2ca1375",
+          "BasicArithmatic.c::snippet::3e077d1c"
+        ],
+        "retrieved_sources": [
+          "BasicArithmatic.c",
+          "multiply.c",
+          "RussianPeasantMultiplication.c",
+          "CalcUsingSwitchCase.c",
+          "combine_calculator.c",
+          "SimpleMultiplicationTable.c",
+          "DecrementOperator.c",
+          "fastModuloExponentiation.c",
+          "IncrementOperator.c",
+          "MagicNumbers.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 0.5,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 0.3333,
+        "R@3": 0.5,
+        "NDCG@3": 0.6131,
+        "Hit@3": 1.0,
+        "P@5": 0.2,
+        "R@5": 0.5,
+        "NDCG@5": 0.6131,
+        "Hit@5": 1.0,
+        "P@8": 0.125,
+        "R@8": 0.5,
+        "NDCG@8": 0.6131,
+        "Hit@8": 1.0,
+        "P@10": 0.1,
+        "R@10": 0.5,
+        "NDCG@10": 0.6131,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 0.5
+      },
+      {
+        "question": "What is the alphabet triangle program doing?",
+        "retrieved_ids": [
+          "alphabetTriangle.cpp::snippet::6f5f9c81",
+          "CheckCharacterType.c::snippet::dbe188da",
+          "pattern.c::snippet::e222c45d",
+          "VowelorConsonant.c::snippet::c3a4ed35",
+          "NumberPattern.c::snippet::66d2b4a5",
+          "LowercaseToUppercase.c::snippet::f6a371e3",
+          "UppercaseToLowercase.c::snippet::59353725",
+          "Star_Pattern.c::snippet::04966593",
+          "Pattern1.c::snippet::8b82184f",
+          "Number_to_Character.c::snippet::f624c174"
+        ],
+        "relevant_ids": [
+          "alphabetTriangle.cpp::snippet::6f5f9c81"
+        ],
+        "retrieved_sources": [
+          "alphabetTriangle.cpp",
+          "CheckCharacterType.c",
+          "pattern.c",
+          "VowelorConsonant.c",
+          "NumberPattern.c",
+          "LowercaseToUppercase.c",
+          "UppercaseToLowercase.c",
+          "Star_Pattern.c",
+          "Pattern1.c",
+          "Number_to_Character.c"
+        ],
+        "P@1": 1.0,
+        "R@1": 1.0,
+        "NDCG@1": 1.0,
+        "Hit@1": 1.0,
+        "P@3": 0.3333,
+        "R@3": 1.0,
+        "NDCG@3": 1.0,
+        "Hit@3": 1.0,
+        "P@5": 0.2,
+        "R@5": 1.0,
+        "NDCG@5": 1.0,
+        "Hit@5": 1.0,
+        "P@8": 0.125,
+        "R@8": 1.0,
+        "NDCG@8": 1.0,
+        "Hit@8": 1.0,
+        "P@10": 0.1,
+        "R@10": 1.0,
+        "NDCG@10": 1.0,
+        "Hit@10": 1.0,
+        "RR": 1.0,
+        "AP": 1.0
+      }
+    ],
+    "aggregate": {
+      "Precision@1": 0.9333333333333333,
+      "Recall@1": 0.4277777777777778,
+      "F1@1": 0.5113540163540163,
+      "NDCG@1": 0.9333333333333333,
+      "HitRate@1": 0.9333333333333333,
+      "Precision@3": 0.6666666666666666,
+      "Recall@3": 0.6194444444444444,
+      "F1@3": 0.5375128575128575,
+      "NDCG@3": 0.8865485745934846,
+      "HitRate@3": 1.0,
+      "Precision@5": 0.5066666666666667,
+      "Recall@5": 0.6988888888888888,
+      "F1@5": 0.49649276649276647,
+      "NDCG@5": 0.8450966260194133,
+      "HitRate@5": 1.0,
+      "Precision@8": 0.39166666666666666,
+      "Recall@8": 0.7938888888888889,
+      "F1@8": 0.4519732521906435,
+      "NDCG@8": 0.8423287138516945,
+      "HitRate@8": 1.0,
+      "Precision@10": 0.33999999999999997,
+      "Recall@10": 0.8161111111111111,
+      "F1@10": 0.4156297406297406,
+      "NDCG@10": 0.8445968542367436,
+      "HitRate@10": 1.0,
+      "MRR": 0.9666666666666667,
+      "MAP": 0.7498816137566138
+    }
+  },
+  "generation_quality": {
+    "skipped": true
+  },
+  "performance": {
+    "indexing": {
+      "repo_url": "https://github.com/gouravthakur39/beginners-C-program-examples",
+      "chunk_count": 246,
+      "runs": 1,
+      "times_sec": [
+        30.03035029998864
+      ],
+      "mean_sec": 30.0304,
+      "min_sec": 30.0304,
+      "max_sec": 30.0304,
+      "p50_sec": 30.0304,
+      "p95_sec": 30.0304,
+      "p99_sec": 30.0304
+    },
+    "retrieval_latency": {
+      "total_queries": 45,
+      "per_question": [
+        {
+          "question": "How does the Armstrong number checker work?",
+          "times_sec": [
+            3.980635000014445,
+            3.785485200001858,
+            3.7591071000206284
+          ],
+          "mean_sec": 3.8417,
+          "min_sec": 3.7591,
+          "max_sec": 3.9806,
+          "p50_sec": 3.7855,
+          "p95_sec": 3.9806,
+          "p99_sec": 3.9806
+        },
+        {
+          "question": "Explain the Adding_Fractions.c program",
+          "times_sec": [
+            3.065532799984794,
+            2.8672050000168383,
+            3.1151343999954406
+          ],
+          "mean_sec": 3.016,
+          "min_sec": 2.8672,
+          "max_sec": 3.1151,
+          "p50_sec": 3.0655,
+          "p95_sec": 3.1151,
+          "p99_sec": 3.1151
+        },
+        {
+          "question": "Show me the bubble sort implementation",
+          "times_sec": [
+            4.805208799982211,
+            5.028349399974104,
+            6.524424499977613
+          ],
+          "mean_sec": 5.4527,
+          "min_sec": 4.8052,
+          "max_sec": 6.5244,
+          "p50_sec": 5.0283,
+          "p95_sec": 6.5244,
+          "p99_sec": 6.5244
+        },
+        {
+          "question": "How is temperature conversion implemented?",
+          "times_sec": [
+            3.058580200013239,
+            3.0322806000185665,
+            2.857513900002232
+          ],
+          "mean_sec": 2.9828,
+          "min_sec": 2.8575,
+          "max_sec": 3.0586,
+          "p50_sec": 3.0323,
+          "p95_sec": 3.0586,
+          "p99_sec": 3.0586
+        },
+        {
+          "question": "What programs calculate the area of geometric shapes?",
+          "times_sec": [
+            3.125132899993332,
+            3.816957100003492,
+            3.4928103999991436
+          ],
+          "mean_sec": 3.4783,
+          "min_sec": 3.1251,
+          "max_sec": 3.817,
+          "p50_sec": 3.4928,
+          "p95_sec": 3.817,
+          "p99_sec": 3.817
+        },
+        {
+          "question": "How does the binary search algorithm work in this repository?",
+          "times_sec": [
+            4.146333599986974,
+            5.864342200016836,
+            4.107440499996301
+          ],
+          "mean_sec": 4.706,
+          "min_sec": 4.1074,
+          "max_sec": 5.8643,
+          "p50_sec": 4.1463,
+          "p95_sec": 5.8643,
+          "p99_sec": 5.8643
+        },
+        {
+          "question": "Explain the background thread sorter program",
+          "times_sec": [
+            4.371109600004274,
+            3.7996068999927957,
+            4.573457699996652
+          ],
+          "mean_sec": 4.2481,
+          "min_sec": 3.7996,
+          "max_sec": 4.5735,
+          "p50_sec": 4.3711,
+          "p95_sec": 4.5735,
+          "p99_sec": 4.5735
+        },
+        {
+          "question": "What is an automorphic number and how is it detected?",
+          "times_sec": [
+            4.596925799996825,
+            4.845824000018183,
+            3.185424099996453
+          ],
+          "mean_sec": 4.2094,
+          "min_sec": 3.1854,
+          "max_sec": 4.8458,
+          "p50_sec": 4.5969,
+          "p95_sec": 4.8458,
+          "p99_sec": 4.8458
+        },
+        {
+          "question": "Show me a simple addition program in C",
+          "times_sec": [
+            3.457399000006262,
+            4.02915089999442,
+            5.843455199996242
+          ],
+          "mean_sec": 4.4433,
+          "min_sec": 3.4574,
+          "max_sec": 5.8435,
+          "p50_sec": 4.0292,
+          "p95_sec": 5.8435,
+          "p99_sec": 5.8435
+        },
+        {
+          "question": "How does the ARRAY.c program handle insertion and deletion?",
+          "times_sec": [
+            6.328413000010187,
+            6.225887899985537,
+            6.423891799990088
+          ],
+          "mean_sec": 6.3261,
+          "min_sec": 6.2259,
+          "max_sec": 6.4239,
+          "p50_sec": 6.3284,
+          "p95_sec": 6.4239,
+          "p99_sec": 6.4239
+        },
+        {
+          "question": "What data structures are used in the BasicGame.c program?",
+          "times_sec": [
+            6.585147400008282,
+            6.708401799987769,
+            6.483204100019066
+          ],
+          "mean_sec": 6.5923,
+          "min_sec": 6.4832,
+          "max_sec": 6.7084,
+          "p50_sec": 6.5851,
+          "p95_sec": 6.7084,
+          "p99_sec": 6.7084
+        },
+        {
+          "question": "How does the selection sort compare to bubble sort in this codebase?",
+          "times_sec": [
+            6.00901020001038,
+            6.069152200012468,
+            6.028696699999273
+          ],
+          "mean_sec": 6.0356,
+          "min_sec": 6.009,
+          "max_sec": 6.0692,
+          "p50_sec": 6.0287,
+          "p95_sec": 6.0692,
+          "p99_sec": 6.0692
+        },
+        {
+          "question": "Explain the linear search implementation",
+          "times_sec": [
+            5.859034599998267,
+            5.95613730000332,
+            5.830213800014462
+          ],
+          "mean_sec": 5.8818,
+          "min_sec": 5.8302,
+          "max_sec": 5.9561,
+          "p50_sec": 5.859,
+          "p95_sec": 5.9561,
+          "p99_sec": 5.9561
+        },
+        {
+          "question": "How are basic arithmetic operations implemented?",
+          "times_sec": [
+            5.436808099999325,
+            5.578968999994686,
+            5.662324100005208
+          ],
+          "mean_sec": 5.5594,
+          "min_sec": 5.4368,
+          "max_sec": 5.6623,
+          "p50_sec": 5.579,
+          "p95_sec": 5.6623,
+          "p99_sec": 5.6623
+        },
+        {
+          "question": "What is the alphabet triangle program doing?",
+          "times_sec": [
+            5.6174698999966495,
+            5.629178300005151,
+            5.48254349999479
+          ],
+          "mean_sec": 5.5764,
+          "min_sec": 5.4825,
+          "max_sec": 5.6292,
+          "p50_sec": 5.6175,
+          "p95_sec": 5.6292,
+          "p99_sec": 5.6292
+        }
+      ],
+      "aggregate": {
+        "mean_sec": 4.8233,
+        "min_sec": 2.8575,
+        "max_sec": 6.7084,
+        "p50_sec": 4.8458,
+        "p95_sec": 6.5244,
+        "p99_sec": 6.7084
+      }
+    },
+    "e2e_latency": {
+      "total_queries": 15,
+      "per_question": [
+        {
+          "question": "How does the Armstrong number checker work?",
+          "times_sec": [
+            6.345067799993558
+          ],
+          "mean_sec": 6.3451,
+          "min_sec": 6.3451,
+          "max_sec": 6.3451,
+          "p50_sec": 6.3451,
+          "p95_sec": 6.3451,
+          "p99_sec": 6.3451
+        },
+        {
+          "question": "Explain the Adding_Fractions.c program",
+          "times_sec": [
+            5.075020299991593
+          ],
+          "mean_sec": 5.075,
+          "min_sec": 5.075,
+          "max_sec": 5.075,
+          "p50_sec": 5.075,
+          "p95_sec": 5.075,
+          "p99_sec": 5.075
+        },
+        {
+          "question": "Show me the bubble sort implementation",
+          "times_sec": [
+            6.138997600006405
+          ],
+          "mean_sec": 6.139,
+          "min_sec": 6.139,
+          "max_sec": 6.139,
+          "p50_sec": 6.139,
+          "p95_sec": 6.139,
+          "p99_sec": 6.139
+        },
+        {
+          "question": "How is temperature conversion implemented?",
+          "times_sec": [
+            5.166663000010885
+          ],
+          "mean_sec": 5.1667,
+          "min_sec": 5.1667,
+          "max_sec": 5.1667,
+          "p50_sec": 5.1667,
+          "p95_sec": 5.1667,
+          "p99_sec": 5.1667
+        },
+        {
+          "question": "What programs calculate the area of geometric shapes?",
+          "times_sec": [
+            5.434604100009892
+          ],
+          "mean_sec": 5.4346,
+          "min_sec": 5.4346,
+          "max_sec": 5.4346,
+          "p50_sec": 5.4346,
+          "p95_sec": 5.4346,
+          "p99_sec": 5.4346
+        },
+        {
+          "question": "How does the binary search algorithm work in this repository?",
+          "times_sec": [
+            7.0193652999878395
+          ],
+          "mean_sec": 7.0194,
+          "min_sec": 7.0194,
+          "max_sec": 7.0194,
+          "p50_sec": 7.0194,
+          "p95_sec": 7.0194,
+          "p99_sec": 7.0194
+        },
+        {
+          "question": "Explain the background thread sorter program",
+          "times_sec": [
+            6.795095000008587
+          ],
+          "mean_sec": 6.7951,
+          "min_sec": 6.7951,
+          "max_sec": 6.7951,
+          "p50_sec": 6.7951,
+          "p95_sec": 6.7951,
+          "p99_sec": 6.7951
+        },
+        {
+          "question": "What is an automorphic number and how is it detected?",
+          "times_sec": [
+            5.6290009999938775
+          ],
+          "mean_sec": 5.629,
+          "min_sec": 5.629,
+          "max_sec": 5.629,
+          "p50_sec": 5.629,
+          "p95_sec": 5.629,
+          "p99_sec": 5.629
+        },
+        {
+          "question": "Show me a simple addition program in C",
+          "times_sec": [
+            5.018266099999892
+          ],
+          "mean_sec": 5.0183,
+          "min_sec": 5.0183,
+          "max_sec": 5.0183,
+          "p50_sec": 5.0183,
+          "p95_sec": 5.0183,
+          "p99_sec": 5.0183
+        },
+        {
+          "question": "How does the ARRAY.c program handle insertion and deletion?",
+          "times_sec": [
+            5.583205100003397
+          ],
+          "mean_sec": 5.5832,
+          "min_sec": 5.5832,
+          "max_sec": 5.5832,
+          "p50_sec": 5.5832,
+          "p95_sec": 5.5832,
+          "p99_sec": 5.5832
+        },
+        {
+          "question": "What data structures are used in the BasicGame.c program?",
+          "times_sec": [
+            6.7382354000001214
+          ],
+          "mean_sec": 6.7382,
+          "min_sec": 6.7382,
+          "max_sec": 6.7382,
+          "p50_sec": 6.7382,
+          "p95_sec": 6.7382,
+          "p99_sec": 6.7382
+        },
+        {
+          "question": "How does the selection sort compare to bubble sort in this codebase?",
+          "times_sec": [
+            4.201752900000429
+          ],
+          "mean_sec": 4.2018,
+          "min_sec": 4.2018,
+          "max_sec": 4.2018,
+          "p50_sec": 4.2018,
+          "p95_sec": 4.2018,
+          "p99_sec": 4.2018
+        },
+        {
+          "question": "Explain the linear search implementation",
+          "times_sec": [
+            3.8306798999838065
+          ],
+          "mean_sec": 3.8307,
+          "min_sec": 3.8307,
+          "max_sec": 3.8307,
+          "p50_sec": 3.8307,
+          "p95_sec": 3.8307,
+          "p99_sec": 3.8307
+        },
+        {
+          "question": "How are basic arithmetic operations implemented?",
+          "times_sec": [
+            3.3997944000002462
+          ],
+          "mean_sec": 3.3998,
+          "min_sec": 3.3998,
+          "max_sec": 3.3998,
+          "p50_sec": 3.3998,
+          "p95_sec": 3.3998,
+          "p99_sec": 3.3998
+        },
+        {
+          "question": "What is the alphabet triangle program doing?",
+          "times_sec": [
+            3.606141399999615
+          ],
+          "mean_sec": 3.6061,
+          "min_sec": 3.6061,
+          "max_sec": 3.6061,
+          "p50_sec": 3.6061,
+          "p95_sec": 3.6061,
+          "p99_sec": 3.6061
+        }
+      ],
+      "aggregate": {
+        "mean_sec": 5.3321,
+        "min_sec": 3.3998,
+        "max_sec": 7.0194,
+        "p50_sec": 5.4346,
+        "p95_sec": 7.0194,
+        "p99_sec": 7.0194
+      }
+    }
+  },
+  "extreme_scenarios": {
+    "skipped": true
+  }
+}

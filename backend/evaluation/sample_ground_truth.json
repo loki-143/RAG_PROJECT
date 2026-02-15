@@ -1,0 +1,96 @@
+{
+  "repo_url": "https://github.com/gouravthakur39/beginners-C-program-examples",
+  "description": "Ground truth dataset for evaluating RAG retrieval and generation on a beginners C program examples repository.",
+  "queries": [
+    {
+      "question": "How does the Armstrong number checker work?",
+      "relevant_sources": ["ArmstrongNumber.c"],
+      "expected_answer_keywords": ["digits", "power", "sum", "armstrong"],
+      "category": "function_explanation"
+    },
+    {
+      "question": "Explain the Adding_Fractions.c program",
+      "relevant_sources": ["Adding_Fractions.c"],
+      "expected_answer_keywords": ["numerator", "denominator", "fraction", "add"],
+      "category": "file_explanation"
+    },
+    {
+      "question": "Show me the bubble sort implementation",
+      "relevant_sources": ["ARRAY.c", "BubbleSort.c", "Bubble_Sort.c", "bubble_sort.c"],
+      "expected_answer_keywords": ["bubble", "sort", "swap", "array"],
+      "category": "code_retrieval"
+    },
+    {
+      "question": "How is temperature conversion implemented?",
+      "relevant_sources": ["AllTempScalesConv.c", "Celsius_to_Fahrenheit.c"],
+      "expected_answer_keywords": ["celsius", "fahrenheit", "kelvin", "convert"],
+      "category": "function_explanation"
+    },
+    {
+      "question": "What programs calculate the area of geometric shapes?",
+      "relevant_sources": ["AreaAndCircumference.c", "Area_of_Circle.c", "Area_of_Square.c", "Area_of_Triangle.c"],
+      "expected_answer_keywords": ["area", "circle", "square", "triangle", "radius"],
+      "category": "cross_file"
+    },
+    {
+      "question": "How does the binary search algorithm work in this repository?",
+      "relevant_sources": ["ARRAY.c", "BinarySearch.c", "binary_search.c"],
+      "expected_answer_keywords": ["binary", "search", "mid", "beg", "end"],
+      "category": "algorithm_explanation"
+    },
+    {
+      "question": "Explain the background thread sorter program",
+      "relevant_sources": ["BackgroundThreadSorter.c"],
+      "expected_answer_keywords": ["pthread", "mutex", "sort", "thread", "background"],
+      "category": "file_explanation"
+    },
+    {
+      "question": "What is an automorphic number and how is it detected?",
+      "relevant_sources": ["Automorphic_number.c"],
+      "expected_answer_keywords": ["automorphic", "square", "digits", "last"],
+      "category": "concept_explanation"
+    },
+    {
+      "question": "Show me a simple addition program in C",
+      "relevant_sources": ["Addition.c", "BasicArithmatic.c"],
+      "expected_answer_keywords": ["add", "sum", "scanf", "printf"],
+      "category": "code_retrieval"
+    },
+    {
+      "question": "How does the ARRAY.c program handle insertion and deletion?",
+      "relevant_sources": ["ARRAY.c"],
+      "expected_answer_keywords": ["insertion", "deletion", "position", "element", "array"],
+      "category": "function_explanation"
+    },
+    {
+      "question": "What data structures are used in the BasicGame.c program?",
+      "relevant_sources": ["BasicGame.c"],
+      "expected_answer_keywords": ["array", "struct", "player", "prize", "board"],
+      "category": "architecture"
+    },
+    {
+      "question": "How does the selection sort compare to bubble sort in this codebase?",
+      "relevant_sources": ["ARRAY.c", "BubbleSort.c", "SelectionSort.c", "selection_sort.c"],
+      "expected_answer_keywords": ["selection", "bubble", "sort", "compare", "swap"],
+      "category": "comparison"
+    },
+    {
+      "question": "Explain the linear search implementation",
+      "relevant_sources": ["ARRAY.c", "LinearSearch.c", "linear_search.c"],
+      "expected_answer_keywords": ["linear", "search", "element", "found", "loop"],
+      "category": "algorithm_explanation"
+    },
+    {
+      "question": "How are basic arithmetic operations implemented?",
+      "relevant_sources": ["BasicArithmatic.c", "Addition.c"],
+      "expected_answer_keywords": ["addition", "subtraction", "multiplication", "division", "modulo"],
+      "category": "function_explanation"
+    },
+    {
+      "question": "What is the alphabet triangle program doing?",
+      "relevant_sources": ["alphabetTriangle.cpp"],
+      "expected_answer_keywords": ["alphabet", "triangle", "pattern", "print", "character"],
+      "category": "file_explanation"
+    }
+  ]
+}

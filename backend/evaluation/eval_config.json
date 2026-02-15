@@ -1,0 +1,8 @@
+{
+  "ground_truth": "evaluation/sample_ground_truth.json",
+  "output_dir": "evaluation_results",
+  "k_values": [1, 3, 5, 8, 10],
+  "skip_generation": false,
+  "skip_extreme": false,
+  "skip_performance": false
+}
