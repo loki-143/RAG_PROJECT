@@ -48,8 +48,17 @@ class FallbackChunker:
         if structural_chunks:
             chunks.extend(structural_chunks)
 
-        # Add remaining lines as general chunks
-        remaining_chunks = self._chunk_remaining_lines(text, lines, filepath, language, repo_url, ext)
+        # Build set of line ranges already covered by structural chunks
+        covered_lines: set = set()
+        for sc in structural_chunks:
+            for ln in range(sc.start_line, sc.end_line + 1):
+                covered_lines.add(ln)
+
+        # Add chunks ONLY for lines not already covered by structural extraction
+        remaining_chunks = self._chunk_remaining_lines(
+            text, lines, filepath, language, repo_url, ext,
+            skip_lines=covered_lines,
+        )
         chunks.extend(remaining_chunks)
 
         return chunks if chunks else self._fallback_character_chunks(
@@ -81,6 +90,19 @@ class FallbackChunker:
         elif language == 'go':
             func_pattern = r'^\s*func\s*(?:\(.*?\)\s+)?(\w+)\s*\('
             class_pattern = r'^\s*type\s+(\w+)\s+struct'
+        elif language in ('c', 'cpp', 'csharp'):
+            # C/C++ function: `int main(`, `void foo(`, `static int bar(`
+            # Also matches return‐type pointer: `int *myFunc(`
+            func_pattern = (
+                r'^\s*'
+                r'(?:static\s+|inline\s+|extern\s+|const\s+)*'   # optional qualifiers
+                r'(?:unsigned\s+|signed\s+|long\s+|short\s+)*'    # optional type modifiers
+                r'(?:void|int|char|float|double|long|short|unsigned|struct\s+\w+|\w+_t)\s*'
+                r'\*?\s*'                                          # optional pointer
+                r'(\w+)\s*\('                                      # function name + opening paren
+            )
+            # C struct: `struct Foo {`  or `typedef struct {`
+            class_pattern = r'^\s*(?:typedef\s+)?struct\s+(\w+)'
         else:
             return chunks
 
@@ -149,8 +171,12 @@ class FallbackChunker:
         language: str,
         repo_url: str,
         ext: str,
+        skip_lines: set = None,
     ) -> List[ChunkMetadata]:
-        """Chunk remaining lines with overlap for better retrieval."""
+        """Chunk remaining lines with overlap, skipping structurally covered lines."""
+        if skip_lines is None:
+            skip_lines = set()
+
         chunks = []
         total = len(lines)
         window = 50          # lines per chunk
@@ -160,6 +186,16 @@ class FallbackChunker:
         while idx < total:
             end = min(idx + window, total)
             chunk_lines = lines[idx:end]
+
+            # Check if this window is mostly covered by structural chunks
+            line_range = set(range(idx + 1, end + 1))  # 1-indexed
+            uncovered = line_range - skip_lines
+            coverage_ratio = 1.0 - (len(uncovered) / max(len(line_range), 1))
+
+            # Skip this window if >70% already covered by structural chunks
+            if coverage_ratio > 0.7:
+                idx += stride
+                continue
 
             if any(l.strip() for l in chunk_lines):  # Has content
                 chunk_text = '\n'.join(chunk_lines)

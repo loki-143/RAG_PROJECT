@@ -1,7 +1,7 @@
 {
   "repo_url": "https://github.com/gouravthakur39/beginners-C-program-examples",
   "repo_hash": "1d9ffbaf",
-  "indexed_at": "2026-02-14T19:03:11.343560",
-  "chunk_count": 246,
+  "indexed_at": "2026-02-15T17:31:06.000927",
+  "chunk_count": 460,
   "embeddings_model": "sentence-transformers/all-MiniLM-L6-v2"
 }

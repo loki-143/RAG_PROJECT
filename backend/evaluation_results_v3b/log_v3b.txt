@@ -1,0 +1,636 @@
+PS D:\RAG_PROJECT\backend> Remove-Item -Recurse -Force indexes\index_1d9ffbaf -ErrorAction SilentlyContinue; python -m evaluation.run_evaluation --skip-extreme --skip-generation --output-dir evaluation_results_v3b
+2026-02-15 18:46:41,234 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2026-02-15 18:46:41,234 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-02-15 18:46:45,690 - __main__ - INFO - Loaded 15 ground-truth queries for https://github.com/gouravthakur39/beginners-C-program-examples
+D:\RAG_PROJECT\backend\evaluation\run_evaluation.py:378: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat(),
+2026-02-15 18:46:45,691 - __main__ - INFO - ============================================================
+2026-02-15 18:46:45,692 - __main__ - INFO - PHASE 1  — Indexing repository
+2026-02-15 18:46:45,692 - __main__ - INFO - ============================================================
+2026-02-15 18:46:45,693 - indexer - INFO - Indexing repository: https://github.com/gouravthakur39/beginners-C-program-examples
+2026-02-15 18:46:47,912 - indexer - INFO - Cloned to C:\Users\chlok\AppData\Local\Temp\tmp5x2s6dw_
+2026-02-15 18:46:49,354 - indexer - INFO - Extracted 460 chunks
+2026-02-15 18:46:49,387 - storage - INFO - Saved 460 chunks to indexes\index_1d9ffbaf\chunks.jsonl
+2026-02-15 18:46:49,391 - storage - INFO - Saved metadata to indexes\index_1d9ffbaf\meta.json
+2026-02-15 18:46:49,497 - retriever - INFO - Building hybrid index for https://github.com/gouravthakur39/beginners-C-program-examples
+2026-02-15 18:46:49,741 - retriever - INFO - Embedding 460/460 new chunks (0 cached)
+2026-02-15 18:47:34,965 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-02-15 18:47:35,076 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-02-15 18:47:35,929 - retriever - INFO - Saved embedding cache (460 entries)
+2026-02-15 18:47:35,942 - retriever - INFO - Saved FAISS index to indexes\index_1d9ffbaf\faiss_index
+2026-02-15 18:47:35,943 - retriever - INFO - Built hybrid index with 460 chunks
+2026-02-15 18:47:35,944 - rag_agent - INFO - ✓ Indexed https://github.com/gouravthakur39/beginners-C-program-examples: 460 chunks
+2026-02-15 18:47:35,944 - evaluation.performance_metrics - INFO - [Timer] indexing: 50.2514s    
+2026-02-15 18:47:35,944 - rag_agent - INFO - ✓ Added https://github.com/gouravthakur39/beginners-C-program-examples to active repositories
+2026-02-15 18:47:35,945 - __main__ - INFO - ============================================================
+2026-02-15 18:47:35,945 - __main__ - INFO - PHASE 2  — Retrieval Quality
+2026-02-15 18:47:35,945 - __main__ - INFO - ============================================================
+2026-02-15 18:47:35,986 - retriever - INFO - Loading cross-encoder: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-02-15 18:47:38,712 - sentence_transformers.cross_encoder.CrossEncoder - INFO - Use pytorch device: cpu
+2026-02-15 18:47:39,196 - retriever - INFO - Cross-encoder loaded successfully
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.45s/it]
+2026-02-15 18:47:45,661 - __main__ - INFO -   Q1: P@5=0.200  R@5=0.500  NDCG@5=0.613  RR=1.000  
+2026-02-15 18:47:45,662 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 18:47:45,710 - retriever - INFO - Filename boost: Adding_Fractions.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.04s/it]
+2026-02-15 18:47:53,758 - __main__ - INFO -   Q2: P@5=0.000  R@5=0.000  NDCG@5=0.000  RR=0.111  
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.25s/it]
+2026-02-15 18:48:00,045 - __main__ - INFO -   Q3: P@5=1.000  R@5=0.278  NDCG@5=1.000  RR=1.000  
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.70s/it]
+2026-02-15 18:48:06,796 - __main__ - INFO -   Q4: P@5=0.200  R@5=0.200  NDCG@5=0.131  RR=0.200  
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.46s/it]
+2026-02-15 18:48:13,320 - __main__ - INFO -   Q5: P@5=0.200  R@5=0.250  NDCG@5=0.168  RR=0.250  
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.82s/it]
+2026-02-15 18:48:21,234 - __main__ - INFO -   Q6: P@5=1.000  R@5=0.250  NDCG@5=1.000  RR=1.000
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.87s/it]
+2026-02-15 18:48:29,197 - __main__ - INFO -   Q7: P@5=0.600  R@5=0.333  NDCG@5=0.699  RR=1.000  
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.95s/it]
+2026-02-15 18:48:37,192 - __main__ - INFO -   Q8: P@5=0.200  R@5=0.500  NDCG@5=0.613  RR=1.000  
+2026-02-15 18:48:37,198 - retriever - INFO - Detected file-specific query for: addition
+2026-02-15 18:48:37,246 - retriever - INFO - Filename boost: Addition.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.05s/it]
+2026-02-15 18:48:45,302 - __main__ - INFO -   Q9: P@5=0.000  R@5=0.000  NDCG@5=0.000  RR=0.167  
+2026-02-15 18:48:45,303 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 18:48:45,357 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,358 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,359 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,359 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,360 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,361 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,361 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,362 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,362 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,362 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,363 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,363 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,363 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,364 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:48:45,364 - retriever - INFO - Filename boost: ARRAY.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.18s/it] 
+2026-02-15 18:48:52,554 - __main__ - INFO -   Q10: P@5=0.600  R@5=0.200  NDCG@5=0.723  RR=1.000 
+2026-02-15 18:48:52,556 - retriever - INFO - Detected file-specific query for: basicgame.c      
+2026-02-15 18:48:52,636 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,636 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,637 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,637 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,637 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,637 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,638 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,638 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,638 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,638 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,639 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,639 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,639 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,639 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,639 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,640 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,640 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,640 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,640 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,640 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,641 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,641 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,642 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,642 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,643 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,643 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,644 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,644 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,645 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,645 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,645 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,646 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,646 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,646 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,646 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,647 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,647 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:48:52,647 - retriever - INFO - Filename boost: BasicGame.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.02s/it] 
+2026-02-15 18:49:00,679 - __main__ - INFO -   Q11: P@5=1.000  R@5=0.132  NDCG@5=1.000  RR=1.000
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.35s/it]
+2026-02-15 18:49:08,120 - __main__ - INFO -   Q12: P@5=1.000  R@5=0.238  NDCG@5=1.000  RR=1.000 
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.62s/it]
+2026-02-15 18:49:16,775 - __main__ - INFO -   Q13: P@5=0.600  R@5=0.200  NDCG@5=0.699  RR=1.000 
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.90s/it]
+2026-02-15 18:49:24,764 - __main__ - INFO -   Q14: P@5=0.200  R@5=0.500  NDCG@5=0.237  RR=0.200 
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.47s/it]
+2026-02-15 18:49:33,286 - __main__ - INFO -   Q15: P@5=0.000  R@5=0.000  NDCG@5=0.000  RR=0.111 
+2026-02-15 18:49:33,289 - __main__ - INFO - 
+  Aggregate: {
+  "Precision@1": 0.6,
+  "Recall@1": 0.09492898913951546,
+  "F1@1": 0.14173504857715385,
+  "NDCG@1": 0.6,
+  "HitRate@1": 0.6,
+  "Precision@3": 0.4666666666666667,
+  "Recall@3": 0.13960178223336117,
+  "F1@3": 0.17545428021568002,
+  "NDCG@3": 0.517134377300544,
+  "HitRate@3": 0.6,
+  "Precision@5": 0.4533333333333333,
+  "Recall@5": 0.23871901977165136,
+  "F1@5": 0.25065950938549525,
+  "NDCG@5": 0.5255987282953549,
+  "HitRate@5": 0.8,
+  "Precision@8": 0.425,
+  "Recall@8": 0.4062573099415205,
+  "F1@8": 0.32389084277081454,
+  "NDCG@8": 0.5481399625478017,
+  "HitRate@8": 0.8666666666666667,
+  "Precision@10": 0.41333333333333333,
+  "Recall@10": 0.5730994152046783,
+  "F1@10": 0.3673131166136259,
+  "NDCG@10": 0.5824137816458368,
+  "HitRate@10": 1.0,
+  "MRR": 0.6692592592592593,
+  "MAP": 0.2966011788731087
+}
+2026-02-15 18:49:33,290 - __main__ - INFO - Skipping generation quality (--skip-generation)     
+2026-02-15 18:49:33,290 - __main__ - INFO - ============================================================
+2026-02-15 18:49:33,290 - __main__ - INFO - PHASE 4  — Performance Benchmarks
+2026-02-15 18:49:33,290 - __main__ - INFO - ============================================================
+2026-02-15 18:49:33,291 - indexer - INFO - Indexing repository: https://github.com/gouravthakur39/beginners-C-program-examples
+2026-02-15 18:49:35,449 - indexer - INFO - Cloned to C:\Users\chlok\AppData\Local\Temp\tmpbccftpfo
+2026-02-15 18:49:36,805 - indexer - INFO - Extracted 460 chunks
+2026-02-15 18:49:36,853 - storage - INFO - Saved 460 chunks to indexes\index_1d9ffbaf\chunks.jsonl
+2026-02-15 18:49:36,856 - storage - INFO - Saved metadata to indexes\index_1d9ffbaf\meta.json
+2026-02-15 18:49:36,950 - retriever - INFO - Building hybrid index for https://github.com/gouravthakur39/beginners-C-program-examples
+2026-02-15 18:49:37,318 - retriever - INFO - Loaded embedding cache with 460 entries
+2026-02-15 18:49:37,318 - retriever - INFO - All 460 chunk embeddings served from cache
+2026-02-15 18:49:38,054 - retriever - INFO - Saved embedding cache (460 entries)
+2026-02-15 18:49:38,069 - retriever - INFO - Saved FAISS index to indexes\index_1d9ffbaf\faiss_index
+2026-02-15 18:49:38,069 - retriever - INFO - Built hybrid index with 460 chunks
+2026-02-15 18:49:38,069 - rag_agent - INFO - ✓ Indexed https://github.com/gouravthakur39/beginners-C-program-examples: 460 chunks
+2026-02-15 18:49:38,069 - evaluation.performance_metrics - INFO - [Timer] index_run_0: 4.7849s  
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:05<00:00,  5.86s/it]
+2026-02-15 18:49:43,966 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 18:49:44,008 - retriever - INFO - Filename boost: Adding_Fractions.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.91s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.06s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.16s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:05<00:00,  5.97s/it]
+2026-02-15 18:50:10,259 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 18:50:10,300 - retriever - INFO - Filename boost: Adding_Fractions.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.78s/it]
+2026-02-15 18:50:18,093 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 18:50:18,142 - retriever - INFO - Filename boost: Adding_Fractions.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.97s/it]
+2026-02-15 18:50:26,119 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 18:50:26,153 - retriever - INFO - Filename boost: Adding_Fractions.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.65s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.81s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.57s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.64s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.51s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.02s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.86s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.64s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.62s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.61s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.13s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.14s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.90s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.94s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.16s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.64s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.74s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.75s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.07s/it]
+2026-02-15 18:52:48,611 - retriever - INFO - Detected file-specific query for: addition
+2026-02-15 18:52:48,645 - retriever - INFO - Filename boost: Addition.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.06s/it]
+2026-02-15 18:52:56,713 - retriever - INFO - Detected file-specific query for: addition
+2026-02-15 18:52:56,775 - retriever - INFO - Filename boost: Addition.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.55s/it]
+2026-02-15 18:53:04,339 - retriever - INFO - Detected file-specific query for: addition
+2026-02-15 18:53:04,382 - retriever - INFO - Filename boost: Addition.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.35s/it]
+2026-02-15 18:53:11,745 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 18:53:11,800 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,801 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,802 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,803 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,803 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,804 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,805 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,805 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,805 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,806 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,806 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,806 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,806 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,807 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:11,807 - retriever - INFO - Filename boost: ARRAY.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.27s/it] 
+2026-02-15 18:53:19,083 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 18:53:19,128 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,128 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,129 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,129 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,129 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,131 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,131 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,131 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,131 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,132 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,132 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,132 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,132 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,132 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:19,133 - retriever - INFO - Filename boost: ARRAY.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.84s/it] 
+2026-02-15 18:53:25,978 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 18:53:26,019 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,019 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,020 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,020 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,020 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,020 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,021 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,021 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,021 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,021 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,022 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,022 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,022 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,022 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:53:26,023 - retriever - INFO - Filename boost: ARRAY.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.30s/it] 
+2026-02-15 18:53:33,323 - retriever - INFO - Detected file-specific query for: basicgame.c      
+2026-02-15 18:53:33,381 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,381 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,381 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,382 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,382 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,382 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,382 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,383 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,383 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,383 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,383 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,384 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,384 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,384 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,385 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,385 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,385 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,385 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,385 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,386 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,386 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,386 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,386 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,386 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,387 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,387 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,387 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,387 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,387 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,388 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,388 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,388 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,389 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,389 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,389 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,389 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,389 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:33,390 - retriever - INFO - Filename boost: BasicGame.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.44s/it] 
+2026-02-15 18:53:40,830 - retriever - INFO - Detected file-specific query for: basicgame.c      
+2026-02-15 18:53:40,890 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,891 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,891 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,892 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,892 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,892 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,893 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,893 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,893 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,893 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,894 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,894 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,894 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,895 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,895 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,895 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,895 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,895 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,896 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,896 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,896 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,896 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,897 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,897 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,897 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,898 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,899 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,899 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,899 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,899 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,900 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,900 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,900 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,901 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,901 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,902 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,902 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:40,902 - retriever - INFO - Filename boost: BasicGame.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.81s/it] 
+2026-02-15 18:53:48,722 - retriever - INFO - Detected file-specific query for: basicgame.c      
+2026-02-15 18:53:48,784 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,785 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,785 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,786 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,786 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,788 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,789 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,790 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,791 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,792 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,792 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,793 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,794 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,794 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,795 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,795 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,796 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,796 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,797 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,797 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,797 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,798 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,799 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,799 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,799 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,799 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,800 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,800 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,800 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,800 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,801 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,801 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,802 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,802 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,803 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,803 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,804 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:53:48,804 - retriever - INFO - Filename boost: BasicGame.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.59s/it] 
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.18s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  7.00s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.50s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.21s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.93s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  8.00s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.05s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.79s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.94s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.84s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.98s/it]
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.17s/it]
+2026-02-15 18:55:30,802 - rag_agent - INFO - Retrieving context for: How does the Armstrong number checker work?...
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.29s/it]
+2026-02-15 18:55:37,160 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:55:37,722 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:55:37,722 - rag_agent - INFO - Retrieving context for: How does the Armstrong number checker work?...
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.08s/it]
+2026-02-15 18:55:43,873 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:55:43,998 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:55:43,999 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:55:44,000 - rag_agent - INFO - Retrieving context for: Explain the Adding_Fractions.c program...
+2026-02-15 18:55:44,000 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 18:55:44,048 - retriever - INFO - Filename boost: Adding_Fractions.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.21s/it]
+2026-02-15 18:55:52,273 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:55:52,408 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:55:52,410 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:55:52,410 - rag_agent - INFO - Retrieving context for: Show me the bubble sort implementation...
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.83s/it]
+2026-02-15 18:55:59,296 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:55:59,444 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:55:59,444 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:55:59,445 - rag_agent - INFO - Retrieving context for: How is temperature conversion implemented?...
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.10s/it]
+2026-02-15 18:56:06,592 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:56:06,719 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:06,720 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:06,721 - rag_agent - INFO - Retrieving context for: What programs calculate the area of geometric shap...
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:06<00:00,  6.94s/it]
+2026-02-15 18:56:13,707 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:56:13,822 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:13,823 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:13,823 - rag_agent - INFO - Retrieving context for: How does the binary search algorithm work in this ...
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.84s/it]
+2026-02-15 18:56:21,695 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:56:21,807 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:21,807 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:21,808 - rag_agent - INFO - Retrieving context for: Explain the background thread sorter program...
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.09s/it]
+2026-02-15 18:56:29,938 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:56:30,060 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:30,060 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:30,061 - rag_agent - INFO - Retrieving context for: What is an automorphic number and how is it detect...
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.44s/it]
+2026-02-15 18:56:38,533 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:56:38,645 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:38,645 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:38,646 - rag_agent - INFO - Retrieving context for: Show me a simple addition program in C...
+2026-02-15 18:56:38,648 - retriever - INFO - Detected file-specific query for: addition
+2026-02-15 18:56:38,696 - retriever - INFO - Filename boost: Addition.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.85s/it]
+2026-02-15 18:56:46,554 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:56:46,681 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:46,681 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:46,683 - rag_agent - INFO - Retrieving context for: How does the ARRAY.c program handle insertion and ...
+2026-02-15 18:56:46,683 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 18:56:46,770 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,771 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,772 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,772 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,773 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,773 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,774 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,774 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,774 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,775 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,775 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,775 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,775 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,775 - retriever - INFO - Filename boost: ARRAY.c
+2026-02-15 18:56:46,776 - retriever - INFO - Filename boost: ARRAY.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.66s/it] 
+2026-02-15 18:56:54,437 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:56:54,556 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:54,556 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:56:54,556 - rag_agent - INFO - Retrieving context for: What data structures are used in the BasicGame.c p...
+2026-02-15 18:56:54,557 - retriever - INFO - Detected file-specific query for: basicgame.c      
+2026-02-15 18:56:54,622 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,623 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,623 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,625 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,626 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,627 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,628 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,629 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,630 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,630 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,630 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,631 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,631 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,633 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,636 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,636 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,636 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,636 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,637 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,637 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,638 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,638 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,638 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,639 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,639 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,639 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,639 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,640 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,640 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,640 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,641 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,641 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,643 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,643 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,643 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,644 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,644 - retriever - INFO - Filename boost: BasicGame.c
+2026-02-15 18:56:54,645 - retriever - INFO - Filename boost: BasicGame.c
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.88s/it] 
+2026-02-15 18:57:02,537 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:57:02,654 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:57:02,655 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:57:02,655 - rag_agent - INFO - Retrieving context for: How does the selection sort compare to bubble sort...
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.34s/it]
+2026-02-15 18:57:10,065 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:57:10,175 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:57:10,175 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:57:10,177 - rag_agent - INFO - Retrieving context for: Explain the linear search implementation...
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.12s/it]
+2026-02-15 18:57:18,324 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:57:18,441 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:57:18,442 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:57:18,443 - rag_agent - INFO - Retrieving context for: How are basic arithmetic operations implemented?...
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:07<00:00,  7.76s/it]
+2026-02-15 18:57:26,261 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:57:26,390 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:57:26,390 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:57:26,391 - rag_agent - INFO - Retrieving context for: What is the alphabet triangle program doing?...
+Batches: 100%|███████████████████████████████████████████████████| 1/1 [00:08<00:00,  8.49s/it]
+2026-02-15 18:57:34,930 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 18:57:35,084 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:57:35,084 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 18:57:35,085 - __main__ - INFO - Skipping extreme scenarios (--skip-extreme)
+2026-02-15 18:57:35,091 - __main__ - INFO -   JSON report → evaluation_results_v3b\evaluation_report.json
+2026-02-15 18:57:35,093 - __main__ - INFO -   Markdown report → evaluation_results_v3b\evaluation_report.md
+2026-02-15 18:57:35,094 - __main__ - INFO - ============================================================
+2026-02-15 18:57:35,094 - __main__ - INFO - Evaluation complete — results in evaluation_results_v3b/
+2026-02-15 18:57:35,094 - __main__ - INFO - ============================================================
+
+============================================================
+EVALUATION SUMMARY
+============================================================
+
+Retrieval Quality:
+  Precision@5        = 0.4533
+  Recall@5           = 0.2387
+  NDCG@5             = 0.5256
+  MRR                = 0.6693
+  HitRate@5          = 0.8000
+  MAP                = 0.2966
+
+Retrieval Latency: P50=7.6883s  P95=8.2434s  P99=8.8003s
+End-to-End Latency: P50=7.9838s  P95=8.6936s  P99=8.6936s
+
+Full reports saved to: evaluation_results_v3b/
+  - evaluation_report.json
+  - evaluation_report.md
+PS D:\RAG_PROJECT\backend> Get-Content d:\RAG_PROJECT\backend\evaluation_results_v3b\evaluation_report.md
+# RAG System â€” Automated Evaluation Report
+
+**Date:** 2026-02-15T13:16:45.691382
+**Repository:** `https://github.com/gouravthakur39/beginners-C-program-examples`
+**Ground-truth queries:** 15
+**Total evaluation time:** 649.39s
+
+## 1. Retrieval Quality
+
+| Metric | Value |
+|--------|------:|
+| F1@1 | 0.1417 |
+| F1@10 | 0.3673 |
+| F1@3 | 0.1755 |
+| F1@5 | 0.2507 |
+| F1@8 | 0.3239 |
+| HitRate@1 | 0.6000 |
+| HitRate@10 | 1.0000 |
+| HitRate@3 | 0.6000 |
+| HitRate@5 | 0.8000 |
+| HitRate@8 | 0.8667 |
+| MAP | 0.2966 |
+| MRR | 0.6693 |
+| NDCG@1 | 0.6000 |
+| NDCG@10 | 0.5824 |
+| NDCG@3 | 0.5171 |
+| NDCG@5 | 0.5256 |
+| NDCG@8 | 0.5481 |
+| Precision@1 | 0.6000 |
+| Precision@10 | 0.4133 |
+| Precision@3 | 0.4667 |
+| Precision@5 | 0.4533 |
+| Precision@8 | 0.4250 |
+| Recall@1 | 0.0949 |
+| Recall@10 | 0.5731 |
+| Recall@3 | 0.1396 |
+| Recall@5 | 0.2387 |
+| Recall@8 | 0.4063 |
+
+### Per-Query Breakdown (K=5)
+
+| # | Question | P@5 | R@5 | NDCG@5 | RR |
+|---|----------|----:|----:|-------:|---:|
+| 1 | How does the Armstrong number checker work? | 0.200 | 0.500 | 0.613 | 1.000 |
+| 2 | Explain the Adding_Fractions.c program | 0.000 | 0.000 | 0.000 | 0.111 |
+| 3 | Show me the bubble sort implementation | 1.000 | 0.278 | 1.000 | 1.000 |
+| 4 | How is temperature conversion implemented? | 0.200 | 0.200 | 0.131 | 0.200 |
+| 5 | What programs calculate the area of geometric shapes? | 0.200 | 0.250 | 0.168 | 0.250 |
+| 6 | How does the binary search algorithm work in this repository | 1.000 | 0.250 | 1.000 | 1.000 |
+| 7 | Explain the background thread sorter program | 0.600 | 0.333 | 0.699 | 1.000 |
+| 8 | What is an automorphic number and how is it detected? | 0.200 | 0.500 | 0.613 | 1.000 |   
+| 9 | Show me a simple addition program in C | 0.000 | 0.000 | 0.000 | 0.167 |
+| 10 | How does the ARRAY.c program handle insertion and deletion? | 0.600 | 0.200 | 0.723 | 1.000 |
+| 11 | What data structures are used in the BasicGame.c program? | 1.000 | 0.132 | 1.000 | 1.000 |
+| 12 | How does the selection sort compare to bubble sort in this c | 1.000 | 0.238 | 1.000 | 1.000 |
+| 13 | Explain the linear search implementation | 0.600 | 0.200 | 0.699 | 1.000 |
+| 14 | How are basic arithmetic operations implemented? | 0.200 | 0.500 | 0.237 | 0.200 |       
+| 15 | What is the alphabet triangle program doing? | 0.000 | 0.000 | 0.000 | 0.111 |
+
+## 2. Generation Quality (LLM-as-Judge, 1â€“5 scale)
+
+## 3. Performance
+
+**Indexing:** 460 chunks in 4.7849s
+
+| Metric | Retrieval Only | End-to-End (with LLM) |
+|--------|---------------:|----------------------:|
+| MEAN (s) | 7.5305 | 7.8240 |
+| P50 (s) | 7.6883 | 7.9838 |
+| P95 (s) | 8.2434 | 8.6936 |
+| P99 (s) | 8.8003 | 8.6936 |
+
+## 4. Extreme Scenarios
+
+_Skipped._
+
+---
+
+*Report generated automatically by `evaluation.run_evaluation`.*
+PS D:\RAG_PROJECT\backend> 

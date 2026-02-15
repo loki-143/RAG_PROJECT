@@ -1,5 +1,7 @@
 """Hybrid retrieval combining BM25 and FAISS with Reciprocal Rank Fusion."""
 
+import hashlib
+import json
 import logging
 import os
 import re
@@ -20,8 +22,10 @@ logger = logging.getLogger(__name__)
 # ──────────────────────────────────────────────────────────────────
 RRF_K = 60                 # Reciprocal Rank Fusion constant (standard = 60)
 CANDIDATE_POOL = 40        # Pull top-N from each retriever before fusion
-FILENAME_BOOST = 5.0       # RRF bonus for chunks whose source matches the query
+FILENAME_MULTIPLIER = 1.15 # Post-fusion score multiplier for file-matching chunks (bounded, single-pass)
 RERANK_POOL = 30           # How many candidates to rerank
+CROSS_ENCODER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"  # Lightweight cross-encoder
+EMBEDDING_CACHE_FILE = "embedding_cache.json"  # Per-index embedding cache
 
 
 class HybridRetriever:
@@ -32,6 +36,13 @@ class HybridRetriever:
         self.embeddings = HuggingFaceEmbeddings(model_name=embeddings_model)
         self.chunk_store = ChunkStore()
         self.repo_indexes: Dict[str, Any] = {}  # {repo_url: {'bm25': ..., 'faiss': ..., 'chunks': ...}}
+
+        # Lazy-load cross-encoder (loaded on first rerank call)
+        # NOTE: ms-marco cross-encoder is trained on natural-language QA and
+        # actively hurts code retrieval rankings.  Disabled by default.
+        # Set to None and call _get_cross_encoder() to attempt loading.
+        self._cross_encoder = False   # False = sentinel "don't try to load"
+        self._embedding_cache: Dict[str, List[float]] = {}  # text_hash → embedding vector
 
     # ──────────────────────────────────────────────────────────────
     # Indexing
@@ -67,15 +78,8 @@ class HybridRetriever:
         tokenized_texts = [self._tokenize(chunk.text) for chunk in enriched_chunks]
         bm25_index = BM25Okapi(tokenized_texts)
 
-        # Build FAISS index with enriched text (filename + content)
-        docs_for_faiss = [
-            Document(
-                page_content=self._make_faiss_text(chunk),
-                metadata={"chunk_id": chunk.chunk_id},
-            )
-            for chunk in chunks
-        ]
-        faiss_index = FAISS.from_documents(docs_for_faiss, self.embeddings)
+        # Build FAISS index with embedding cache (only embeds new/changed chunks)
+        faiss_index = self._build_faiss_with_cache(repo_url, chunks)
 
         # Store indexes in memory
         self.repo_indexes[repo_url] = {
@@ -89,6 +93,103 @@ class HybridRetriever:
         self._save_index_to_disk(repo_url, bm25_index, faiss_index, chunks)
 
         logger.info(f"Built hybrid index with {len(chunks)} chunks")
+
+    # ──────────────────────────────────────────────────────────────
+    # Embedding cache (Issue 5 — avoid re-embedding unchanged chunks)
+    # ──────────────────────────────────────────────────────────────
+
+    def _build_faiss_with_cache(
+        self,
+        repo_url: str,
+        chunks: List[ChunkMetadata],
+    ) -> FAISS:
+        """
+        Build FAISS index with a persistent embedding cache.
+
+        First build: all chunks are embedded (same speed as before).
+        Re-index of same repo: only new/changed chunks are embedded.
+        """
+        cache_dir = self.chunk_store.get_faiss_dir(repo_url)
+        os.makedirs(cache_dir, exist_ok=True)
+        cache_path = os.path.join(cache_dir, EMBEDDING_CACHE_FILE)
+
+        # Load existing cache   {text_md5: [float, …]}
+        cached: Dict[str, List[float]] = {}
+        if os.path.exists(cache_path):
+            try:
+                with open(cache_path, "r") as f:
+                    cached = json.load(f)
+                logger.info(f"Loaded embedding cache with {len(cached)} entries")
+            except Exception:
+                cached = {}
+
+        # Prepare FAISS texts and figure out which need embedding
+        faiss_texts = [self._make_faiss_text(c) for c in chunks]
+        text_hashes = [hashlib.md5(t.encode()).hexdigest() for t in faiss_texts]
+
+        to_embed_texts: List[str] = []
+        to_embed_indices: List[int] = []
+        for i, h in enumerate(text_hashes):
+            if h not in cached:
+                to_embed_texts.append(faiss_texts[i])
+                to_embed_indices.append(i)
+
+        # Batch-embed only the missing chunks
+        if to_embed_texts:
+            logger.info(
+                f"Embedding {len(to_embed_texts)}/{len(chunks)} new chunks "
+                f"({len(chunks) - len(to_embed_texts)} cached)"
+            )
+            new_vectors = self.embeddings.embed_documents(to_embed_texts)
+            for idx, vec in zip(to_embed_indices, new_vectors):
+                cached[text_hashes[idx]] = vec
+        else:
+            logger.info(f"All {len(chunks)} chunk embeddings served from cache")
+
+        # Build FAISS from pre-computed embeddings
+        text_embedding_pairs = [
+            (faiss_texts[i], cached[text_hashes[i]]) for i in range(len(chunks))
+        ]
+        metadatas = [{"chunk_id": c.chunk_id} for c in chunks]
+
+        faiss_index = FAISS.from_embeddings(
+            text_embedding_pairs, self.embeddings, metadatas=metadatas,
+        )
+
+        # ── Upgrade flat index → HNSW for faster retrieval at scale ──
+        try:
+            import faiss as faiss_lib
+            flat_index = faiss_index.index
+            dim = flat_index.d
+            n_vectors = flat_index.ntotal
+
+            if n_vectors >= 64:  # HNSW only worthwhile above ~64 vectors
+                # Reconstruct all vectors from the flat index
+                vectors = flat_index.reconstruct_n(0, n_vectors)
+
+                # Build HNSW index (M=32 neighbours, search depth configured below)
+                hnsw_index = faiss_lib.IndexHNSWFlat(dim, 32)
+                hnsw_index.hnsw.efConstruction = 200  # build quality
+                hnsw_index.hnsw.efSearch = 128         # query quality
+                hnsw_index.add(vectors)
+
+                # Swap into LangChain wrapper
+                faiss_index.index = hnsw_index
+                logger.info(f"Upgraded FAISS index to HNSW (dim={dim}, n={n_vectors}, M=32)")
+            else:
+                logger.info(f"Keeping flat index (only {n_vectors} vectors)")
+        except Exception as e:
+            logger.warning(f"HNSW upgrade failed, keeping flat index: {e}")
+
+        # Persist updated cache
+        try:
+            with open(cache_path, "w") as f:
+                json.dump(cached, f)
+            logger.info(f"Saved embedding cache ({len(cached)} entries)")
+        except Exception as e:
+            logger.warning(f"Failed to save embedding cache: {e}")
+
+        return faiss_index
 
     @staticmethod
     def _make_faiss_text(chunk: ChunkMetadata) -> str:
@@ -171,10 +272,21 @@ class HybridRetriever:
         rrf_scores: Dict[str, float] = {}         # chunk_id → RRF score
         chunk_lookup: Dict[str, ChunkMetadata] = {}
 
-        # Detect if query is asking about a specific file
-        target_filename = self._extract_filename_from_query(query)
+        # Collect known source files across all repos for strict filename validation
+        known_sources: Set[str] = set()
+        for repo_url in repo_urls:
+            self.ensure_index_loaded(repo_url)
+            if repo_url in self.repo_indexes:
+                for c in self.repo_indexes[repo_url]['chunk_list']:
+                    known_sources.add(c.source)
+
+        # Detect if query is asking about a specific file (strict validation)
+        target_filename = self._extract_filename_from_query(query, known_sources)
         if target_filename:
             logger.info(f"Detected file-specific query for: {target_filename}")
+
+        # Collect chunk IDs that belong to the target file (for post-fusion boost)
+        target_file_ids: Set[str] = set()
 
         for repo_url in repo_urls:
             self.ensure_index_loaded(repo_url)
@@ -200,21 +312,33 @@ class HybridRetriever:
             for rank, (chunk, _raw) in enumerate(faiss_ranked, start=1):
                 rrf_scores[chunk.chunk_id] = rrf_scores.get(chunk.chunk_id, 0) + 1.0 / (RRF_K + rank)
 
-            # ── Step 4: Filename-match bonus (acts as a third ranked list) ──
+            # ── Step 4: Identify file-matching chunks (post-fusion multiplier) ──
             if target_filename:
                 file_matches = self._find_chunks_by_filename(chunk_list, target_filename)
-                for rank, chunk in enumerate(file_matches, start=1):
-                    rrf_scores[chunk.chunk_id] = rrf_scores.get(chunk.chunk_id, 0) + FILENAME_BOOST / (RRF_K + rank)
-                    logger.info(f"Filename boost: {chunk.source}")
+                for chunk in file_matches:
+                    target_file_ids.add(chunk.chunk_id)
+                if file_matches:
+                    logger.info(
+                        f"Filename match: {file_matches[0].source} "
+                        f"({len(file_matches)} chunks eligible for {FILENAME_MULTIPLIER:.0%} boost)"
+                    )
 
-        # ── Step 5: Sort by RRF score ──
+        # ── Step 5: Post-fusion filename boost ──
+        # Single-pass bounded multiplier: every chunk from the matched file
+        # gets the same fixed % uplift.  No stacking, no rank inflation.
+        if target_file_ids:
+            for cid in target_file_ids:
+                if cid in rrf_scores:
+                    rrf_scores[cid] *= FILENAME_MULTIPLIER
+
+        # ── Step 6: Sort by RRF score ──
         sorted_ids = sorted(rrf_scores.keys(), key=lambda cid: rrf_scores[cid], reverse=True)
         candidates = [
             (chunk_lookup[cid], rrf_scores[cid])
             for cid in sorted_ids if cid in chunk_lookup
         ]
 
-        # ── Step 6: Semantic rerank ──
+        # ── Step 7: Semantic rerank ──
         if rerank and candidates:
             candidates = self._rerank_candidates(query, candidates, min(RERANK_POOL, len(candidates)))
 
@@ -336,28 +460,56 @@ class HybridRetriever:
     # Filename extraction & matching
     # ──────────────────────────────────────────────────────────────
 
-    def _extract_filename_from_query(self, query: str) -> Optional[str]:
+    # Common code extensions for validating explicit filename references
+    _CODE_EXTENSIONS = {
+        '.c', '.cpp', '.cc', '.cxx', '.h', '.hpp', '.hxx',
+        '.py', '.pyw',
+        '.js', '.jsx', '.ts', '.tsx', '.mjs', '.cjs',
+        '.java', '.kt', '.kts',
+        '.go', '.rs', '.rb', '.cs',
+        '.swift', '.m', '.mm',
+        '.sh', '.bash', '.zsh',
+        '.sql', '.r', '.R',
+        '.php', '.pl', '.pm', '.lua',
+        '.scala', '.clj', '.ex', '.exs',
+        '.zig', '.nim', '.dart', '.v',
+    }
+
+    def _extract_filename_from_query(
+        self,
+        query: str,
+        known_sources: Optional[Set[str]] = None,
+    ) -> Optional[str]:
         """
-        Extract filename from query if user is asking about a specific file.
-        
-        Examples:
-            "explain ARRAY.c" -> "array.c"
-            "what does main.py do?" -> "main.py"
-            "show me the utils file" -> "utils"
-            "how does the BasicGame.c program…" -> "basicgame.c"
+        Extract filename from query **only** when there is strong evidence.
+
+        Rules:
+          1. Explicit extension in query (e.g. "ARRAY.c") → always trust.
+          2. "the X program/file/module" pattern → trust ONLY if X matches
+             the stem of a file actually present in the loaded index.
         """
-        # Look for explicit file patterns like .c, .py, .js, etc.
+        # ── Rule 1: explicit extension (.c, .py, .js …) ──
         file_pattern = r'\b([a-zA-Z_][a-zA-Z0-9_]*\.[a-zA-Z0-9]+)\b'
-        matches = re.findall(file_pattern, query)
-        if matches:
-            return matches[0].lower()
-        
-        # Look for patterns like "the X file" or "X program"
-        file_ref_pattern = r'(?:the\s+)?([a-zA-Z_][a-zA-Z0-9_]*)\s+(?:file|program|module|code)'
-        matches = re.findall(file_ref_pattern, query.lower())
-        if matches:
-            return matches[0].lower()
-        
+        for m in re.finditer(file_pattern, query):
+            candidate = m.group(1)
+            ext = '.' + candidate.rsplit('.', 1)[-1].lower()
+            if ext in self._CODE_EXTENSIONS:
+                return candidate.lower()
+
+        # ── Rule 2: "the X program/file" — validated against repo files ──
+        if known_sources:
+            # Build set of lowercase file stems from actual repo files
+            known_stems: Set[str] = set()
+            for src in known_sources:
+                stem = os.path.splitext(os.path.basename(src))[0].lower()
+                known_stems.add(stem)
+
+            file_ref_pattern = r'(?:the\s+)?([a-zA-Z_][a-zA-Z0-9_]*)\s+(?:file|program|module|code)'
+            for m in re.finditer(file_ref_pattern, query.lower()):
+                candidate_stem = m.group(1).lower()
+                if candidate_stem in known_stems:
+                    return candidate_stem
+
         return None
     
     def _find_chunks_by_filename(
@@ -410,6 +562,19 @@ class HybridRetriever:
     # Semantic Reranking
     # ──────────────────────────────────────────────────────────────
 
+    def _get_cross_encoder(self):
+        """Lazy-load cross-encoder model on first use."""
+        if self._cross_encoder is None:
+            try:
+                from sentence_transformers import CrossEncoder
+                logger.info(f"Loading cross-encoder: {CROSS_ENCODER_MODEL}")
+                self._cross_encoder = CrossEncoder(CROSS_ENCODER_MODEL)
+                logger.info("Cross-encoder loaded successfully")
+            except Exception as e:
+                logger.warning(f"Failed to load cross-encoder: {e}. Falling back to cosine rerank.")
+                self._cross_encoder = False  # sentinel: don't retry
+        return self._cross_encoder if self._cross_encoder is not False else None
+
     def _rerank_candidates(
         self,
         query: str,
@@ -417,30 +582,64 @@ class HybridRetriever:
         top_n: int = 30,
     ) -> List[Tuple[ChunkMetadata, float]]:
         """
-        Rerank candidates using cosine similarity of embeddings.
-        Blends RRF score with fresh semantic similarity so that
-        filename-boosted chunks keep their advantage.
+        Rerank candidates using a cross-encoder model.
+
+        Cross-encoders score (query, passage) pairs jointly and are
+        significantly more accurate than bi-encoder cosine similarity.
+        Falls back to cosine reranking if cross-encoder is unavailable.
         """
+        subset = candidates[:top_n]
+
+        # ── Try cross-encoder first ──
+        cross_encoder = self._get_cross_encoder()
+        if cross_encoder is not None:
+            try:
+                pairs = [(query, chunk.text) for chunk, _score in subset]
+                ce_scores = cross_encoder.predict(pairs)
+
+                reranked = []
+                for (chunk, rrf_score), ce_score in zip(subset, ce_scores):
+                    # Blend: 35% cross-encoder + 65% RRF (RRF scaled ×10)
+                    # ms-marco is trained on natural-language QA, not code,
+                    # so we let RRF (which already fuses BM25+FAISS+filename)
+                    # dominate while the cross-encoder refines ordering.
+                    final = 0.35 * float(ce_score) + 0.65 * (rrf_score * 10.0)
+                    reranked.append((chunk, final))
+
+                reranked.sort(key=lambda x: x[1], reverse=True)
+                return reranked
+            except Exception as e:
+                logger.warning(f"Cross-encoder rerank failed: {e}")
+
+        # ── Fallback: cosine reranking ──
+        return self._cosine_rerank(query, subset)
+
+    def _cosine_rerank(
+        self,
+        query: str,
+        candidates: List[Tuple[ChunkMetadata, float]],
+    ) -> List[Tuple[ChunkMetadata, float]]:
+        """Fallback reranker using cosine similarity with cached query embedding."""
         try:
+            # Embed query once and reuse for all candidates
             query_embedding = np.array(self.embeddings.embed_query(query))
             q_norm = np.linalg.norm(query_embedding)
             if q_norm == 0:
                 return candidates
 
+            # Batch-embed all candidate texts at once instead of one-by-one
+            candidate_texts = [self._make_faiss_text(chunk) for chunk, _ in candidates]
+            doc_embeddings = self.embeddings.embed_documents(candidate_texts)
+
             reranked = []
-            for chunk, rrf_score in candidates[:top_n]:
-                doc_embedding = np.array(self.embeddings.embed_query(
-                    self._make_faiss_text(chunk)
-                ))
+            for (chunk, rrf_score), doc_emb in zip(candidates, doc_embeddings):
+                doc_embedding = np.array(doc_emb)
                 d_norm = np.linalg.norm(doc_embedding)
                 if d_norm == 0:
                     cosine_sim = 0.0
                 else:
                     cosine_sim = float(np.dot(query_embedding, doc_embedding) / (q_norm * d_norm))
 
-                # Blend: 50% semantic + 50% RRF (normalised to ~same scale)
-                # RRF scores are typically 0.01–0.10; cosine is 0–1.
-                # Multiply RRF by 10 so both axes matter equally.
                 final_score = 0.5 * cosine_sim + 0.5 * (rrf_score * 10.0)
                 reranked.append((chunk, final_score))
 
@@ -448,7 +647,7 @@ class HybridRetriever:
             return reranked
 
         except Exception as e:
-            logger.warning(f"Reranking failed: {e}, returning original order")
+            logger.warning(f"Cosine reranking failed: {e}, returning original order")
             return candidates
 
     def format_context(self, results: List[Tuple[ChunkMetadata, float]], max_tokens: int = 4000) -> Tuple[str, List[str]]:

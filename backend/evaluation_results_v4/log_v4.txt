@@ -1,0 +1,301 @@
+PS D:\RAG_PROJECT\backend> Remove-Item -Recurse -Force indexes\index_1d9ffbaf -ErrorAction SilentlyContinue; python -m evaluation.run_evaluation --skip-extreme --skip-generation --output-dir evaluation_results_v4
+2026-02-15 22:58:33,826 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2026-02-15 22:58:33,827 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-02-15 22:58:39,882 - __main__ - INFO - Loaded 15 ground-truth queries for https://github.com/gouravthakur39/beginners-C-program-examples
+D:\RAG_PROJECT\backend\evaluation\run_evaluation.py:378: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat(),
+2026-02-15 22:58:39,882 - __main__ - INFO - ============================================================
+2026-02-15 22:58:39,882 - __main__ - INFO - PHASE 1  — Indexing repository
+2026-02-15 22:58:39,884 - __main__ - INFO - ============================================================
+2026-02-15 22:58:39,884 - indexer - INFO - Indexing repository: https://github.com/gouravthakur39/beginners-C-program-examples
+2026-02-15 22:58:43,908 - indexer - INFO - Cloned to C:\Users\chlok\AppData\Local\Temp\tmpazxd5awk
+2026-02-15 22:58:48,171 - indexer - INFO - Extracted 460 chunks
+2026-02-15 22:58:48,176 - storage - INFO - Saved 460 chunks to indexes\index_1d9ffbaf\chunks.jsonl
+2026-02-15 22:58:48,185 - storage - INFO - Saved metadata to indexes\index_1d9ffbaf\meta.json   
+2026-02-15 22:58:48,294 - retriever - INFO - Building hybrid index for https://github.com/gouravthakur39/beginners-C-program-examples
+2026-02-15 22:58:48,405 - retriever - INFO - Embedding 460/460 new chunks (0 cached)
+2026-02-15 22:59:35,885 - faiss.loader - INFO - Loading faiss with AVX2 support.
+2026-02-15 22:59:37,595 - faiss.loader - INFO - Successfully loaded faiss with AVX2 support.
+2026-02-15 22:59:37,688 - retriever - INFO - Upgraded FAISS index to HNSW (dim=384, n=460, M=32)
+2026-02-15 22:59:38,159 - retriever - INFO - Saved embedding cache (460 entries)
+2026-02-15 22:59:38,174 - retriever - INFO - Saved FAISS index to indexes\index_1d9ffbaf\faiss_index
+2026-02-15 22:59:38,175 - retriever - INFO - Built hybrid index with 460 chunks
+2026-02-15 22:59:38,176 - rag_agent - INFO - ✓ Indexed https://github.com/gouravthakur39/beginners-C-program-examples: 460 chunks
+2026-02-15 22:59:38,177 - evaluation.performance_metrics - INFO - [Timer] indexing: 58.2934s    
+2026-02-15 22:59:38,177 - rag_agent - INFO - ✓ Added https://github.com/gouravthakur39/beginners-C-program-examples to active repositories
+2026-02-15 22:59:38,179 - __main__ - INFO - ============================================================
+2026-02-15 22:59:38,180 - __main__ - INFO - PHASE 2  — Retrieval Quality
+2026-02-15 22:59:38,181 - __main__ - INFO - ============================================================
+2026-02-15 22:59:42,429 - __main__ - INFO -   Q1: P@5=0.400  R@5=1.000  NDCG@5=1.000  RR=1.000
+2026-02-15 22:59:42,429 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 22:59:42,480 - retriever - INFO - Filename match: Adding_Fractions.c (1 chunks eligible for 115% boost)
+2026-02-15 22:59:46,741 - __main__ - INFO -   Q2: P@5=0.200  R@5=1.000  NDCG@5=1.000  RR=1.000
+2026-02-15 22:59:51,044 - __main__ - INFO -   Q3: P@5=0.800  R@5=0.222  NDCG@5=0.830  RR=1.000
+2026-02-15 22:59:54,801 - __main__ - INFO -   Q4: P@5=0.800  R@5=0.800  NDCG@5=0.786  RR=1.000
+2026-02-15 22:59:58,689 - __main__ - INFO -   Q5: P@5=0.800  R@5=1.000  NDCG@5=1.000  RR=1.000
+2026-02-15 23:00:02,860 - __main__ - INFO -   Q6: P@5=0.800  R@5=0.200  NDCG@5=0.869  RR=1.000
+2026-02-15 23:00:07,076 - __main__ - INFO -   Q7: P@5=1.000  R@5=0.556  NDCG@5=1.000  RR=1.000
+2026-02-15 23:00:11,223 - __main__ - INFO -   Q8: P@5=0.400  R@5=1.000  NDCG@5=1.000  RR=1.000
+2026-02-15 23:00:11,231 - retriever - INFO - Detected file-specific query for: addition
+2026-02-15 23:00:11,302 - retriever - INFO - Filename match: Addition.c (1 chunks eligible for 115% boost)
+2026-02-15 23:00:15,463 - __main__ - INFO -   Q9: P@5=0.200  R@5=0.500  NDCG@5=0.613  RR=1.000
+2026-02-15 23:00:15,464 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 23:00:15,524 - retriever - INFO - Filename match: ARRAY.c (15 chunks eligible for 115% boost)
+2026-02-15 23:00:19,523 - __main__ - INFO -   Q10: P@5=0.800  R@5=0.267  NDCG@5=0.854  RR=1.000
+2026-02-15 23:00:19,524 - retriever - INFO - Detected file-specific query for: basicgame.c
+2026-02-15 23:00:19,603 - retriever - INFO - Filename match: BasicGame.c (38 chunks eligible for 115% boost)
+2026-02-15 23:00:23,895 - __main__ - INFO -   Q11: P@5=1.000  R@5=0.132  NDCG@5=1.000  RR=1.000
+2026-02-15 23:00:35,999 - __main__ - INFO -   Q12: P@5=1.000  R@5=0.238  NDCG@5=1.000  RR=1.000
+2026-02-15 23:00:52,219 - __main__ - INFO -   Q13: P@5=0.600  R@5=0.200  NDCG@5=0.530  RR=0.500
+2026-02-15 23:00:56,543 - __main__ - INFO -   Q14: P@5=0.200  R@5=0.500  NDCG@5=0.613  RR=1.000
+2026-02-15 23:01:00,690 - __main__ - INFO -   Q15: P@5=0.400  R@5=1.000  NDCG@5=1.000  RR=1.000
+2026-02-15 23:01:00,692 - __main__ - INFO - 
+  Aggregate: {
+  "Precision@1": 0.9333333333333333,
+  "Recall@1": 0.28715121136173766,
+  "F1@1": 0.3822906041327094,
+  "NDCG@1": 0.9333333333333333,
+  "HitRate@1": 0.9333333333333333,
+  "Precision@3": 0.7333333333333333,
+  "Recall@3": 0.4866388192703982,
+  "F1@3": 0.4640257087871086,
+  "NDCG@3": 0.8817529590353944,
+  "HitRate@3": 1.0,
+  "Precision@5": 0.6266666666666667,
+  "Recall@5": 0.5742745753272069,
+  "F1@5": 0.4671481222219342,
+  "NDCG@5": 0.873005953867905,
+  "HitRate@5": 1.0,
+  "Precision@8": 0.5,
+  "Recall@8": 0.6504901141743247,
+  "F1@8": 0.4350637099750779,
+  "NDCG@8": 0.853643094489515,
+  "HitRate@8": 1.0,
+  "Precision@10": 0.4266666666666667,
+  "Recall@10": 0.6616179337231969,
+  "F1@10": 0.3993498751767003,
+  "NDCG@10": 0.825970487856716,
+  "HitRate@10": 1.0,
+  "MRR": 0.9666666666666667,
+  "MAP": 0.6126721665274297
+}
+2026-02-15 23:01:00,693 - __main__ - INFO - Skipping generation quality (--skip-generation)     
+2026-02-15 23:01:00,693 - __main__ - INFO - ============================================================
+2026-02-15 23:01:00,694 - __main__ - INFO - PHASE 4  — Performance Benchmarks
+2026-02-15 23:01:00,694 - __main__ - INFO - ============================================================
+2026-02-15 23:01:00,695 - indexer - INFO - Indexing repository: https://github.com/gouravthakur39/beginners-C-program-examples
+2026-02-15 23:01:04,762 - indexer - INFO - Cloned to C:\Users\chlok\AppData\Local\Temp\tmpt4b21h2l
+2026-02-15 23:01:05,955 - indexer - INFO - Extracted 460 chunks
+2026-02-15 23:01:05,997 - storage - INFO - Saved 460 chunks to indexes\index_1d9ffbaf\chunks.jsonl
+2026-02-15 23:01:06,005 - storage - INFO - Saved metadata to indexes\index_1d9ffbaf\meta.json
+2026-02-15 23:01:06,484 - retriever - INFO - Building hybrid index for https://github.com/gouravthakur39/beginners-C-program-examples
+2026-02-15 23:01:07,252 - retriever - INFO - Loaded embedding cache with 460 entries
+2026-02-15 23:01:07,264 - retriever - INFO - All 460 chunk embeddings served from cache
+2026-02-15 23:01:07,585 - retriever - INFO - Upgraded FAISS index to HNSW (dim=384, n=460, M=32)
+2026-02-15 23:01:08,569 - retriever - INFO - Saved embedding cache (460 entries)
+2026-02-15 23:01:08,588 - retriever - INFO - Saved FAISS index to indexes\index_1d9ffbaf\faiss_index
+2026-02-15 23:01:08,589 - retriever - INFO - Built hybrid index with 460 chunks
+2026-02-15 23:01:08,591 - rag_agent - INFO - ✓ Indexed https://github.com/gouravthakur39/beginners-C-program-examples: 460 chunks
+2026-02-15 23:01:08,591 - evaluation.performance_metrics - INFO - [Timer] index_run_0: 7.8959s  
+2026-02-15 23:01:18,136 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 23:01:18,289 - retriever - INFO - Filename match: Adding_Fractions.c (1 chunks eligible for 115% boost)
+2026-02-15 23:02:15,139 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 23:02:15,249 - retriever - INFO - Filename match: Adding_Fractions.c (1 chunks eligible for 115% boost)
+2026-02-15 23:02:20,992 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 23:02:21,127 - retriever - INFO - Filename match: Adding_Fractions.c (1 chunks eligible for 115% boost)
+2026-02-15 23:02:28,388 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 23:02:28,494 - retriever - INFO - Filename match: Adding_Fractions.c (1 chunks eligible for 115% boost)
+2026-02-15 23:04:07,151 - retriever - INFO - Detected file-specific query for: addition
+2026-02-15 23:04:07,204 - retriever - INFO - Filename match: Addition.c (1 chunks eligible for 115% boost)
+2026-02-15 23:04:11,126 - retriever - INFO - Detected file-specific query for: addition
+2026-02-15 23:04:11,184 - retriever - INFO - Filename match: Addition.c (1 chunks eligible for 115% boost)
+2026-02-15 23:04:14,784 - retriever - INFO - Detected file-specific query for: addition
+2026-02-15 23:04:14,834 - retriever - INFO - Filename match: Addition.c (1 chunks eligible for 115% boost)
+2026-02-15 23:04:18,951 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 23:04:19,012 - retriever - INFO - Filename match: ARRAY.c (15 chunks eligible for 115% boost)
+2026-02-15 23:04:22,805 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 23:04:22,870 - retriever - INFO - Filename match: ARRAY.c (15 chunks eligible for 115% boost)
+2026-02-15 23:04:27,063 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 23:04:27,161 - retriever - INFO - Filename match: ARRAY.c (15 chunks eligible for 115% boost)
+2026-02-15 23:04:31,180 - retriever - INFO - Detected file-specific query for: basicgame.c
+2026-02-15 23:04:31,247 - retriever - INFO - Filename match: BasicGame.c (38 chunks eligible for 115% boost)
+2026-02-15 23:04:35,150 - retriever - INFO - Detected file-specific query for: basicgame.c
+2026-02-15 23:04:35,224 - retriever - INFO - Filename match: BasicGame.c (38 chunks eligible for 115% boost)
+2026-02-15 23:04:39,533 - retriever - INFO - Detected file-specific query for: basicgame.c
+2026-02-15 23:04:39,632 - retriever - INFO - Filename match: BasicGame.c (38 chunks eligible for 115% boost)
+2026-02-15 23:05:33,619 - rag_agent - INFO - Retrieving context for: How does the Armstrong number checker work?...
+2026-02-15 23:05:37,595 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:05:38,556 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:05:38,557 - rag_agent - INFO - Retrieving context for: How does the Armstrong number checker work?...
+2026-02-15 23:05:46,203 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:05:46,337 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:05:46,337 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:05:46,338 - rag_agent - INFO - Retrieving context for: Explain the Adding_Fractions.c program...
+2026-02-15 23:05:46,338 - retriever - INFO - Detected file-specific query for: adding_fractions.c
+2026-02-15 23:05:46,386 - retriever - INFO - Filename match: Adding_Fractions.c (1 chunks eligible for 115% boost)
+2026-02-15 23:05:49,584 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:05:49,722 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:05:49,722 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:05:49,722 - rag_agent - INFO - Retrieving context for: Show me the bubble sort implementation...
+2026-02-15 23:05:53,410 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:05:53,514 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:05:53,515 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:05:53,516 - rag_agent - INFO - Retrieving context for: How is temperature conversion implemented?...
+2026-02-15 23:05:56,914 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:05:57,087 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:05:57,088 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:05:57,088 - rag_agent - INFO - Retrieving context for: What programs calculate the area of geometric shap...
+2026-02-15 23:06:00,196 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:06:00,363 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:00,363 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:00,364 - rag_agent - INFO - Retrieving context for: How does the binary search algorithm work in this ...
+2026-02-15 23:06:03,531 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:06:03,650 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:03,650 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:03,651 - rag_agent - INFO - Retrieving context for: Explain the background thread sorter program...
+2026-02-15 23:06:07,161 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:06:07,327 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:07,327 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:07,328 - rag_agent - INFO - Retrieving context for: What is an automorphic number and how is it detect...
+2026-02-15 23:06:11,531 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:06:11,644 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:11,644 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:11,644 - rag_agent - INFO - Retrieving context for: Show me a simple addition program in C...
+2026-02-15 23:06:11,648 - retriever - INFO - Detected file-specific query for: addition
+2026-02-15 23:06:11,735 - retriever - INFO - Filename match: Addition.c (1 chunks eligible for 115% boost)
+2026-02-15 23:06:15,860 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:06:16,030 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:16,030 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:16,030 - rag_agent - INFO - Retrieving context for: How does the ARRAY.c program handle insertion and ...
+2026-02-15 23:06:16,032 - retriever - INFO - Detected file-specific query for: array.c
+2026-02-15 23:06:16,104 - retriever - INFO - Filename match: ARRAY.c (15 chunks eligible for 115% boost)
+2026-02-15 23:06:20,207 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:06:20,337 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:20,338 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:20,338 - rag_agent - INFO - Retrieving context for: What data structures are used in the BasicGame.c p...
+2026-02-15 23:06:20,339 - retriever - INFO - Detected file-specific query for: basicgame.c      
+2026-02-15 23:06:20,416 - retriever - INFO - Filename match: BasicGame.c (38 chunks eligible for 115% boost)
+2026-02-15 23:06:24,411 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:06:24,531 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:24,531 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:24,532 - rag_agent - INFO - Retrieving context for: How does the selection sort compare to bubble sort...
+2026-02-15 23:06:28,665 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:06:28,830 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:28,831 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:28,833 - rag_agent - INFO - Retrieving context for: Explain the linear search implementation...
+2026-02-15 23:06:32,927 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:06:33,036 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:33,036 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:33,036 - rag_agent - INFO - Retrieving context for: How are basic arithmetic operations implemented?...
+2026-02-15 23:06:38,674 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:06:38,777 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:38,783 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:38,786 - rag_agent - INFO - Retrieving context for: What is the alphabet triangle program doing?...
+2026-02-15 23:06:43,826 - rag_agent - INFO - Calling LLM with 8 sources
+2026-02-15 23:06:43,976 - llm_client - ERROR - Gemini API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:43,978 - evaluation.performance_metrics - WARNING - Query failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
+2026-02-15 23:06:43,978 - __main__ - INFO - Skipping extreme scenarios (--skip-extreme)
+2026-02-15 23:06:43,984 - __main__ - INFO -   JSON report → evaluation_results_v4\evaluation_report.json
+2026-02-15 23:06:43,990 - __main__ - INFO -   Markdown report → evaluation_results_v4\evaluation_report.md
+2026-02-15 23:06:43,993 - __main__ - INFO - ============================================================
+2026-02-15 23:06:43,995 - __main__ - INFO - Evaluation complete — results in evaluation_results_v4/
+2026-02-15 23:06:43,995 - __main__ - INFO - ============================================================
+
+============================================================
+EVALUATION SUMMARY
+============================================================
+
+Retrieval Quality:
+  Precision@5        = 0.6267
+  Recall@5           = 0.5743
+  NDCG@5             = 0.8730
+  MRR                = 0.9667
+  HitRate@5          = 1.0000
+  MAP                = 0.6127
+
+Retrieval Latency: P50=4.1676s  P95=12.8782s  P99=29.423s
+End-to-End Latency: P50=4.2034s  P95=7.7812s  P99=7.7812s
+
+Full reports saved to: evaluation_results_v4/
+  - evaluation_report.json
+  - evaluation_report.md
+PS D:\RAG_PROJECT\backend> Get-Content d:\RAG_PROJECT\backend\evaluation_results_v4\evaluation_report.md
+# RAG System â€” Automated Evaluation Report
+
+**Date:** 2026-02-15T17:28:39.882209
+**Repository:** `https://github.com/gouravthakur39/beginners-C-program-examples`
+**Ground-truth queries:** 15
+**Total evaluation time:** 484.1s
+
+## 1. Retrieval Quality
+
+| Metric | Value |
+|--------|------:|
+| F1@1 | 0.3823 |
+| F1@10 | 0.3993 |
+| F1@3 | 0.4640 |
+| F1@5 | 0.4671 |
+| F1@8 | 0.4351 |
+| HitRate@1 | 0.9333 |
+| HitRate@10 | 1.0000 |
+| HitRate@3 | 1.0000 |
+| HitRate@5 | 1.0000 |
+| HitRate@8 | 1.0000 |
+| MAP | 0.6127 |
+| MRR | 0.9667 |
+| NDCG@1 | 0.9333 |
+| NDCG@10 | 0.8260 |
+| NDCG@3 | 0.8818 |
+| NDCG@5 | 0.8730 |
+| NDCG@8 | 0.8536 |
+| Precision@1 | 0.9333 |
+| Precision@10 | 0.4267 |
+| Precision@3 | 0.7333 |
+| Precision@5 | 0.6267 |
+| Precision@8 | 0.5000 |
+| Recall@1 | 0.2872 |
+| Recall@10 | 0.6616 |
+| Recall@3 | 0.4866 |
+| Recall@5 | 0.5743 |
+| Recall@8 | 0.6505 |
+
+### Per-Query Breakdown (K=5)
+
+| # | Question | P@5 | R@5 | NDCG@5 | RR |
+|---|----------|----:|----:|-------:|---:|
+| 1 | How does the Armstrong number checker work? | 0.400 | 1.000 | 1.000 | 1.000 |
+| 2 | Explain the Adding_Fractions.c program | 0.200 | 1.000 | 1.000 | 1.000 |
+| 3 | Show me the bubble sort implementation | 0.800 | 0.222 | 0.830 | 1.000 |
+| 4 | How is temperature conversion implemented? | 0.800 | 0.800 | 0.786 | 1.000 |
+| 5 | What programs calculate the area of geometric shapes? | 0.800 | 1.000 | 1.000 | 1.000 |   
+| 6 | How does the binary search algorithm work in this repository | 0.800 | 0.200 | 0.869 | 1.000 |
+| 7 | Explain the background thread sorter program | 1.000 | 0.556 | 1.000 | 1.000 |
+| 8 | What is an automorphic number and how is it detected? | 0.400 | 1.000 | 1.000 | 1.000 |   
+| 9 | Show me a simple addition program in C | 0.200 | 0.500 | 0.613 | 1.000 |
+| 10 | How does the ARRAY.c program handle insertion and deletion? | 0.800 | 0.267 | 0.854 | 1.000 |
+| 11 | What data structures are used in the BasicGame.c program? | 1.000 | 0.132 | 1.000 | 1.000 |
+| 12 | How does the selection sort compare to bubble sort in this c | 1.000 | 0.238 | 1.000 | 1.000 |
+| 13 | Explain the linear search implementation | 0.600 | 0.200 | 0.530 | 0.500 |
+| 14 | How are basic arithmetic operations implemented? | 0.200 | 0.500 | 0.613 | 1.000 |       
+| 15 | What is the alphabet triangle program doing? | 0.400 | 1.000 | 1.000 | 1.000 |
+
+## 2. Generation Quality (LLM-as-Judge, 1â€“5 scale)
+
+## 3. Performance
+
+**Indexing:** 460 chunks in 7.8959s
+
+| Metric | Retrieval Only | End-to-End (with LLM) |
+|--------|---------------:|----------------------:|
+| MEAN (s) | 5.5209 | 4.3612 |
+| P50 (s) | 4.1676 | 4.2034 |
+| P95 (s) | 12.8782 | 7.7812 |
+| P99 (s) | 29.4230 | 7.7812 |
+
+## 4. Extreme Scenarios
+
+_Skipped._
+
+---
+
+*Report generated automatically by `evaluation.run_evaluation`.*
