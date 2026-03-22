@@ -78,7 +78,7 @@ class RAGAgent:
         self,
         question: str,
         repo_urls: Optional[List[str]] = None,
-        top_k: int = 8,
+        top_k: int = 15,
         use_history: bool = True,
     ) -> LLMResponse:
         """
@@ -112,8 +112,19 @@ class RAGAgent:
                 model=self.llm.model_name,
             )
 
-        # Format context
-        context, citations = self.retriever.format_context(results, max_tokens=4000)
+        # Format context (generous budget — Gemini 2.5 Flash has 1M tokens)
+        context, citations = self.retriever.format_context(results, max_tokens=16000)
+
+        # Build structured citation objects from retrieved chunks
+        structured_citations = []
+        for chunk, _score in results:
+            structured_citations.append({
+                "file_path": chunk.source or "",
+                "line_start": chunk.start_line or 1,
+                "line_end": chunk.end_line or 1,
+                "content": chunk.text or "",
+                "language": chunk.language or "",
+            })
 
         # Get chat history
         chat_history = None
@@ -129,15 +140,15 @@ class RAGAgent:
             chat_history=chat_history,
         )
 
-        # Create response
+        # Create response with structured citations
         response = LLMResponse(
             answer=answer,
-            citations=used_citations,
+            citations=structured_citations,
             question=question,
             model=self.llm.model_name,
         )
 
-        # Add to history
+        # Add to history (store string citations for history readability)
         for repo_url in repo_urls:
             self.history_manager.add_message(repo_url, "user", question)
             self.history_manager.add_message(repo_url, "assistant", answer, used_citations)

@@ -1,0 +1,369 @@
+{
+  "repo_url": "d:\\temp_redis_mini",
+  "description": "Extreme evaluation ground truth for Redis (redis/redis) — 60 queries across 4 categories testing retrieval at 2000+ chunks scale.",
+  "queries": [
+    {
+      "question": "Show me the main function in server.c",
+      "relevant_sources": ["src\\server.c"],
+      "expected_answer_keywords": ["main", "initServer", "aeMain", "event loop"],
+      "category": "file_based"
+    },
+    {
+      "question": "How does server.c implement the server initialization?",
+      "relevant_sources": ["src\\server.c"],
+      "expected_answer_keywords": ["initServer", "listen", "socket", "aeCreateEventLoop"],
+      "category": "file_based"
+    },
+    {
+      "question": "What functions are defined in dict.c?",
+      "relevant_sources": ["src\\dict.c"],
+      "expected_answer_keywords": ["dictCreate", "dictAdd", "dictFind", "dictDelete", "dictRehash"],
+      "category": "file_based"
+    },
+    {
+      "question": "Show me the dictRehash implementation in dict.c",
+      "relevant_sources": ["src\\dict.c"],
+      "expected_answer_keywords": ["dictRehash", "rehashidx", "bucket", "hash table"],
+      "category": "file_based"
+    },
+    {
+      "question": "Explain the evict.c performEvictions function",
+      "relevant_sources": ["src\\evict.c"],
+      "expected_answer_keywords": ["performEvictions", "maxmemory", "eviction", "pool"],
+      "category": "file_based"
+    },
+    {
+      "question": "How does db.c implement key lookup?",
+      "relevant_sources": ["src\\db.c"],
+      "expected_answer_keywords": ["lookupKey", "lookupKeyRead", "lookupKeyWrite", "expireIfNeeded"],
+      "category": "file_based"
+    },
+    {
+      "question": "Show the networking.c client creation code",
+      "relevant_sources": ["src\\networking.c"],
+      "expected_answer_keywords": ["createClient", "client", "conn", "fd"],
+      "category": "file_based"
+    },
+    {
+      "question": "How does networking.c handle reading queries from clients?",
+      "relevant_sources": ["src\\networking.c"],
+      "expected_answer_keywords": ["readQueryFromClient", "processInputBuffer", "querybuf"],
+      "category": "file_based"
+    },
+    {
+      "question": "Show me the rdb.c save implementation",
+      "relevant_sources": ["src\\rdb.c"],
+      "expected_answer_keywords": ["rdbSave", "rdbSaveBackground", "rio", "dump"],
+      "category": "file_based"
+    },
+    {
+      "question": "What does aof.c feedAppendOnlyFile do?",
+      "relevant_sources": ["src\\aof.c"],
+      "expected_answer_keywords": ["feedAppendOnlyFile", "append", "propagate", "buf"],
+      "category": "file_based"
+    },
+    {
+      "question": "Show the pubsub.c subscribe implementation",
+      "relevant_sources": ["src\\pubsub.c"],
+      "expected_answer_keywords": ["pubsubSubscribeChannel", "subscribe", "channel", "client"],
+      "category": "file_based"
+    },
+    {
+      "question": "How does replication.c feed data to replicas?",
+      "relevant_sources": ["src\\replication.c"],
+      "expected_answer_keywords": ["replicationFeedSlaves", "replicas", "backlog", "offset"],
+      "category": "file_based"
+    },
+    {
+      "question": "Show me the cluster initialization in cluster_legacy.c",
+      "relevant_sources": ["src\\cluster_legacy.c", "src\\cluster.c"],
+      "expected_answer_keywords": ["clusterInit", "cluster", "node", "slots"],
+      "category": "file_based"
+    },
+    {
+      "question": "Explain the sds.c string library implementation",
+      "relevant_sources": ["src\\sds.c", "src\\sds.h"],
+      "expected_answer_keywords": ["sds", "sdsnew", "sdscat", "sdsfree", "dynamic string"],
+      "category": "file_based"
+    },
+    {
+      "question": "How does ae.c implement the event loop?",
+      "relevant_sources": ["src\\ae.c", "src\\ae.h"],
+      "expected_answer_keywords": ["aeCreateEventLoop", "aeMain", "aeProcessEvents", "fire"],
+      "category": "file_based"
+    },
+    {
+      "question": "What is in the quicklist.c data structure?",
+      "relevant_sources": ["src\\quicklist.c", "src\\quicklist.h"],
+      "expected_answer_keywords": ["quicklist", "quicklistCreate", "quicklistPush", "ziplist", "listpack"],
+      "category": "file_based"
+    },
+    {
+      "question": "Show me the sorted set implementation in t_zset.c",
+      "relevant_sources": ["src\\t_zset.c"],
+      "expected_answer_keywords": ["zset", "skiplist", "zslCreate", "zslInsert", "score"],
+      "category": "file_based"
+    },
+    {
+      "question": "How does t_string.c handle the SET command?",
+      "relevant_sources": ["src\\t_string.c"],
+      "expected_answer_keywords": ["setCommand", "setGenericCommand", "SET", "string", "OBJ_STRING"],
+      "category": "file_based"
+    },
+    {
+      "question": "What does the multi.c transaction implementation look like?",
+      "relevant_sources": ["src\\multi.c"],
+      "expected_answer_keywords": ["multiCommand", "execCommand", "MULTI", "EXEC", "queue"],
+      "category": "file_based"
+    },
+    {
+      "question": "Show the lazy free implementation in lazyfree.c",
+      "relevant_sources": ["src\\lazyfree.c"],
+      "expected_answer_keywords": ["lazyfree", "dbAsyncDelete", "freeObjAsync", "bio", "background"],
+      "category": "file_based"
+    },
+
+    {
+      "question": "How does Redis handle memory eviction when maxmemory is reached?",
+      "relevant_sources": ["src\\evict.c", "src\\server.c", "src\\db.c"],
+      "expected_answer_keywords": ["eviction", "maxmemory", "LRU", "LFU", "performEvictions", "pool"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis implement hash table rehashing?",
+      "relevant_sources": ["src\\dict.c", "src\\dict.h"],
+      "expected_answer_keywords": ["rehash", "incremental", "dictRehash", "ht", "rehashidx"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does the Redis event loop work?",
+      "relevant_sources": ["src\\ae.c", "src\\ae.h", "src\\server.c"],
+      "expected_answer_keywords": ["event loop", "epoll", "aeProcessEvents", "aeMain", "file events", "time events"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis persist data to disk?",
+      "relevant_sources": ["src\\rdb.c", "src\\aof.c", "src\\server.c"],
+      "expected_answer_keywords": ["RDB", "AOF", "snapshot", "append", "fsync", "persistence"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis handle pub/sub messaging?",
+      "relevant_sources": ["src\\pubsub.c", "src\\server.h"],
+      "expected_answer_keywords": ["publish", "subscribe", "channel", "pattern", "pubsubPublishMessage"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis implement master-slave replication?",
+      "relevant_sources": ["src\\replication.c", "src\\server.c"],
+      "expected_answer_keywords": ["replication", "SYNC", "PSYNC", "backlog", "replica", "master"],
+      "category": "conceptual"
+    },
+    {
+      "question": "What is the skiplist data structure used for in Redis?",
+      "relevant_sources": ["src\\t_zset.c", "src\\server.h"],
+      "expected_answer_keywords": ["skiplist", "sorted set", "zsl", "level", "score", "O(log n)"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis handle client connections and request parsing?",
+      "relevant_sources": ["src\\networking.c", "src\\server.c", "src\\connection.c"],
+      "expected_answer_keywords": ["client", "connection", "readQueryFromClient", "processInputBuffer", "RESP"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis implement background saving with fork?",
+      "relevant_sources": ["src\\rdb.c", "src\\server.c", "src\\aof.c"],
+      "expected_answer_keywords": ["fork", "background", "child", "rdbSaveBackground", "COW", "copy-on-write"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis manage expired keys?",
+      "relevant_sources": ["src\\expire.c", "src\\db.c", "src\\server.c"],
+      "expected_answer_keywords": ["expire", "TTL", "lazy", "active", "expireIfNeeded", "activeExpireCycle"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis implement the SDS dynamic string library?",
+      "relevant_sources": ["src\\sds.c", "src\\sds.h"],
+      "expected_answer_keywords": ["SDS", "simple dynamic string", "header", "alloc", "len", "binary safe"],
+      "category": "conceptual"
+    },
+    {
+      "question": "What memory allocator does Redis use and how does it track memory?",
+      "relevant_sources": ["src\\zmalloc.c", "src\\zmalloc.h"],
+      "expected_answer_keywords": ["zmalloc", "memory", "jemalloc", "used_memory", "fragmentation"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis clustering work with hash slots?",
+      "relevant_sources": ["src\\cluster_legacy.c", "src\\cluster.c", "src\\cluster.h"],
+      "expected_answer_keywords": ["cluster", "slots", "16384", "hash slot", "CRC16", "node"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis handle the OBJECT ENCODING introspection?",
+      "relevant_sources": ["src\\object.c", "src\\server.h"],
+      "expected_answer_keywords": ["encoding", "object", "OBJ_ENCODING", "listpack", "hashtable", "ziplist"],
+      "category": "conceptual"
+    },
+    {
+      "question": "What is the Redis module API and how does it work?",
+      "relevant_sources": ["src\\module.c", "src\\redismodule.h"],
+      "expected_answer_keywords": ["module", "RedisModule", "API", "command", "register"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis implement the quicklist data structure for lists?",
+      "relevant_sources": ["src\\quicklist.c", "src\\quicklist.h", "src\\t_list.c"],
+      "expected_answer_keywords": ["quicklist", "listpack", "node", "compress", "list"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis implement ACL (Access Control Lists)?",
+      "relevant_sources": ["src\\acl.c", "src\\server.h"],
+      "expected_answer_keywords": ["ACL", "user", "permission", "command", "auth"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does the Redis sentinel implement automatic failover?",
+      "relevant_sources": ["src\\sentinel.c"],
+      "expected_answer_keywords": ["sentinel", "failover", "master", "quorum", "ODOWN", "leader"],
+      "category": "conceptual"
+    },
+    {
+      "question": "What are the different object types and encodings in Redis?",
+      "relevant_sources": ["src\\object.c", "src\\server.h"],
+      "expected_answer_keywords": ["OBJ_STRING", "OBJ_LIST", "OBJ_SET", "OBJ_ZSET", "OBJ_HASH", "encoding"],
+      "category": "conceptual"
+    },
+    {
+      "question": "How does Redis implement blocking operations like BLPOP?",
+      "relevant_sources": ["src\\blocked.c", "src\\t_list.c", "src\\server.c"],
+      "expected_answer_keywords": ["blocked", "BLPOP", "blocking", "timeout", "unblock", "client"],
+      "category": "conceptual"
+    },
+
+    {
+      "question": "Trace how a SET command is processed from client input to storage",
+      "relevant_sources": ["src\\networking.c", "src\\server.c", "src\\t_string.c", "src\\db.c"],
+      "expected_answer_keywords": ["readQueryFromClient", "processCommand", "setCommand", "dbAdd", "setKey"],
+      "category": "cross_file"
+    },
+    {
+      "question": "How does a key expiration flow from setting TTL to actual deletion?",
+      "relevant_sources": ["src\\db.c", "src\\expire.c", "src\\server.c", "src\\lazyfree.c"],
+      "expected_answer_keywords": ["expireIfNeeded", "activeExpireCycle", "dbDelete", "TTL", "lazy"],
+      "category": "cross_file"
+    },
+    {
+      "question": "How does RDB persistence interact with the server event loop?",
+      "relevant_sources": ["src\\rdb.c", "src\\server.c", "src\\bio.c"],
+      "expected_answer_keywords": ["rdbSaveBackground", "fork", "serverCron", "backgroundSaveDoneHandler", "wait"],
+      "category": "cross_file"
+    },
+    {
+      "question": "How does a client connection get established and become ready for commands?",
+      "relevant_sources": ["src\\networking.c", "src\\connection.c", "src\\server.c", "src\\ae.c"],
+      "expected_answer_keywords": ["accept", "createClient", "connSetReadHandler", "readQueryFromClient", "event"],
+      "category": "cross_file"
+    },
+    {
+      "question": "How does AOF rewrite work with the main server process?",
+      "relevant_sources": ["src\\aof.c", "src\\server.c", "src\\bio.c"],
+      "expected_answer_keywords": ["rewriteAppendOnlyFileBackground", "fork", "aofRewriteBufferAppend", "pipe"],
+      "category": "cross_file"
+    },
+    {
+      "question": "How does cluster failover detection propagate across nodes?",
+      "relevant_sources": ["src\\cluster_legacy.c", "src\\cluster.c", "src\\server.c"],
+      "expected_answer_keywords": ["clusterHandleSlaveFailover", "clusterProcessPacket", "FAILOVER", "vote", "epoch"],
+      "category": "cross_file"
+    },
+    {
+      "question": "How does the replication backlog enable partial resynchronization?",
+      "relevant_sources": ["src\\replication.c", "src\\server.c", "src\\networking.c"],
+      "expected_answer_keywords": ["backlog", "PSYNC", "offset", "replicationFeedSlaves", "partial"],
+      "category": "cross_file"
+    },
+    {
+      "question": "How do Lua scripts execute within the Redis command processing pipeline?",
+      "relevant_sources": ["src\\eval.c", "src\\script.c", "src\\script_lua.c", "src\\server.c"],
+      "expected_answer_keywords": ["lua", "eval", "EVAL", "script", "call", "luaCallFunction"],
+      "category": "cross_file"
+    },
+    {
+      "question": "How does pub/sub message delivery flow from publisher to subscriber clients?",
+      "relevant_sources": ["src\\pubsub.c", "src\\networking.c", "src\\server.c"],
+      "expected_answer_keywords": ["publishCommand", "pubsubPublishMessage", "addReply", "subscriber", "channel"],
+      "category": "cross_file"
+    },
+    {
+      "question": "How does memory eviction interact with the key space and replication?",
+      "relevant_sources": ["src\\evict.c", "src\\db.c", "src\\replication.c", "src\\server.c"],
+      "expected_answer_keywords": ["performEvictions", "dbDelete", "propagate", "replicationFeedSlaves", "DEL"],
+      "category": "cross_file"
+    },
+
+    {
+      "question": "Where does Redis implement B-tree indexing?",
+      "relevant_sources": [],
+      "expected_answer_keywords": ["not", "no B-tree", "skiplist", "hash table"],
+      "category": "adversarial"
+    },
+    {
+      "question": "Show me the Redis SQL query parser",
+      "relevant_sources": [],
+      "expected_answer_keywords": ["not", "no SQL", "key-value", "RESP"],
+      "category": "adversarial"
+    },
+    {
+      "question": "How does Redis use Java for its networking layer?",
+      "relevant_sources": [],
+      "expected_answer_keywords": ["not", "C language", "no Java"],
+      "category": "adversarial"
+    },
+    {
+      "question": "Where is the Redis GraphQL endpoint implemented?",
+      "relevant_sources": [],
+      "expected_answer_keywords": ["not", "no GraphQL", "RESP protocol"],
+      "category": "adversarial"
+    },
+    {
+      "question": "Show me the Redis garbage collector implementation",
+      "relevant_sources": [],
+      "expected_answer_keywords": ["not", "no garbage collector", "manual memory", "zmalloc", "zfree"],
+      "category": "adversarial"
+    },
+    {
+      "question": "How does Redis implement columnar storage like Parquet?",
+      "relevant_sources": [],
+      "expected_answer_keywords": ["not", "no columnar", "in-memory", "key-value"],
+      "category": "adversarial"
+    },
+    {
+      "question": "Where does Redis use RAFT consensus protocol?",
+      "relevant_sources": [],
+      "expected_answer_keywords": ["not", "gossip", "no RAFT", "cluster"],
+      "category": "adversarial"
+    },
+    {
+      "question": "Show me the Redis REST API handler for HTTP requests",
+      "relevant_sources": [],
+      "expected_answer_keywords": ["not", "no REST API", "RESP protocol", "TCP"],
+      "category": "adversarial"
+    },
+    {
+      "question": "How does Redis implement write-ahead logging with LSM trees?",
+      "relevant_sources": [],
+      "expected_answer_keywords": ["not", "no LSM tree", "AOF", "RDB", "append only file"],
+      "category": "adversarial"
+    },
+    {
+      "question": "Where is the Redis connection pooling thread implemented in Python?",
+      "relevant_sources": [],
+      "expected_answer_keywords": ["not", "no Python", "C", "single-threaded"],
+      "category": "adversarial"
+    }
+  ]
+}

@@ -661,7 +661,9 @@ class HybridRetriever:
         Returns:
             Tuple of (formatted_context_str, citations_list)
         """
-        context_parts = []
+        # Group chunks by source file for clearer context
+        from collections import OrderedDict
+        file_groups: OrderedDict[str, list] = OrderedDict()
         citations = []
         total_tokens = 0
 
@@ -671,11 +673,25 @@ class HybridRetriever:
                 break
 
             citation = chunk.citation_str()
-            context_parts.append(f"[{citation}]\n{chunk.text}")
+            source = chunk.source or "unknown"
+            if source not in file_groups:
+                file_groups[source] = []
+            file_groups[source].append((chunk, citation, score))
             citations.append(citation)
             total_tokens += chunk_tokens
 
-        context_str = "\n\n---\n\n".join(context_parts)
+        # Build structured context grouped by file
+        context_parts = []
+        for source, group in file_groups.items():
+            file_section = f"== File: {source} =="
+            for chunk, citation, score in group:
+                lines = f"(lines {chunk.start_line}-{chunk.end_line})" if chunk.start_line else ""
+                symbol = f" [{chunk.name}]" if chunk.name else ""
+                file_section += f"\n\n[{citation}]{symbol} {lines}\n{chunk.text}"
+            context_parts.append(file_section)
+
+        separator = "\n\n" + "=" * 60 + "\n\n"
+        context_str = separator.join(context_parts)
         return context_str, citations
 
     def _load_index_from_disk(self, repo_url: str) -> bool:

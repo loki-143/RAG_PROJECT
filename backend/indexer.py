@@ -100,7 +100,13 @@ class RepositoryIndexer:
         # Walk directory tree
         for root, dirs, files in os.walk(repo_path):
             # Skip hidden and common non-source directories
-            dirs[:] = [d for d in dirs if not d.startswith('.') and d not in ('node_modules', '__pycache__', 'venv', '.git')]
+            _SKIP_DIRS = {
+                'node_modules', '__pycache__', 'venv', '.git',
+                'deps', 'vendor', 'third_party', 'thirdparty',
+                'external', 'build', 'dist', 'out',
+                'tests', 'test', 'modules', 'utils',
+            }
+            dirs[:] = [d for d in dirs if not d.startswith('.') and d not in _SKIP_DIRS]
 
             for filename in files:
                 filepath = os.path.join(root, filename)

@@ -23,8 +23,8 @@ gitpython
 requests
 typing_extensions
 
-# --- Gemini ---
-google-generativeai
+# --- LLM Clients ---
+openai
 protobuf==4.25.3
 
 # --- Env ---

@@ -167,10 +167,15 @@ class RAGEvaluator:
 
         per_query_results: List[Dict[str, Any]] = []
 
+        def _norm(p: str) -> str:
+            """Normalise path separators for cross-platform matching."""
+            return p.replace("\\", "/")
+
         for qi, entry in enumerate(self.queries, start=1):
             question = entry["question"]
             # Ground truth can specify relevant chunks by source file or chunk id patterns
-            relevant_sources: Set[str] = set(entry.get("relevant_sources", []))
+            relevant_sources_raw: Set[str] = set(entry.get("relevant_sources", []))
+            relevant_sources: Set[str] = {_norm(s) for s in relevant_sources_raw}
             relevant_ids: Set[str] = set(entry.get("relevant_chunk_ids", []))
 
             # Retrieve
@@ -186,12 +191,12 @@ class RAGEvaluator:
             if relevant_sources and not relevant_ids:
                 relevant_ids = set()
                 for chunk, _ in results:
-                    if chunk.source in relevant_sources:
+                    if _norm(chunk.source) in relevant_sources:
                         relevant_ids.add(chunk.chunk_id)
                 # Also check chunks NOT in results (load full chunk list)
                 all_chunks = self.agent.retriever.repo_indexes.get(self.repo_url, {}).get("chunk_list", [])
                 for chunk in all_chunks:
-                    if chunk.source in relevant_sources:
+                    if _norm(chunk.source) in relevant_sources:
                         relevant_ids.add(chunk.chunk_id)
 
             per_query = {

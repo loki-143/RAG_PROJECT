@@ -1,0 +1,7 @@
+{
+  "repo_url": "https://github.com/loki-143/TinySteps",
+  "repo_hash": "f8c77c7e",
+  "indexed_at": "2026-03-20T10:58:51.704695",
+  "chunk_count": 116,
+  "embeddings_model": "sentence-transformers/all-MiniLM-L6-v2"
+}

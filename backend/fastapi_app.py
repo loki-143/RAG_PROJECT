@@ -24,6 +24,9 @@ import asyncio
 import logging
 from typing import List, Optional
 
+# Force UTF-8 on Windows to avoid charmap codec errors
+os.environ.setdefault('PYTHONUTF8', '1')
+
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -137,7 +140,7 @@ class IndexRequest(BaseModel):
 class AskRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=5000)
     repos: Optional[List[HttpUrl]] = None
-    top_k: Optional[int] = Field(default=8, ge=1, le=50)
+    top_k: Optional[int] = Field(default=15, ge=1, le=50)
     use_history: Optional[bool] = True
     
     @validator('question')
@@ -154,7 +157,7 @@ class AskRequest(BaseModel):
 class ChatRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=5000)
     repos: List[HttpUrl]
-    top_k: Optional[int] = Field(default=8, ge=1, le=50)
+    top_k: Optional[int] = Field(default=15, ge=1, le=50)
     
     @validator('question')
     def validate_question(cls, v):
@@ -166,11 +169,13 @@ class ChatRequest(BaseModel):
 
 
 class DeleteIndexRequest(BaseModel):
-    repo_url: HttpUrl
+    repo_url: str
     
     @validator('repo_url')
     def validate_repo_url(cls, v):
-        return InputValidator.validate_repo_url(str(v))
+        if not v or not v.strip():
+            raise ValueError("repo_url cannot be empty")
+        return v.strip()
 
 
 # ---------------------------------------------
@@ -320,7 +325,8 @@ async def chat(req: ChatRequest, request: Request):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Failed to process chat")
+        logger.exception("Chat failed")
+        raise HTTPException(status_code=500, detail=f"Failed to process chat: {e}")
 
 
 @app.get("/history", dependencies=[Depends(verify_api_key)])

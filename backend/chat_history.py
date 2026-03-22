@@ -35,7 +35,7 @@ class ChatHistoryManager:
 
         # Load existing history
         if os.path.exists(history_file):
-            with open(history_file, 'r') as f:
+            with open(history_file, 'r', encoding='utf-8') as f:
                 history = json.load(f)
         else:
             history = []
@@ -71,7 +71,7 @@ class ChatHistoryManager:
         if not os.path.exists(history_file):
             return []
 
-        with open(history_file, 'r') as f:
+        with open(history_file, 'r', encoding='utf-8') as f:
             history = json.load(f)
 
         if last_n:
@@ -90,8 +90,8 @@ class ChatHistoryManager:
         """Export chat history to file."""
         history = self.get_history(repo_url)
 
-        with open(output_file, 'w') as f:
-            json.dump(history, f, indent=2)
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(history, f, indent=2, ensure_ascii=False)
 
         logger.info(f"Exported history to {output_file}")
 

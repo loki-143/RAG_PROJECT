@@ -1,5 +1,0 @@
-[Unit]
-Description=RAG Agent API
-
-[Service]
-ExecStart=/opt/startup/startup.sh
