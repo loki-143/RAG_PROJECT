@@ -129,7 +129,7 @@ python cli.py index https://github.com/user/project
 python cli.py chat -r https://github.com/user/project
 
 # API Server Use:
-uvicorn fastapi_app:app --host 0.0.0.0 --port 8000
+uvicorn fastapi_app:app --host 0.0.0.0 --port 5000
 ```
 
 ### Frontend Runtime
@@ -138,7 +138,7 @@ cd frontend
 npm install
 npm run dev
 ```
-(Connects to localhost:8000 by default via `services/api.js`).
+(Connects to localhost:5000 by default via `services/api.js`).
 
 ## Environment Variables
 *   `GOOGLE_API_KEY` - Gemini API key.

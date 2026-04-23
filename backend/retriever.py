@@ -31,9 +31,42 @@ EMBEDDING_CACHE_FILE = "embedding_cache.json"  # Per-index embedding cache
 class HybridRetriever:
     """Hybrid retrieval combining BM25 lexical search and FAISS semantic search."""
 
-    def __init__(self, embeddings_model: str = "sentence-transformers/all-MiniLM-L6-v2"):
+    def __init__(
+        self, 
+        embeddings_model: str = "sentence-transformers/all-MiniLM-L6-v2",
+        use_parallel_embeddings: bool = True,
+        embedding_batch_size: int = 500,
+    ):
+        """
+        Initialize HybridRetriever with eager model loading.
+        
+        Args:
+            embeddings_model: Model name for embeddings
+            use_parallel_embeddings: Use parallel processing for embeddings (faster)
+            embedding_batch_size: Batch size for embedding generation
+        """
         self.embeddings_model_name = embeddings_model
-        self.embeddings = HuggingFaceEmbeddings(model_name=embeddings_model)
+        self.use_parallel_embeddings = use_parallel_embeddings
+        self.embedding_batch_size = embedding_batch_size
+        self.is_ready = False  # Track model readiness
+        
+        logger.info(f"Loading embedding model: {embeddings_model}")
+        
+        # Initialize embeddings with optimizations (EAGER LOADING)
+        model_kwargs = {
+            'device': 'cpu',  # Will be optimized below
+        }
+        encode_kwargs = {
+            'normalize_embeddings': True,  # Normalize for cosine similarity
+            'batch_size': embedding_batch_size,  # Larger batches
+        }
+        
+        self.embeddings = HuggingFaceEmbeddings(
+            model_name=embeddings_model,
+            model_kwargs=model_kwargs,
+            encode_kwargs=encode_kwargs,
+        )
+        
         self.chunk_store = ChunkStore()
         self.repo_indexes: Dict[str, Any] = {}  # {repo_url: {'bm25': ..., 'faiss': ..., 'chunks': ...}}
 
@@ -43,6 +76,10 @@ class HybridRetriever:
         # Set to None and call _get_cross_encoder() to attempt loading.
         self._cross_encoder = False   # False = sentinel "don't try to load"
         self._embedding_cache: Dict[str, List[float]] = {}  # text_hash → embedding vector
+        
+        # Mark as ready after successful initialization
+        self.is_ready = True
+        logger.info("Embedding model loaded successfully - System ready")
 
     # ──────────────────────────────────────────────────────────────
     # Indexing
@@ -134,13 +171,21 @@ class HybridRetriever:
                 to_embed_texts.append(faiss_texts[i])
                 to_embed_indices.append(i)
 
-        # Batch-embed only the missing chunks
+        # Batch-embed only the missing chunks (use optimized parallel processing)
         if to_embed_texts:
             logger.info(
                 f"Embedding {len(to_embed_texts)}/{len(chunks)} new chunks "
                 f"({len(chunks) - len(to_embed_texts)} cached)"
             )
-            new_vectors = self.embeddings.embed_documents(to_embed_texts)
+            
+            # Use parallel embedding generation for significant speedup
+            if self.use_parallel_embeddings and len(to_embed_texts) > 1000:
+                new_vectors = self._parallel_embed_documents(to_embed_texts)
+            else:
+                # Process embeddings in large batches to maximize throughput
+                new_vectors = self._batch_embed_documents(to_embed_texts)
+            
+            # Update cache with new embeddings
             for idx, vec in zip(to_embed_indices, new_vectors):
                 cached[text_hashes[idx]] = vec
         else:
@@ -208,6 +253,84 @@ class HybridRetriever:
         if header:
             return f"{header}\n{chunk.text}"
         return chunk.text
+
+    def _batch_embed_documents(self, texts: List[str]) -> List[List[float]]:
+        """
+        Embed documents in batches with progress logging.
+        Sequential processing but with optimized batch sizes.
+        """
+        new_vectors = []
+        
+        for batch_start in range(0, len(texts), self.embedding_batch_size):
+            batch_end = min(batch_start + self.embedding_batch_size, len(texts))
+            batch_texts = texts[batch_start:batch_end]
+            
+            batch_num = batch_start // self.embedding_batch_size + 1
+            total_batches = (len(texts) + self.embedding_batch_size - 1) // self.embedding_batch_size
+            
+            logger.info(
+                f"Embedding batch {batch_num}/{total_batches}: "
+                f"{len(batch_texts)} chunks"
+            )
+            
+            batch_vectors = self.embeddings.embed_documents(batch_texts)
+            new_vectors.extend(batch_vectors)
+        
+        return new_vectors
+
+    def _parallel_embed_documents(self, texts: List[str]) -> List[List[float]]:
+        """
+        Embed documents using parallel processing for significant speedup.
+        Uses ThreadPoolExecutor since embedding model releases GIL during inference.
+        """
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        import multiprocessing
+        
+        # Use fewer workers for embedding (model is memory-intensive)
+        max_workers = min(4, multiprocessing.cpu_count())
+        
+        logger.info(
+            f"Using parallel embedding with {max_workers} workers "
+            f"(batch_size={self.embedding_batch_size})"
+        )
+        
+        # Split texts into chunks for parallel processing
+        num_batches = (len(texts) + self.embedding_batch_size - 1) // self.embedding_batch_size
+        batches = [
+            texts[i:i + self.embedding_batch_size]
+            for i in range(0, len(texts), self.embedding_batch_size)
+        ]
+        
+        # Process batches in parallel
+        results = [None] * len(batches)
+        
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            future_to_idx = {
+                executor.submit(self.embeddings.embed_documents, batch): idx
+                for idx, batch in enumerate(batches)
+            }
+            
+            completed = 0
+            for future in as_completed(future_to_idx):
+                idx = future_to_idx[future]
+                try:
+                    results[idx] = future.result()
+                    completed += 1
+                    logger.info(
+                        f"Embedding progress: {completed}/{num_batches} batches "
+                        f"({completed * 100 // num_batches}%)"
+                    )
+                except Exception as e:
+                    logger.error(f"Batch {idx} failed: {e}")
+                    results[idx] = []
+        
+        # Flatten results
+        all_vectors = []
+        for batch_vectors in results:
+            if batch_vectors:
+                all_vectors.extend(batch_vectors)
+        
+        return all_vectors
 
     @staticmethod
     def _enrich_chunks(chunks: List[ChunkMetadata]) -> List[ChunkMetadata]:

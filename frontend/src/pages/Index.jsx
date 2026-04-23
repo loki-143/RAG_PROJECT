@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { AppSidebar } from '@/components/layout/AppSidebar';
 import { ChatArea } from '@/components/chat/ChatArea';
+import { SystemReadyNotification } from '@/components/SystemReadyNotification';
 import { useAppStore } from '@/stores/appStore';
 import * as api from '@/services/api';
 
@@ -39,6 +40,7 @@ const Index = () => {
 
     return (
         <div className="flex h-screen w-full bg-background overflow-hidden">
+            <SystemReadyNotification />
             <AppSidebar />
             <main className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
                 <ChatArea />

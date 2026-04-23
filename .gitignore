@@ -18,6 +18,8 @@ ENV/
 # Environment
 .env
 .env.local
+.env.production.local
+backend/.env.local
 
 # RAG specific
 rag_agent/indexes/
@@ -35,3 +37,10 @@ Thumbs.db
 # Git repos cloned during indexing
 tmp/
 temp/
+
+# Docker
+docker-compose.override.yml
+
+# Backups
+backups/
+*.tar.gz

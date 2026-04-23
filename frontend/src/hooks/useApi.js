@@ -3,6 +3,19 @@ import { useToast } from '@/hooks/use-toast';
 import * as api from '@/services/api';
 import { useAppStore } from '@/stores/appStore';
 
+// Polyfill for crypto.randomUUID() for older browsers
+function generateUUID() {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        return crypto.randomUUID();
+    }
+    // Fallback implementation
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
 export function useIndexRepository() {
     const [isIndexing, setIsIndexing] = useState(false);
     const { toast } = useToast();
@@ -16,7 +29,7 @@ export function useIndexRepository() {
         const repoName = urlParts.slice(-2).join('/').replace('.git', '');
 
         const newRepo = {
-            id: crypto.randomUUID(),
+            id: generateUUID(),
             name: repoName || 'unknown/repo',
             url: repoUrl,
             status: 'indexing',
@@ -111,7 +124,7 @@ export function useChat() {
 
         // Add user message
         const userMessage = {
-            id: crypto.randomUUID(),
+            id: generateUUID(),
             role: 'user',
             content,
             timestamp: new Date(),
@@ -136,7 +149,7 @@ export function useChat() {
             })) || [];
 
             const assistantMessage = {
-                id: crypto.randomUUID(),
+                id: generateUUID(),
                 role: 'assistant',
                 content: result.answer || result.response || 'No response received.',
                 citations: citations.length > 0 ? citations : undefined,
@@ -152,7 +165,7 @@ export function useChat() {
 
             // Add error message to chat
             addMessage({
-                id: crypto.randomUUID(),
+                id: generateUUID(),
                 role: 'assistant',
                 content: 'Sorry, I encountered an error while processing your question. Please try again.',
                 timestamp: new Date(),

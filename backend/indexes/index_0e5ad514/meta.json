@@ -1,0 +1,7 @@
+{
+  "repo_url": "https://github.com/danilosampaio/dbrest",
+  "repo_hash": "0e5ad514",
+  "indexed_at": "2026-04-23T18:37:37.662821",
+  "chunk_count": 122,
+  "embeddings_model": "sentence-transformers/all-MiniLM-L6-v2"
+}

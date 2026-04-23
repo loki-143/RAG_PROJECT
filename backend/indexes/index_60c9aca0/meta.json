@@ -1,0 +1,7 @@
+{
+  "repo_url": "https://github.com/coollabsio/coolify",
+  "repo_hash": "60c9aca0",
+  "indexed_at": "2026-04-11T11:50:30.295197",
+  "chunk_count": 775,
+  "embeddings_model": "sentence-transformers/all-MiniLM-L6-v2"
+}

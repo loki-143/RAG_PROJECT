@@ -59,13 +59,23 @@ def compute_line_ranges(text: str, node_start_byte: int, node_end_byte: int) -> 
 
 def is_text_file(filepath: str, max_size_mb: int = 10) -> bool:
     """Check if file is text (not binary) and within size limit."""
-    # Check binary extensions
-    binary_exts = {'.jpg', '.png', '.gif', '.pdf', '.zip', '.exe', '.dll', '.so',
-                   '.dylib', '.bin', '.pyc', '.o', '.a', '.lib'}
-    if Path(filepath).suffix.lower() in binary_exts:
+    # Check binary extensions first (fast, no I/O)
+    binary_exts = {
+        '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.ico', '.svg',
+        '.pdf', '.zip', '.tar', '.gz', '.bz2', '.7z', '.rar',
+        '.exe', '.dll', '.so', '.dylib', '.bin', '.pyc', '.pyo',
+        '.o', '.a', '.lib', '.wasm', '.class',
+        '.mp3', '.mp4', '.avi', '.mov', '.wav', '.flac',
+        '.ttf', '.otf', '.woff', '.woff2', '.eot',
+        '.db', '.sqlite', '.sqlite3',
+        '.lock', '.lockb',  # Lock files (bun.lockb, etc.)
+    }
+    
+    file_ext = Path(filepath).suffix.lower()
+    if file_ext in binary_exts:
         return False
 
-    # Check size
+    # Check size (fast, no file read)
     try:
         size_mb = os.path.getsize(filepath) / (1024 * 1024)
         if size_mb > max_size_mb:
@@ -73,11 +83,39 @@ def is_text_file(filepath: str, max_size_mb: int = 10) -> bool:
     except:
         return False
 
-    # Check if readable as text
-    try:
-        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
-            f.read(8192)  # Try reading first 8KB
+    # For known text extensions, skip the read check (much faster!)
+    text_exts = {
+        '.py', '.js', '.jsx', '.ts', '.tsx', '.java', '.c', '.cpp', '.cc', '.h', '.hpp',
+        '.go', '.rs', '.rb', '.php', '.cs', '.swift', '.kt', '.scala', '.clj',
+        '.html', '.css', '.scss', '.sass', '.less', '.vue', '.svelte',
+        '.json', '.xml', '.yaml', '.yml', '.toml', '.ini', '.cfg', '.conf',
+        '.md', '.markdown', '.txt', '.rst', '.adoc',
+        '.sh', '.bash', '.zsh', '.fish', '.ps1', '.bat', '.cmd',
+        '.sql', '.graphql', '.proto', '.thrift',
+        '.r', '.R', '.m', '.mm', '.f', '.f90',
+        '.lua', '.pl', '.pm', '.tcl', '.vim',
+        '.dockerfile', '.gitignore', '.gitattributes', '.editorconfig',
+    }
+    
+    if file_ext in text_exts:
         return True
+    
+    # For unknown extensions, check if it's text (slower, but necessary)
+    # Only do this for files without extension or unknown extensions
+    try:
+        with open(filepath, 'rb') as f:
+            chunk = f.read(512)  # Read only 512 bytes instead of 8KB
+            if not chunk:
+                return False
+            # Check for null bytes (binary indicator)
+            if b'\x00' in chunk:
+                return False
+            # Try to decode as UTF-8
+            try:
+                chunk.decode('utf-8')
+                return True
+            except UnicodeDecodeError:
+                return False
     except:
         return False
 

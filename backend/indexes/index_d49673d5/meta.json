@@ -1,0 +1,7 @@
+{
+  "repo_url": "https://github.com/sickn33/antigravity-awesome-skills",
+  "repo_hash": "d49673d5",
+  "indexed_at": "2026-04-11T18:16:29.769669",
+  "chunk_count": 81166,
+  "embeddings_model": "sentence-transformers/all-MiniLM-L6-v2"
+}

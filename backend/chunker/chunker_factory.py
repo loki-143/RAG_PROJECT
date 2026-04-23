@@ -29,17 +29,6 @@ class ChunkerFactory:
         text: str,
         repo_url: str = None,
     ) -> List[ChunkMetadata]:
-        """
-        Chunk a file using appropriate strategy.
-        
-        Args:
-            filepath: File path
-            text: File contents
-            repo_url: Repository URL
-            
-        Returns:
-            List of ChunkMetadata objects
-        """
         language = detect_language(filepath)
         ext = _get_extension(filepath)
 

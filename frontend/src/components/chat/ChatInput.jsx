@@ -4,7 +4,7 @@ import { Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-export function ChatInput({ onSend, disabled, isLoading }) {
+export function ChatInput({ onSend, disabled = false, isLoading = false }) {
     const [message, setMessage] = useState('');
     const textareaRef = useRef(null);
 
@@ -80,9 +80,4 @@ ChatInput.propTypes = {
     onSend: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
     isLoading: PropTypes.bool,
-};
-
-ChatInput.defaultProps = {
-    disabled: false,
-    isLoading: false,
 };

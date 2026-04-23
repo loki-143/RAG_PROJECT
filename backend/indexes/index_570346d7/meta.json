@@ -1,0 +1,7 @@
+{
+  "repo_url": "https://github.com/sharmilat23/RAG-SEARCH",
+  "repo_hash": "570346d7",
+  "indexed_at": "2026-04-10T19:50:11.419348",
+  "chunk_count": 216,
+  "embeddings_model": "sentence-transformers/all-MiniLM-L6-v2"
+}

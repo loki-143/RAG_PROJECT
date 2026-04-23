@@ -6,7 +6,7 @@ from typing import List, Optional, Tuple
 from utils import setup_logging, get_repo_hash
 from indexer import RepositoryIndexer
 from retriever import HybridRetriever
-from llm_client import GeminiLLMWrapper, LLMResponse
+from llm_client import LLMClient, LLMResponse
 from chat_history import ChatHistoryManager
 from storage import ChunkStore
 
@@ -16,24 +16,57 @@ logger = logging.getLogger(__name__)
 class RAGAgent:
     """Main RAG agent orchestrator."""
 
-    def __init__(self, api_key: str, log_level=logging.INFO):
+    def __init__(
+        self,
+        github_token: Optional[str] = None,
+        google_api_key: Optional[str] = None,
+        ollama_model: str = "llama3",
+        # Legacy support: if api_key is passed, treat it as google_api_key
+        api_key: Optional[str] = None,
+        log_level=logging.INFO,
+        max_workers: Optional[int] = None,
+    ):
         """
         Initialize RAG Agent.
-        
+
         Args:
-            api_key: Google Gemini API key
+            github_token: GitHub PAT for GitHub Models API (primary)
+            google_api_key: Google Gemini API key (3rd fallback)
+            ollama_model: Ollama model name (2nd fallback)
+            api_key: Legacy param — maps to google_api_key
             log_level: Logging level
+            max_workers: Max parallel workers for indexing (default: CPU count - 1)
         """
         setup_logging(log_level)
 
-        self.indexer = RepositoryIndexer()
-        self.retriever = HybridRetriever()
-        self.llm = GeminiLLMWrapper(api_key)
+        # Legacy support
+        if api_key and not google_api_key:
+            google_api_key = api_key
+
+        self.indexer = RepositoryIndexer(max_workers=max_workers)
+        
+        # Configure retriever with parallel embeddings
+        use_parallel_embeddings = os.environ.get("USE_PARALLEL_EMBEDDINGS", "true").lower() == "true"
+        embedding_batch_size = int(os.environ.get("EMBEDDING_BATCH_SIZE", "500"))
+        
+        self.retriever = HybridRetriever(
+            use_parallel_embeddings=use_parallel_embeddings,
+            embedding_batch_size=embedding_batch_size,
+        )
+        self.llm = LLMClient(
+            github_token=github_token,
+            google_api_key=google_api_key,
+            ollama_model=ollama_model,
+        )
         self.history_manager = ChatHistoryManager()
         self.chunk_store = ChunkStore()
 
-        self.active_repos: List[str] = []  # Repositories to query
+        self.active_repos: List[str] = []
         self.logger = logger
+
+    def is_ready(self) -> bool:
+        """Check if the RAG system is ready (embedding model loaded)."""
+        return self.retriever.is_ready
 
     def index_repository(
         self,

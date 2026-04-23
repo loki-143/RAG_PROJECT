@@ -1,29 +1,74 @@
-"""LLM wrapper for Gemini API with citation support."""
+"""LLM wrapper with multi-provider fallback.
+
+Priority:
+  1. GitHub Models API  (GITHUB_TOKEN)
+  2. Ollama local       (OLLAMA_MODEL, default llama3)
+  3. Google Gemini      (GOOGLE_API_KEY)
+"""
 
 import logging
+import os
+import json
 from typing import Tuple, List, Optional
-import google.generativeai as genai
+
+import requests
 
 from utils import ChunkMetadata, get_timestamp
 
 logger = logging.getLogger(__name__)
 
+# ---------------------------------------------------------------------------
+# GitHub Models API  (uses OpenAI-compatible REST – no SDK needed)
+# ---------------------------------------------------------------------------
+GITHUB_MODELS_URL = "https://models.inference.ai.azure.com/chat/completions"
 
-class GeminiLLMWrapper:
-    """Wrapper around Gemini for code Q&A."""
+# ---------------------------------------------------------------------------
+# Ollama local endpoint
+# ---------------------------------------------------------------------------
+OLLAMA_URL = "http://localhost:11434/api/chat"
 
-    def __init__(self, api_key: str, model: str = "gemini-2.5-flash"):
-        """
-        Initialize Gemini wrapper.
-        
-        Args:
-            api_key: Google API key
-            model: Model name (default: gemini-2.5-flash - FREE)
-        """
-        genai.configure(api_key=api_key)
-        self.model_name = model
-        self.model = genai.GenerativeModel(model)
 
+class LLMClient:
+    """Multi-provider LLM client with automatic fallback."""
+
+    def __init__(
+        self,
+        github_token: Optional[str] = None,
+        google_api_key: Optional[str] = None,
+        ollama_model: str = "llama3",
+        github_model: str = "gpt-4o-mini",
+        gemini_model: str = "gemini-2.5-flash",
+    ):
+        self.github_token = github_token
+        self.google_api_key = google_api_key
+        self.ollama_model = ollama_model
+        self.github_model = github_model
+        self.gemini_model = gemini_model
+
+        # Determine which providers are available
+        self._providers: List[str] = []
+        if self.github_token:
+            self._providers.append("github")
+        if self._ollama_available():
+            self._providers.append("ollama")
+        if self.google_api_key:
+            self._providers.append("gemini")
+
+        if not self._providers:
+            raise RuntimeError(
+                "No LLM provider configured. Set GITHUB_TOKEN, run Ollama, "
+                "or set GOOGLE_API_KEY."
+            )
+
+        self.model_name = self._active_model_name()
+        logger.info(
+            f"LLM providers available (priority order): {self._providers} | "
+            f"active: {self._providers[0]}"
+        )
+
+    # ------------------------------------------------------------------
+    # Public API  (same signature as the old GeminiLLMWrapper)
+    # ------------------------------------------------------------------
     def answer_question(
         self,
         question: str,
@@ -32,38 +77,123 @@ class GeminiLLMWrapper:
         chat_history: Optional[List[dict]] = None,
         temperature: float = 0.3,
     ) -> Tuple[str, List[str]]:
-        """
-        Answer question using context and citations.
-        
-        Args:
-            question: User question
-            context: Retrieved context with citations
-            citations: List of source citations used
-            chat_history: Optional conversation history
-            temperature: Model temperature (0-1, lower is more deterministic)
-            
-        Returns:
-            Tuple of (answer_text, used_citations)
-        """
-        # Build prompt
+        """Answer a question using the best available provider with fallback."""
         prompt = self._build_prompt(question, context, citations, chat_history)
 
+        last_error = None
+        for provider in self._providers:
+            try:
+                answer = self._call_provider(provider, prompt, temperature)
+                used_citations = self._extract_citations(answer, citations)
+                return answer, used_citations
+            except Exception as e:
+                last_error = e
+                logger.warning(f"{provider} failed: {e} — trying next provider")
+
+        raise RuntimeError(f"All LLM providers failed. Last error: {last_error}")
+
+    def get_model_info(self) -> dict:
+        return {
+            "providers": self._providers,
+            "active": self._providers[0] if self._providers else None,
+            "model": self.model_name,
+        }
+
+    # ------------------------------------------------------------------
+    # Provider calls
+    # ------------------------------------------------------------------
+    def _call_provider(self, provider: str, prompt: str, temperature: float) -> str:
+        if provider == "github":
+            return self._call_github(prompt, temperature)
+        elif provider == "ollama":
+            return self._call_ollama(prompt, temperature)
+        elif provider == "gemini":
+            return self._call_gemini(prompt, temperature)
+        raise ValueError(f"Unknown provider: {provider}")
+
+    def _call_github(self, prompt: str, temperature: float) -> str:
+        """Call GitHub Models API (OpenAI-compatible REST)."""
+        headers = {
+            "Authorization": f"Bearer {self.github_token}",
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "model": self.github_model,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": temperature,
+        }
+        resp = requests.post(
+            GITHUB_MODELS_URL, headers=headers, json=payload, timeout=120
+        )
+        if not resp.ok:
+            raise RuntimeError(f"GitHub API Error {resp.status_code}: {resp.text}")
+        data = resp.json()
+        return data["choices"][0]["message"]["content"]
+
+    def _call_ollama(self, prompt: str, temperature: float) -> str:
+        """Call local Ollama instance."""
+        payload = {
+            "model": self.ollama_model,
+            "messages": [{"role": "user", "content": prompt}],
+            "stream": False,
+            "options": {"temperature": temperature},
+        }
+        resp = requests.post(OLLAMA_URL, json=payload, timeout=120)
+        
+        # If /api/chat is not found (older Ollama), fallback to /api/generate
+        if resp.status_code == 404:
+            generate_payload = {
+                "model": self.ollama_model,
+                "prompt": prompt,
+                "stream": False,
+                "options": {"temperature": temperature},
+            }
+            resp = requests.post("http://localhost:11434/api/generate", json=generate_payload, timeout=120)
+
+        if not resp.ok:
+            raise RuntimeError(f"Ollama API Error {resp.status_code}: {resp.text}")
+            
+        data = resp.json()
+        # Handle both /api/chat and /api/generate response formats
+        if "message" in data:
+            return data["message"]["content"]
+        else:
+            return data.get("response", "")
+
+    def _call_gemini(self, prompt: str, temperature: float) -> str:
+        """Call Google Gemini API (fallback)."""
+        import google.generativeai as genai
+
+        genai.configure(api_key=self.google_api_key)
+        model = genai.GenerativeModel(self.gemini_model)
+        response = model.generate_content(
+            prompt,
+            generation_config=genai.types.GenerationConfig(temperature=temperature),
+        )
+        return response.text
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+    def _ollama_available(self) -> bool:
+        """Check if Ollama is running locally."""
         try:
-            # Call model
-            response = self.model.generate_content(
-                prompt,
-                generation_config=genai.types.GenerationConfig(temperature=temperature),
-            )
-            answer = response.text
+            r = requests.get("http://localhost:11434/api/tags", timeout=2)
+            return r.status_code == 200
+        except Exception:
+            return False
 
-            # Extract used citations from answer
-            used_citations = self._extract_citations(answer, citations)
-
-            return answer, used_citations
-
-        except Exception as e:
-            logger.error(f"Gemini API error: {e}")
-            raise
+    def _active_model_name(self) -> str:
+        if not self._providers:
+            return "none"
+        p = self._providers[0]
+        if p == "github":
+            return self.github_model
+        if p == "ollama":
+            return self.ollama_model
+        if p == "gemini":
+            return self.gemini_model
+        return "unknown"
 
     def _build_prompt(
         self,
@@ -72,7 +202,6 @@ class GeminiLLMWrapper:
         citations: List[str],
         chat_history: Optional[List[dict]] = None,
     ) -> str:
-        """Build prompt for Gemini."""
         system_instruction = """You are an expert code analyst. You have access to source code from a repository.
 Your job is to provide **thorough, well-structured answers** by synthesizing information from ALL the provided source code chunks.
 
@@ -90,11 +219,11 @@ IMPORTANT RULES:
         history_str = ""
         if chat_history:
             history_str = "\n\nPrevious conversation:\n"
-            for msg in chat_history[-4:]:  # Last 4 messages
-                role = "User" if msg['role'] == 'user' else "Assistant"
+            for msg in chat_history[-4:]:
+                role = "User" if msg["role"] == "user" else "Assistant"
                 history_str += f"{role}: {msg['content']}\n"
 
-        prompt = f"""{system_instruction}
+        return f"""{system_instruction}
 
 {history_str}
 
@@ -106,25 +235,19 @@ IMPORTANT RULES:
 
 ============ ANSWER ============
 """
-        return prompt
 
     def _extract_citations(self, answer: str, available_citations: List[str]) -> List[str]:
-        """Extract citations that appear in the answer."""
         used = []
         for citation in available_citations:
-            # Simple check: does citation appear in answer
-            if citation in answer:
-                if citation not in used:
-                    used.append(citation)
+            if citation in answer and citation not in used:
+                used.append(citation)
         return used
 
-    def get_model_info(self) -> dict:
-        """Get information about the model."""
-        return {
-            "model": self.model_name,
-            "type": "Gemini",
-            "context_window": 128000,  # Gemini 2.0 Flash context
-        }
+
+# ---------------------------------------------------------------------------
+# Backwards-compatible alias so existing imports keep working
+# ---------------------------------------------------------------------------
+GeminiLLMWrapper = LLMClient
 
 
 class LLMResponse:
@@ -154,12 +277,9 @@ class LLMResponse:
         }
 
     def to_markdown(self) -> str:
-        """Format response as markdown."""
         text = f"## Answer\n\n{self.answer}\n"
-
         if self.citations:
-            text += f"\n### Sources\n"
+            text += "\n### Sources\n"
             for citation in self.citations:
                 text += f"- {citation}\n"
-
         return text

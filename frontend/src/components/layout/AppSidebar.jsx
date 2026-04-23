@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { GitBranch, Plus, Trash2, Moon, Sun, MessageSquare, Github, ExternalLink } from 'lucide-react';
+import { Plus, Trash2, Moon, Sun, MessageSquare, Github, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Progress } from '@/components/ui/progress';
+import { CodeSenseLogo } from '@/components/CodeSenseLogo';
 import { useAppStore } from '@/stores/appStore';
 import { useIndexRepository, useDeleteRepository } from '@/hooks/useApi';
 import { cn } from '@/lib/utils';
@@ -37,12 +38,16 @@ export function AppSidebar() {
             {/* Branding */}
             <div className="p-4 border-b border-border">
                 <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center glow-primary">
-                        <GitBranch className="w-5 h-5 text-primary" />
+                    <div className="relative">
+                        <CodeSenseLogo size={36} />
+                        {/* Subtle glow effect */}
+                        <div className="absolute inset-0 blur-lg opacity-20 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full -z-10" />
                     </div>
                     <div>
-                        <h1 className="font-semibold text-foreground tracking-tight">CodeLens AI</h1>
-                        <p className="text-xs text-muted-foreground">Chat with your codebase</p>
+                        <h1 className="font-bold text-lg bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                            CodeSense
+                        </h1>
+                        <p className="text-xs text-muted-foreground">AI Code Assistant</p>
                     </div>
                 </div>
             </div>

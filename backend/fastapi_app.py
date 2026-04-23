@@ -22,7 +22,11 @@ Environment Variables:
 import os
 import asyncio
 import logging
+import warnings
 from typing import List, Optional
+
+# Suppress Pydantic v2 deprecation warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="pydantic")
 
 # Force UTF-8 on Windows to avoid charmap codec errors
 os.environ.setdefault('PYTHONUTF8', '1')
@@ -83,7 +87,21 @@ from rag_agent import RAGAgent
 
 # Use more workers for better concurrency
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "8"))
-agent = RAGAgent(api_key=GOOGLE_API_KEY)
+
+# Parallel indexing configuration
+INDEXING_MAX_WORKERS = int(os.environ.get("INDEXING_MAX_WORKERS", "0"))  # 0 = auto (CPU count - 1)
+USE_PARALLEL_INDEXING = os.environ.get("USE_PARALLEL_INDEXING", "true").lower() == "true"
+
+# Fallbacks for multi-llm architecture
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3")
+
+agent = RAGAgent(
+    google_api_key=GOOGLE_API_KEY, 
+    github_token=GITHUB_TOKEN, 
+    ollama_model=OLLAMA_MODEL,
+    max_workers=INDEXING_MAX_WORKERS if INDEXING_MAX_WORKERS > 0 else None,
+)
 executor = ThreadPoolExecutor(max_workers=MAX_WORKERS)
 
 # -----------------------------
@@ -196,8 +214,13 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint for load balancers."""
-    return {"status": "healthy"}
+    """Health check endpoint for load balancers and frontend."""
+    is_ready = agent.is_ready()
+    return {
+        "status": "healthy",
+        "ready": is_ready,
+        "message": "System ready" if is_ready else "Loading embedding model..."
+    }
 
 
 # ---------------------------------------------
@@ -419,8 +442,7 @@ async def trigger_cleanup(force: bool = False, keep_count: int = 10):
 # ------------------------------------------------------
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.environ.get("PORT", 8000))
-    print(os.environ.get("GOOGLE_API_KEY"))
+    port = int(os.environ.get("PORT", 5000))
     uvicorn.run(
         "fastapi_app:app",
         host="0.0.0.0",

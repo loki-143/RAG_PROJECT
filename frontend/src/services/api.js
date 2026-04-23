@@ -1,5 +1,7 @@
-// API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// API Configuration (Supports local and tunneled connections)
+const API_BASE_URL = window.location.hostname.includes('loca.lt') 
+  ? 'https://rag-backend-api.loca.lt' 
+  : (import.meta.env.VITE_API_URL || 'http://localhost:5000');
 const API_KEY = import.meta.env.VITE_RAG_API_KEY || '';
 
 function getHeaders() {
