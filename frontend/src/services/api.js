@@ -1,7 +1,6 @@
-// API Configuration (Supports local and tunneled connections)
-const API_BASE_URL = window.location.hostname.includes('loca.lt') 
-  ? 'https://rag-backend-api.loca.lt' 
-  : (import.meta.env.VITE_API_URL || 'http://localhost:5000');
+// API Configuration - Uses Nginx reverse proxy
+// All API calls go through /api which Nginx proxies to backend container
+const API_BASE_URL = '/api';
 const API_KEY = import.meta.env.VITE_RAG_API_KEY || '';
 
 function getHeaders() {

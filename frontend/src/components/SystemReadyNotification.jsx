@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, CheckCircle2 } from 'lucide-react';
 
-const API_URL = import.meta.env.VITE_API_URL || '/api';
+// Use Nginx reverse proxy - no need for env variable
+const API_URL = '/api';
 
 export const SystemReadyNotification = () => {
     const [systemState, setSystemState] = useState({
